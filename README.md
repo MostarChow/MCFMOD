@@ -5,7 +5,7 @@
 ## 接入Android
 1. 复制文件\
 将`fmod_android`、`media`、`mostar_fmod.cpp`复制到`proj.android-studio/jni`目录下。
-2. 编辑`proj.android-studio/jni/CocosAndroid.mk`文件。\
+2. 编辑`proj.android-studio/jni/CocosAndroid.mk`文件。
 
    1). 在`LOCAL_PATH := $(call my-dir)`下插入以下代码:
 
