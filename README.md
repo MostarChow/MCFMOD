@@ -63,3 +63,17 @@
         implementation fileTree(dir: '../jni/fmod_android/core/lib/fmod.jar', include: ['*.jar'])
     }
     ```
+4. 编辑`proj.android-studio/app/src/org/cocos2dx/javascript/AppActivity.java`文件。
+
+   1). 在`public class AppActivity extends Cocos2dxActivity {` 下插入以下代码:
+   ```
+   public static native void loadBank();
+   public static native void playEvent(String path);
+   public static native void stopEvent(String path);
+   
+   static
+   {
+    System.loadLibrary("fmod");
+    System.loadLibrary("fmodstudio");
+   }
+   ```
