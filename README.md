@@ -37,7 +37,7 @@
     LOCAL_SHARED_LIBRARIES := fmod fmodstudio
     ```
 
-3. 编辑`proj.android-studio/app/build.gradle`文件。\
+3. 编辑`proj.android-studio/app/build.gradle`文件。
 
    1). 找到`sourceSets.main`插入`assets.srcDirs = ['res', '../jni/media']`\
    如以下代码:
