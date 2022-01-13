@@ -1,5 +1,6 @@
 # MCFMOD
-封装FMOD
+Cocos Creator version: 2.4.6 \
+FMOD version: 2.02.05
 
 #
 ## 接入Android
@@ -55,7 +56,7 @@
     }
    ```
    示例图：\
-   ![build_1](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/build_1.png)
+   ![build_2](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/build_2.png)
    
 
     2). 找到`dependencies`插入`implementation fileTree(dir: '../jni/fmod_android/core/lib/fmod.jar', include: ['*.jar'])`\
@@ -70,7 +71,7 @@
     }
     ```
     示例图：\
-   ![build_2](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/build_2.png)
+   ![build_1](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/build_1.png)
 
 4. 编辑`proj.android-studio/app/src/org/cocos2dx/javascript/AppActivity.java`文件。
 
@@ -86,3 +87,6 @@
     System.loadLibrary("fmodstudio");
    }
    ```
+
+#
+## 接入iOS
