@@ -36,6 +36,9 @@
     ```
     LOCAL_SHARED_LIBRARIES := fmod fmodstudio
     ```
+    示例图：
+    ![(CocosCocosAndroid)](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/CocosAndroid.png)
+
 
 3. 编辑`proj.android-studio/app/build.gradle`文件。
 
