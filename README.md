@@ -36,8 +36,8 @@
     ```
     LOCAL_SHARED_LIBRARIES := fmod fmodstudio
     ```
-    示例图：
-    ![(CocosCocosAndroid)](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/CocosAndroid.png)
+    示例图：\
+    ![CocosCocosAndroid](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/CocosAndroid.png)
 
 
 3. 编辑`proj.android-studio/app/build.gradle`文件。
@@ -54,6 +54,9 @@
         assets.srcDirs = ['res', '../jni/media']
     }
    ```
+   示例图：\
+   ![build_1](https://https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/build_1.png)
+   
 
     2). 找到`dependencies`插入`implementation fileTree(dir: '../jni/fmod_android/core/lib/fmod.jar', include: ['*.jar'])`\
     如以下代码:
@@ -66,6 +69,9 @@
         implementation fileTree(dir: '../jni/fmod_android/core/lib/fmod.jar', include: ['*.jar'])
     }
     ```
+    示例图：\
+   ![build_2](https://https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/build_2.png)
+
 4. 编辑`proj.android-studio/app/src/org/cocos2dx/javascript/AppActivity.java`文件。
 
    1). 在`public class AppActivity extends Cocos2dxActivity {` 下插入以下代码:
