@@ -107,11 +107,13 @@ FMOD version: 2.02.05
 
 6. 打开`proj.ios_mac/fmod_ios/lib/Release`将所有文件拖动到`Link Binary With Libraries`中。
    
-   示例图：
+   示例图：\
+   ![ios_1](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/ios_1.png)
 
 7. 打开`proj.ios_mac/fmod_ios/MCFMOD`将所有文件拖动到`*.xcodeproj/Classes/ios`下。
    
-   示例图：
+   示例图：\
+   ![ios_2](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/ios_2.png)
 
 8. 打开`*.xcodeproj/Classes/ios/AppController.mm`并引入`mostar_fmod_ios.hpp`。
    ```
