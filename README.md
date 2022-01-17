@@ -87,6 +87,11 @@ FMOD version: 2.02.05
     System.loadLibrary("fmodstudio");
    }
    ```
+   
+   2). 在`protected void onCreate(Bundle savedInstanceState) {`最后插入以下代码：
+   ```
+   org.fmod.FMOD.init(this);
+   ```
 
 #
 ## 接入iOS
