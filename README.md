@@ -81,6 +81,16 @@ FMOD version: 2.02.05
    public static native void playEvent(String path);
    public static native void stopEvent(String path);
    
+   public static void jsLoadBank() {
+        loadBank();
+    }
+    public static void jsPlayEvent(String path) {
+        playEvent(path);
+    }
+    public static void jsStopEvent(String path) {
+        stopEvent(path);
+    }
+   
    static
    {
     System.loadLibrary("fmod");
