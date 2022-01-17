@@ -90,3 +90,30 @@ FMOD version: 2.02.05
 
 #
 ## 接入iOS
+1. 复制文件\
+将`fmod_ios`、`media`复制到`proj.ios_mac`目录下。
+
+2. 打开`*.xcodeproj`文件并打开`Build Settings`页。
+
+3. 找到`Search Paths`下的`Header Search Paths`并加入以下代码：
+   ```
+   $(SRCROOT)/fmod_ios/header
+   ```
+4. 找到`Search Paths`下的`Library Search Paths`并加入以下代码:
+   ```
+   $(SRCROOT)/fmod_ios/lib/Release
+   ```
+5. 打开`Build Phases`下的`Link Binary With Libraries`。
+
+6. 打开`proj.ios_mac/fmod_ios/lib/Release`将所有文件拖动到`Link Binary With Libraries`中。
+   
+   示例图：
+
+7. 打开`proj.ios_mac/fmod_ios/MCFMOD`将所有文件拖动到`*.xcodeproj/Classes/ios`下。
+   
+   示例图：
+
+8. 打开`*.xcodeproj/Classes/ios/AppController.mm`并引入`mostar_fmod_ios.hpp`。
+   ```
+   #import "mostar_fmod_ios.hpp"
+   ```
