@@ -32,7 +32,7 @@ void loadBank()
     FMOD::System *coreSystem = NULL;
     studioSystem->getCoreSystem(&coreSystem);
     // 初始化studio
-    studioSystem->initialize(2048, FMOD_INIT_NORMAL, FMOD_INIT_NORMAL, extradriverdata);
+    studioSystem->initialize(1024, FMOD_INIT_NORMAL, FMOD_INIT_NORMAL, extradriverdata);
     // 加载bank
     FMOD::Studio::Bank *masterBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Master.bank"), FMOD_STUDIO_INIT_NORMAL, &masterBank);
