@@ -134,3 +134,20 @@ FMOD version: 2.02.05
    ```
    #import "mostar_fmod_ios.hpp"
    ```
+   
+   在`@end`前插入以下代码：
+   ```
+   + (void)jsLoadBank {
+    loadBank();
+   }
+
+   + (void)jsPlayEvent:(NSString *)path {
+    const char *c = [path UTF8String];
+    playEvent(c);
+   }
+
+   + (void)jsStopEvent:(NSString *)path {
+    const char *c = [path UTF8String];
+    stopEvent(c);
+   }
+   ```
