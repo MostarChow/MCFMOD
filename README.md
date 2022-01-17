@@ -5,7 +5,7 @@ FMOD version: 2.02.05
 #
 ## 接入Android
 1. 复制文件\
-将`fmod_android`、`media`、`mostar_fmod.cpp`复制到`proj.android-studio/jni`目录下。
+将`fmod_android`、`media`、`mostar_fmod_android.cpp`复制到`proj.android-studio/jni`目录下。
 2. 编辑`proj.android-studio/jni/CocosAndroid.mk`文件。
 
    1). 在`LOCAL_PATH := $(call my-dir)`下插入以下代码:
@@ -30,7 +30,7 @@ FMOD version: 2.02.05
     LOCAL_SRC_FILES := hellojavascript/main.cpp \
 				   ../../Classes/AppDelegate.cpp \
 				   ../../Classes/jsb_module_register.cpp \
-				   mostar_fmod.cpp \
+				   mostar_fmod_android.cpp \
     ```
 
     3). 在`LOCAL_STATIC_LIBRARIES := cocos2dx_static`下增加以下代码:
