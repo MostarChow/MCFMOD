@@ -28,9 +28,9 @@ void loadBank()
     FMOD::Studio::Bank* stringsBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
     FMOD::Studio::Bank *sfxBank = NULL;
-    studioSystem->loadBankFile(GetMediaPath("SFX.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
+    studioSystem->loadBankFile(GetMediaPath("sfx.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
     FMOD::Studio::Bank *musicBank = NULL;
-    studioSystem->loadBankFile(GetMediaPath("Music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
+    studioSystem->loadBankFile(GetMediaPath("music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
 }
 
 void playEvent(const char *path)
