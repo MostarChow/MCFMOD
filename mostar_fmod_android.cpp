@@ -3,16 +3,12 @@
 #include "cocos2d.h"
 #include <jni.h>
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
 
 #include "fmod_android/inc/fmod.hpp"
 #include "fmod_android/inc/fmod_studio.hpp"
 #include "fmod_android/inc/fmod_errors.h"
-#endif
 
 #define LOG_TAG "main"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
@@ -21,12 +17,10 @@ FMOD::Studio::System *studioSystem;
 
 const char *GetMediaPath(const char *fileName)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     char *filePath = (char *)calloc(256, sizeof(char));
     strcat(filePath, "file:///android_asset/");
     strcat(filePath, fileName);
     return filePath;
-#endif
 }
 
 void loadBank()
@@ -83,7 +77,6 @@ void stopEvent(const char *path)
 extern "C"
 {
     /*JNI_CALL_FUNCTION*/
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_loadBank(JNIEnv*env, jobject thiz)
     {
         loadBank();
@@ -100,6 +93,5 @@ extern "C"
         const char *cPath = pathStr.c_str();
         stopEvent(cPath);
     }
-#endif
 }
 
