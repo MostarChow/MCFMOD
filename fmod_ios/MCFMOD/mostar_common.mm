@@ -1,14 +1,17 @@
 //
-//  MCCommon.m
-//  TestFmod-mobile
+//  mostar_common.m
+//  MCFMOD-mobile
 //
-//  Created by Mostar on 2022/1/5.
+//  Created by Mostar on 2022/1/17.
 //
 
-#import "MCCommon.h"
+#import "mostar_common.h"
 
-#import <Foundation/Foundation.h>
+@implementation mostar_common
 
 const char *GetMediaPath(const char *fileName) {
     return [[NSString stringWithFormat:@"%@/media/%s", [[NSBundle mainBundle] resourcePath], fileName] UTF8String];
 }
+
+
+@end
