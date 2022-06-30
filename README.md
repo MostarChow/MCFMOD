@@ -151,3 +151,5 @@ FMOD version: 2.02.05
     stopEvent(c);
    }
    ```
+9. 将`media`目录拖动到`*.xcodeproj`下。
+   ![ios_3](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/ios_3.png)
