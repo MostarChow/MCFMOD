@@ -9,6 +9,7 @@
 #include "fmod.hpp"
 #include "fmod_studio.hpp"
 #include "mostar_common.h"
+#include <map>
 
 FMOD::Studio::System *studioSystem = NULL;
 
@@ -19,6 +20,7 @@ void loadBank()
     // 创建core对象
     FMOD::System *coreSystem = NULL;
     studioSystem->getCoreSystem(&coreSystem);
+    coreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0);
     // 初始化studio
     void *extradriverdata = NULL;
     studioSystem->initialize(1024, FMOD_INIT_NORMAL, FMOD_INIT_NORMAL, extradriverdata);
@@ -28,9 +30,9 @@ void loadBank()
     FMOD::Studio::Bank* stringsBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
     FMOD::Studio::Bank *sfxBank = NULL;
-    studioSystem->loadBankFile(GetMediaPath("sfx.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
+    studioSystem->loadBankFile(GetMediaPath("SFX.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
     FMOD::Studio::Bank *musicBank = NULL;
-    studioSystem->loadBankFile(GetMediaPath("music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
+    studioSystem->loadBankFile(GetMediaPath("Music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
 }
 
 void playEvent(const char *path)
@@ -45,6 +47,34 @@ void playEvent(const char *path)
     // 播放
     instance->start();
     instance->release();
+    studioSystem->update();
+}
+
+void pauseEvent(const char *path)
+{
+    FMOD::Studio::EventDescription *desc = NULL;
+    studioSystem->getEvent(path, &desc);
+    // 获取实例对象
+    FMOD::Studio::EventInstance *instance = NULL;
+    int count = 0;
+    desc->getInstanceCount(&count);
+    desc->getInstanceList(&instance, count, &count);
+    // 暂停播放
+    instance->setPaused(true);
+    studioSystem->update();
+}
+
+void resumeEvent(const char *path)
+{
+    FMOD::Studio::EventDescription *desc = NULL;
+    studioSystem->getEvent(path, &desc);
+    // 获取实例对象
+    FMOD::Studio::EventInstance *instance = NULL;
+    int count = 0;
+    desc->getInstanceCount(&count);
+    desc->getInstanceList(&instance, count, &count);
+    // 继续播放
+    instance->setPaused(false);
     studioSystem->update();
 }
 

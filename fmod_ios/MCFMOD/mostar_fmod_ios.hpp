@@ -21,6 +21,16 @@ void loadBank();
 void playEvent(const char *path);
 
 /**
+ 暂停播放Event
+ */
+void pauseEvent(const char *path);
+
+/**
+ 继续播放Event
+ */
+void resumeEvent(const char *path);
+
+/**
  停止播放Event
  */
 void stopEvent(const char *path);

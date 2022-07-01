@@ -1,6 +1,6 @@
 # MCFMOD
-Cocos Creator version: 2.4.6 \
-FMOD version: 2.02.05
+Cocos Creator version: 2.4.8 \
+FMOD version: 2.02.07
 
 #
 ## 接入Android
@@ -137,19 +137,30 @@ FMOD version: 2.02.05
    
    在`@end`前插入以下代码：
    ```
-   + (void)jsLoadBank {
++ (void)jsLoadBank {
     loadBank();
    }
 
-   + (void)jsPlayEvent:(NSString *)path {
++ (void)jsPlayEvent:(NSString *)path {
     const char *c = [path UTF8String];
     playEvent(c);
    }
 
-   + (void)jsStopEvent:(NSString *)path {
++ (void)jsPauseEvent:(NSString *)path {
+    const char *c = [path UTF8String];
+    pauseEvent(c);
+}
+
++ (void)jsResumeEvent:(NSString *)path {
+    const char *c = [path UTF8String];
+    resumeEvent(c);
+}
+
++ (void)jsStopEvent:(NSString *)path {
     const char *c = [path UTF8String];
     stopEvent(c);
-   }
+}
+
    ```
-9. 将`media`目录拖动到`*.xcodeproj`下。
+9. 将`media`目录拖动到`*.xcodeproj`下。\
    ![ios_3](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/ios_3.png)
