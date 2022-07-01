@@ -5,7 +5,7 @@
 /library/
 /temp/
 /local/
-/build/
+#/build/
 native
 #/////////////////////////////////////////////////////////////////////////////
 # npm files
@@ -52,9 +52,9 @@ Thumbs.db
 
 .vscode/
 
-./build/jsb-link/frameworks/runtime-src/proj.ios_mac/fmod_ios
-./build/jsb-link/frameworks/runtime-src/proj.ios_mac/media
+/build/jsb-link/frameworks/runtime-src/proj.ios_mac/fmod_ios
+/build/jsb-link/frameworks/runtime-src/proj.ios_mac/media
 
-./build/jsb-link/frameworks/runtime-src/proj.android-studio/jni/fmod_android
-./build/jsb-link/frameworks/runtime-src/proj.android-studio/jni/mostar_fmod_android.cpp
-./build/jsb-link/frameworks/runtime-src/proj.android-studio/jni/media
+/build/jsb-link/frameworks/runtime-src/proj.android-studio/jni/fmod_android
+/build/jsb-link/frameworks/runtime-src/proj.android-studio/jni/mostar_fmod_android.cpp
+/build/jsb-link/frameworks/runtime-src/proj.android-studio/jni/media
