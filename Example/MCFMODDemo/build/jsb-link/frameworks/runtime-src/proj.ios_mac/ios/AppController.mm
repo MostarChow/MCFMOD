@@ -31,7 +31,7 @@
 #import "SDKWrapper.h"
 #import "platform/ios/CCEAGLView-ios.h"
 
-
+#import "mostar_fmod_ios.hpp"
 
 using namespace cocos2d;
 
@@ -133,5 +133,29 @@ Application* app = nullptr;
      Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
      */
 }
+
++ (void)jsLoadBank {
+     loadBank();
+    }
+
+ + (void)jsPlayEvent:(NSString *)path {
+     const char *c = [path UTF8String];
+     playEvent(c);
+    }
+
+ + (void)jsPauseEvent:(NSString *)path {
+     const char *c = [path UTF8String];
+     pauseEvent(c);
+ }
+
+ + (void)jsResumeEvent:(NSString *)path {
+     const char *c = [path UTF8String];
+     resumeEvent(c);
+ }
+
+ + (void)jsStopEvent:(NSString *)path {
+     const char *c = [path UTF8String];
+     stopEvent(c);
+ }
 
 @end
