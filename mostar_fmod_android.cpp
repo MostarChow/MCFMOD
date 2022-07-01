@@ -39,9 +39,9 @@ void loadBank()
     FMOD::Studio::Bank* stringsBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
     FMOD::Studio::Bank *sfxBank = NULL;
-    studioSystem->loadBankFile(GetMediaPath("sfx.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
+    studioSystem->loadBankFile(GetMediaPath("SFX.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
     FMOD::Studio::Bank *musicBank = NULL;
-    studioSystem->loadBankFile(GetMediaPath("music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
+    studioSystem->loadBankFile(GetMediaPath("Music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
 }
 
 void playEvent(const char *path)
@@ -56,6 +56,34 @@ void playEvent(const char *path)
     // 播放
     instance->start();
     instance->release();
+    studioSystem->update();
+}
+
+void pauseEvent(const char *path)
+{
+    FMOD::Studio::EventDescription *desc = NULL;
+    studioSystem->getEvent(path, &desc);
+    // 获取实例对象
+    FMOD::Studio::EventInstance *instance = NULL;
+    int count = 0;
+    desc->getInstanceCount(&count);
+    desc->getInstanceList(&instance, count, &count);
+    // 暂停播放
+    instance->setPaused(true);
+    studioSystem->update();
+}
+
+void resumeEvent(const char *path)
+{
+    FMOD::Studio::EventDescription *desc = NULL;
+    studioSystem->getEvent(path, &desc);
+    // 获取实例对象
+    FMOD::Studio::EventInstance *instance = NULL;
+    int count = 0;
+    desc->getInstanceCount(&count);
+    desc->getInstanceList(&instance, count, &count);
+    // 继续播放
+    instance->setPaused(false);
     studioSystem->update();
 }
 
@@ -86,6 +114,18 @@ extern "C"
         std::string pathStr = cocos2d::JniHelper::jstring2string(path);
         const char *cPath = pathStr.c_str();
         playEvent(cPath);
+    }
+    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_pauseEvent(JNIEnv*env, jobject thiz, jstring path)
+    {
+        std::string pathStr = cocos2d::JniHelper::jstring2string(path);
+        const char *cPath = pathStr.c_str();
+        pauseEvent(cPath);
+    }
+    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_resumeEvent(JNIEnv*env, jobject thiz, jstring path)
+    {
+        std::string pathStr = cocos2d::JniHelper::jstring2string(path);
+        const char *cPath = pathStr.c_str();
+        resumeEvent(cPath);
     }
     JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_stopEvent(JNIEnv*env, jobject thiz, jstring path)
     {
