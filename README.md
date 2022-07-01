@@ -77,27 +77,27 @@ FMOD version: 2.02.07
 
    1). 在`public class AppActivity extends Cocos2dxActivity {` 下插入以下代码:
    ```
-public static native void loadBank();
-public static native void playEvent(String path);
-public static native void pauseEvent(String path);
-public static native void resumeEvent(String path);
-public static native void stopEvent(String path);
+	public static native void loadBank();
+	public static native void playEvent(String path);
+	public static native void pauseEvent(String path);
+	public static native void resumeEvent(String path);
+	public static native void stopEvent(String path);
 
-public static void jsLoadBank() {
-   loadBank();
-}
-public static void jsPlayEvent(String path) {
-   playEvent(path);
-}
-public static void jsPauseEvent(String path) {
-   pauseEvent(path);
-}
-public static void jsResumeEvent(String path) {
-   resumeEvent(path);
-}
-public static void jsStopEvent(String path) {
-   stopEvent(path);
-}
+	public static void jsLoadBank() {
+	   loadBank();
+	}
+	public static void jsPlayEvent(String path) {
+	   playEvent(path);
+	}
+	public static void jsPauseEvent(String path) {
+	   pauseEvent(path);
+	}
+	public static void jsResumeEvent(String path) {
+	   resumeEvent(path);
+	}
+	public static void jsStopEvent(String path) {
+	   stopEvent(path);
+	}
    ```
    
    2). 在`protected void onCreate(Bundle savedInstanceState) {`最后插入以下代码：
@@ -139,29 +139,29 @@ public static void jsStopEvent(String path) {
    
    在`@end`前插入以下代码：
    ```
-+ (void)jsLoadBank {
-    loadBank();
-   }
+	+ (void)jsLoadBank {
+	    loadBank();
+	   }
 
-+ (void)jsPlayEvent:(NSString *)path {
-    const char *c = [path UTF8String];
-    playEvent(c);
-   }
+	+ (void)jsPlayEvent:(NSString *)path {
+	    const char *c = [path UTF8String];
+	    playEvent(c);
+	   }
 
-+ (void)jsPauseEvent:(NSString *)path {
-    const char *c = [path UTF8String];
-    pauseEvent(c);
-}
+	+ (void)jsPauseEvent:(NSString *)path {
+	    const char *c = [path UTF8String];
+	    pauseEvent(c);
+	}
 
-+ (void)jsResumeEvent:(NSString *)path {
-    const char *c = [path UTF8String];
-    resumeEvent(c);
-}
+	+ (void)jsResumeEvent:(NSString *)path {
+	    const char *c = [path UTF8String];
+	    resumeEvent(c);
+	}
 
-+ (void)jsStopEvent:(NSString *)path {
-    const char *c = [path UTF8String];
-    stopEvent(c);
-}
+	+ (void)jsStopEvent:(NSString *)path {
+	    const char *c = [path UTF8String];
+	    stopEvent(c);
+	}
    ```
    
 9. 将`media`目录拖动到`*.xcodeproj`下。\
