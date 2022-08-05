@@ -16,23 +16,28 @@
 void loadBank();
 
 /**
- 播放Event
+ 播放音乐Event
  */
-void playEvent(const char *path);
+void playMusicEvent(const char *path, const char *paramer, float value);
 
 /**
- 暂停播放Event
+ 暂停播放音乐Event
  */
-void pauseEvent(const char *path);
+void pauseMusicEvent(const char *path, const char *paramer, float value);
 
 /**
- 继续播放Event
+ 继续播放音乐Event
  */
-void resumeEvent(const char *path);
+void resumeMusicEvent(const char *path, const char *paramer, float value);
 
 /**
- 停止播放Event
+ 停止播放音乐Event
  */
-void stopEvent(const char *path);
+void stopMusicEvent(const char *path, const char *paramer, float value);
+
+/**
+ 播放音效Event
+ */
+void playEffectEvent(const char *path);
 
 #endif /* mostar_fmod_hpp */

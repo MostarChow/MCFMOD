@@ -138,24 +138,37 @@ Application* app = nullptr;
      loadBank();
     }
 
- + (void)jsPlayEvent:(NSString *)path {
-     const char *c = [path UTF8String];
-     playEvent(c);
+ + (void)jsPlayMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
+     const char *pathc = [path UTF8String];
+     const char *paramerc = [paramer UTF8String];
+     float valuef = [value floatValue];
+     playMusicEvent(pathc, paramerc, valuef);
     }
 
- + (void)jsPauseEvent:(NSString *)path {
-     const char *c = [path UTF8String];
-     pauseEvent(c);
+ + (void)jsPauseMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
+     const char *pathc = [path UTF8String];
+     const char *paramerc = [paramer UTF8String];
+     float valuef = [value floatValue];
+     pauseMusicEvent(pathc, paramerc, valuef);
  }
 
- + (void)jsResumeEvent:(NSString *)path {
-     const char *c = [path UTF8String];
-     resumeEvent(c);
+ + (void)jsResumeMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
+     const char *pathc = [path UTF8String];
+     const char *paramerc = [paramer UTF8String];
+     float valuef = [value floatValue];
+     resumeMusicEvent(pathc, paramerc, valuef);
  }
 
- + (void)jsStopEvent:(NSString *)path {
-     const char *c = [path UTF8String];
-     stopEvent(c);
+ + (void)jsStopMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value{
+     const char *pathc = [path UTF8String];
+     const char *paramerc = [paramer UTF8String];
+     float valuef = [value floatValue];
+     stopMusicEvent(pathc, paramerc, valuef);
  }
+
++ (void)jsPlayEffectEvent:(NSString *)path {
+    const char *pathc = [path UTF8String];
+    playEffectEvent(pathc);
+}
 
 @end

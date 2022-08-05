@@ -1,79 +1,110 @@
-window.__require = function t(s, c, o) {
-function e(a, i) {
-if (!c[a]) {
-if (!s[a]) {
-var r = a.split("/");
+window.__require = function c(s, e, t) {
+function n(i, o) {
+if (!e[i]) {
+if (!s[i]) {
+var r = i.split("/");
 r = r[r.length - 1];
 if (!s[r]) {
-var l = "function" == typeof __require && __require;
-if (!i && l) return l(r, !0);
-if (n) return n(r, !0);
-throw new Error("Cannot find module '" + a + "'");
+var u = "function" == typeof __require && __require;
+if (!o && u) return u(r, !0);
+if (a) return a(r, !0);
+throw new Error("Cannot find module '" + i + "'");
 }
-a = r;
+i = r;
 }
-var p = c[a] = {
+var l = e[i] = {
 exports: {}
 };
-s[a][0].call(p.exports, function(t) {
-return e(s[a][1][t] || t);
-}, p, p.exports, t, s, c, o);
+s[i][0].call(l.exports, function(c) {
+return n(s[i][1][c] || c);
+}, l, l.exports, c, s, e, t);
 }
-return c[a].exports;
+return e[i].exports;
 }
-for (var n = "function" == typeof __require && __require, a = 0; a < o.length; a++) e(o[a]);
-return e;
+for (var a = "function" == typeof __require && __require, i = 0; i < t.length; i++) n(t[i]);
+return n;
 }({
-main: [ function(t, s) {
+main: [ function(c, s) {
 "use strict";
 cc._RF.push(s, "e22a5UlHvdKqbt30vd8GrHn", "main");
-var c = t("mostar_fmod");
+var e = c("mostar_fmod");
 cc.Class({
 extends: cc.Component,
 properties: {},
 start: function() {
 this.paused = !1;
-c.load();
+e.load();
 },
-playAction: function() {
-c.play(c.test);
+playZhucheng: function() {
+e.playMusic(e.zhucheng);
 },
-pauseAction: function() {
-this.paused = !this.paused;
-this.paused ? c.pause(c.test) : c.resume(c.test);
+pauseZhucheng: function() {
+e.pauseMusic(e.zhucheng);
 },
-stopAction: function() {
-c.stop(c.test);
+resumeZhucheng: function() {
+e.resumeMusic(e.zhucheng);
+},
+stopZhucheng: function() {
+e.stopMusic(e.zhucheng);
+},
+playSenlin: function() {
+e.playMusic(e.senlin);
+},
+pauseSenlin: function() {
+e.pauseMusic(e.senlin);
+},
+resumeSenlin: function() {
+e.resumeMusic(e.senlin);
+},
+stopSenlin: function() {
+e.stopMusic(e.senlin);
+},
+playeffect: function() {
+e.playEffect(e.bianda);
 }
 });
 cc._RF.pop();
 }, {
 mostar_fmod: "mostar_fmod"
 } ],
-mostar_fmod: [ function(t, s) {
+mostar_fmod: [ function(c, s) {
 "use strict";
 cc._RF.push(s, "3c2d7hDw9VGV4dLiFpIuKLS", "mostar_fmod");
-var c = cc.Class({
+var e = cc.Class({
 statics: {
 test: "event:/Music/Level 03",
+zhucheng: {
+event: "event:/MUSIC/music_switch",
+paramer: "music switch",
+value: 0
+},
+senlin: {
+event: "event:/MUSIC/music_switch",
+paramer: "music switch",
+value: 2
+},
+bianda: "event:/SFX/jinzhandongzuo/sfx_1jinzhan_bianda",
 load: function() {
 cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsLoadBank") : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsLoadBank", "()V");
 },
-play: function(t) {
-cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsPlayEvent:", t) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsPlayEvent", "(Ljava/lang/String;)V", t);
+playMusic: function(c) {
+cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsPlayMusicEvent:andParamer:andValue:", c.event, c.paramer, c.value) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsPlayMusicEvent", "(Ljava/lang/String;)V", c);
 },
-pause: function(t) {
-cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsPauseEvent:", t) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsPauseEvent", "(Ljava/lang/String;)V", t);
+pauseMusic: function(c) {
+cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsPauseMusicEvent:andParamer:andValue:", c.event, c.paramer, c.value) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsPauseMusicEvent", "(Ljava/lang/String;)V", c);
 },
-resume: function(t) {
-cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsResumeEvent:", t) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsResumeEvent", "(Ljava/lang/String;)V", t);
+resumeMusic: function(c) {
+cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsResumeMusicEvent:andParamer:andValue:", c.event, c.paramer, c.value) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsResumeMusicEvent", "(Ljava/lang/String;)V", c);
 },
-stop: function(t) {
-cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsStopEvent:", t) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsStopEvent", "(Ljava/lang/String;)V", t);
+stopMusic: function(c) {
+cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsStopMusicEvent:andParamer:andValue:", c.event, c.paramer, c.value) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsStopMusicEvent", "(Ljava/lang/String;)V", c);
+},
+playEffect: function(c) {
+cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsPlayEffectEvent:", c) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsPlayEffectEvent", "(Ljava/lang/String;)V", c);
 }
 }
 });
-s.exports = c;
+s.exports = e;
 cc._RF.pop();
 }, {} ]
 }, {}, [ "main", "mostar_fmod" ]);

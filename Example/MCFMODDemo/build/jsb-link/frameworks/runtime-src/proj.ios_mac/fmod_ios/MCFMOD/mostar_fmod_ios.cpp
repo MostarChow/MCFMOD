@@ -9,9 +9,12 @@
 #include "fmod.hpp"
 #include "fmod_studio.hpp"
 #include "mostar_common.h"
+#include <vector>
 #include <map>
 
 FMOD::Studio::System *studioSystem = NULL;
+
+std::map<float, FMOD::Studio::EventInstance *> playMap;
 
 void loadBank()
 {
@@ -35,60 +38,66 @@ void loadBank()
     studioSystem->loadBankFile(GetMediaPath("Music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
 }
 
-void playEvent(const char *path)
+void playMusicEvent(const char *path, const char *paramer, float value)
 {
-    // 创建示例对象并加载
+    // 通过event创建实例
     FMOD::Studio::EventDescription *desc = NULL;
     studioSystem->getEvent(path, &desc);
-    desc->loadSampleData();
+    FMOD::Studio::EventInstance *instance = NULL;
+    desc->createInstance(&instance);
+    
+    // 设置参数和id
+    FMOD_STUDIO_PARAMETER_DESCRIPTION paramDesc;
+    desc->getParameterDescriptionByName(paramer, &paramDesc);
+    FMOD_STUDIO_PARAMETER_ID surfaceID = paramDesc.id;
+    instance->setParameterByID(surfaceID, value);
+    
+    // 播放
+    instance->start();
+    studioSystem->update();
+    
+    // 记录
+    playMap[value] = instance;
+}
 
+
+void pauseMusicEvent(const char *path, const char *paramer, float value)
+{
+    FMOD::Studio::EventInstance *instance = playMap[value];
+    instance->setVolume(0);
+    instance->release();
+    studioSystem->update();
+}
+
+void resumeMusicEvent(const char *path, const char *paramer, float value)
+{
+    FMOD::Studio::EventInstance *instance = playMap[value];
+    instance->setVolume(1);
+    instance->release();
+    studioSystem->update();
+}
+
+void stopMusicEvent(const char *path, const char *paramer, float value)
+{
+    // 停止播放
+    FMOD::Studio::EventInstance *instance = playMap[value];
+    instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+    instance->release();
+    studioSystem->update();
+    // 移除
+    playMap.erase(value);
+}
+
+void playEffectEvent(const char *path)
+{
+    // 通过event创建实例
+    FMOD::Studio::EventDescription *desc = NULL;
+    studioSystem->getEvent(path, &desc);
     FMOD::Studio::EventInstance *instance = NULL;
     desc->createInstance(&instance);
     
     // 播放
     instance->start();
     instance->release();
-    studioSystem->update();
-}
-
-void pauseEvent(const char *path)
-{
-    FMOD::Studio::EventDescription *desc = NULL;
-    studioSystem->getEvent(path, &desc);
-    // 获取实例对象
-    FMOD::Studio::EventInstance *instance = NULL;
-    int count = 0;
-    desc->getInstanceCount(&count);
-    desc->getInstanceList(&instance, count, &count);
-    // 暂停播放
-    instance->setPaused(true);
-    studioSystem->update();
-}
-
-void resumeEvent(const char *path)
-{
-    FMOD::Studio::EventDescription *desc = NULL;
-    studioSystem->getEvent(path, &desc);
-    // 获取实例对象
-    FMOD::Studio::EventInstance *instance = NULL;
-    int count = 0;
-    desc->getInstanceCount(&count);
-    desc->getInstanceList(&instance, count, &count);
-    // 继续播放
-    instance->setPaused(false);
-    studioSystem->update();
-}
-
-void stopEvent(const char *path)
-{
-    FMOD::Studio::EventDescription *desc = NULL;
-    studioSystem->getEvent(path, &desc);
-    // 获取实例对象
-    FMOD::Studio::EventInstance *instance = NULL;
-    int count = 0;
-    desc->getInstanceCount(&count);
-    desc->getInstanceList(&instance, count, &count);
-    // 停止播放
-    instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
     studioSystem->update();
 }

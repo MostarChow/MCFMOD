@@ -22,21 +22,34 @@ cc.Class({
         FMOD.load();
     },
 
-    playAction() {
-        FMOD.play(FMOD.test);
+    playZhucheng() {
+        FMOD.playMusic(FMOD.zhucheng);
+    },
+    pauseZhucheng() {
+        FMOD.pauseMusic(FMOD.zhucheng);
+    },
+    resumeZhucheng() {
+        FMOD.resumeMusic(FMOD.zhucheng);
+    },
+    stopZhucheng() {
+        FMOD.stopMusic(FMOD.zhucheng)
     },
 
-    pauseAction() {
-        this.paused = !this.paused;
-        if (this.paused) {
-            FMOD.pause(FMOD.test);
-        } else {
-            FMOD.resume(FMOD.test);
-        }
+    playSenlin() {
+        FMOD.playMusic(FMOD.senlin);
+    },
+    pauseSenlin() {
+        FMOD.pauseMusic(FMOD.senlin);
+    },
+    resumeSenlin() {
+        FMOD.resumeMusic(FMOD.senlin);
+    },
+    stopSenlin() {
+        FMOD.stopMusic(FMOD.senlin);
     },
 
-    stopAction() {
-        FMOD.stop(FMOD.test)
+    playeffect() {
+      FMOD.playEffect(FMOD.bianda);
     },
 
     // update (dt) {},
