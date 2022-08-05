@@ -139,43 +139,43 @@ FMOD version: 2.02.07
    
    在`@end`前插入以下代码：
    ```
-	+ (void)jsLoadBank {
+    + (void)jsLoadBank {
      loadBank();
     }
 
- + (void)jsPlayMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
-     const char *pathc = [path UTF8String];
-     const char *paramerc = [paramer UTF8String];
-     float valuef = [value floatValue];
-     playMusicEvent(pathc, paramerc, valuef);
-    }
+   + (void)jsPlayMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
+       const char *pathc = [path UTF8String];
+       const char *paramerc = [paramer UTF8String];
+       float valuef = [value floatValue];
+       playMusicEvent(pathc, paramerc, valuef);
+   }
 
- + (void)jsPauseMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
-     const char *pathc = [path UTF8String];
-     const char *paramerc = [paramer UTF8String];
-     float valuef = [value floatValue];
-     pauseMusicEvent(pathc, paramerc, valuef);
- }
+   + (void)jsPauseMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
+       const char *pathc = [path UTF8String];
+       const char *paramerc = [paramer UTF8String];
+       float valuef = [value floatValue];
+       pauseMusicEvent(pathc, paramerc, valuef);
+   }
 
- + (void)jsResumeMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
-     const char *pathc = [path UTF8String];
-     const char *paramerc = [paramer UTF8String];
-     float valuef = [value floatValue];
-     resumeMusicEvent(pathc, paramerc, valuef);
- }
+   + (void)jsResumeMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
+       const char *pathc = [path UTF8String];
+       const char *paramerc = [paramer UTF8String];
+       float valuef = [value floatValue];
+       resumeMusicEvent(pathc, paramerc, valuef);
+   }
 
- + (void)jsStopMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value{
-     const char *pathc = [path UTF8String];
-     const char *paramerc = [paramer UTF8String];
-     float valuef = [value floatValue];
-     stopMusicEvent(pathc, paramerc, valuef);
- }
+   + (void)jsStopMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value{
+       const char *pathc = [path UTF8String];
+       const char *paramerc = [paramer UTF8String];
+       float valuef = [value floatValue];
+       stopMusicEvent(pathc, paramerc, valuef);
+   }
 
-+ (void)jsPlayEffectEvent:(NSString *)path {
-    const char *pathc = [path UTF8String];
-    playEffectEvent(pathc);
-}
-   ```
+   + (void)jsPlayEffectEvent:(NSString *)path {
+       const char *pathc = [path UTF8String];
+       playEffectEvent(pathc);
+   }
+    ```
    
-9. 将`media`目录拖动到`*.xcodeproj`下。\
+9. 将`media`目录拖动到`*.xcodeproj`下。不勾选`Copy items if needed`，选择`Create folder references`。 \
    ![ios_3](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/ios_3.png)
