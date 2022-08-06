@@ -76,28 +76,39 @@ FMOD version: 2.02.07
 4. 编辑`proj.android-studio/app/src/org/cocos2dx/javascript/AppActivity.java`文件。
 
    1). 在`public class AppActivity extends Cocos2dxActivity {` 下插入以下代码:
+   
    ```
-	public static native void loadBank();
-	public static native void playEvent(String path);
-	public static native void pauseEvent(String path);
-	public static native void resumeEvent(String path);
-	public static native void stopEvent(String path);
+    public static native void loadBank();
+    public static native void playMusicEvent(String path, String paramer, float value);
+    public static native void pauseMusicEvent(String path, String paramer, float value);
+    public static native void resumeMusicEvent(String path, String paramer, float value);
+    public static native void stopMusicEvent(String path, String paramer, float value);
+    public static native void playEffectEvent(String path);
 
-	public static void jsLoadBank() {
-	   loadBank();
-	}
-	public static void jsPlayEvent(String path) {
-	   playEvent(path);
-	}
-	public static void jsPauseEvent(String path) {
-	   pauseEvent(path);
-	}
-	public static void jsResumeEvent(String path) {
-	   resumeEvent(path);
-	}
-	public static void jsStopEvent(String path) {
-	   stopEvent(path);
-	}
+    public static void jsLoadBank() {
+        loadBank();
+    }
+    public static void jsPlayMusicEvent(String path, String paramer, float value) {
+        playMusicEvent(path, paramer, value);
+    }
+    public static void jsPauseMusicEvent(String path, String paramer, float value) {
+        pauseMusicEvent(path, paramer, value);
+    }
+    public static void jsResumeMusicEvent(String path, String paramer, float value) {
+        resumeMusicEvent(path, paramer, value);
+    }
+    public static void jsStopMusicEvent(String path, String paramer, float value) {
+        stopMusicEvent(path, paramer, value);
+    }
+    public static void jsPlayEffectEvent(String path) {
+        playEffectEvent(path);
+    }
+   
+    static
+    {
+        System.loadLibrary("fmod");
+        System.loadLibrary("fmodstudio");
+    }
    ```
    
    2). 在`protected void onCreate(Bundle savedInstanceState) {`最后插入以下代码：

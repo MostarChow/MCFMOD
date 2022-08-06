@@ -35,25 +35,29 @@ import android.content.res.Configuration;
 public class AppActivity extends Cocos2dxActivity {
 
     public static native void loadBank();
-    public static native void playEvent(String path);
-    public static native void pauseEvent(String path);
-    public static native void resumeEvent(String path);
-    public static native void stopEvent(String path);
+    public static native void playMusicEvent(String path, String paramer, float value);
+    public static native void pauseMusicEvent(String path, String paramer, float value);
+    public static native void resumeMusicEvent(String path, String paramer, float value);
+    public static native void stopMusicEvent(String path, String paramer, float value);
+    public static native void playEffectEvent(String path);
 
     public static void jsLoadBank() {
         loadBank();
     }
-    public static void jsPlayEvent(String path) {
-        playEvent(path);
+    public static void jsPlayMusicEvent(String path, String paramer, float value) {
+        playMusicEvent(path, paramer, value);
     }
-    public static void jsPauseEvent(String path) {
-        pauseEvent(path);
+    public static void jsPauseMusicEvent(String path, String paramer, float value) {
+        pauseMusicEvent(path, paramer, value);
     }
-    public static void jsResumeEvent(String path) {
-        resumeEvent(path);
+    public static void jsResumeMusicEvent(String path, String paramer, float value) {
+        resumeMusicEvent(path, paramer, value);
     }
-    public static void jsStopEvent(String path) {
-        stopEvent(path);
+    public static void jsStopMusicEvent(String path, String paramer, float value) {
+        stopMusicEvent(path, paramer, value);
+    }
+    public static void jsPlayEffectEvent(String path) {
+        playEffectEvent(path);
     }
 
     static

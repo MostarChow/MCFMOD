@@ -3,6 +3,11 @@ const FMOD = cc.Class({
         // 测试
         test: 'event:/Music/Level 03',
 
+        zhucheng: {'event': 'event:/MUSIC/music_switch', 'paramer': 'music switch', 'value': 0.0},
+        senlin: {'event': 'event:/MUSIC/music_switch', 'paramer': 'music switch', 'value': 2.0},
+
+        bianda: 'event:/SFX/jinzhandongzuo/sfx_1jinzhan_bianda',
+
         load() {
             if (cc.sys.os === cc.sys.OS_IOS) {
                 jsb.reflection.callStaticMethod('AppController', 'jsLoadBank');
@@ -10,34 +15,41 @@ const FMOD = cc.Class({
                 jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsLoadBank', '()V');
             }
         },
-        play(event) {
+        playMusic(event) {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                jsb.reflection.callStaticMethod('AppController', 'jsPlayEvent:', event);
+                jsb.reflection.callStaticMethod('AppController', 'jsPlayMusicEvent:andParamer:andValue:', event.event, event.paramer, event.value);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsPlayEvent', '(Ljava/lang/String;)V', event);
+                jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsPlayMusicEvent', '(Ljava/lang/String;Ljava/lang/String;F)V', event.event, event.paramer, event.value);
             }
         },
-        pause(event) {
+        pauseMusic(event) {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                jsb.reflection.callStaticMethod('AppController', 'jsPauseEvent:', event);
+                jsb.reflection.callStaticMethod('AppController', 'jsPauseMusicEvent:andParamer:andValue:', event.event, event.paramer, event.value);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsPauseEvent', '(Ljava/lang/String;)V', event);
+                jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsPauseMusicEvent', '(Ljava/lang/String;Ljava/lang/String;F)V', event.event, event.paramer, event.value);
             }
         },
-        resume(event) {
+        resumeMusic(event) {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                jsb.reflection.callStaticMethod('AppController', 'jsResumeEvent:', event);
+                jsb.reflection.callStaticMethod('AppController', 'jsResumeMusicEvent:andParamer:andValue:', event.event, event.paramer, event.value);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsResumeEvent', '(Ljava/lang/String;)V', event);
+                jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsResumeMusicEvent', '(Ljava/lang/String;Ljava/lang/String;F)V', event.event, event.paramer, event.value);
             }
         },
-        stop(event) {
+        stopMusic(event) {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                jsb.reflection.callStaticMethod('AppController', 'jsStopEvent:', event);
+                jsb.reflection.callStaticMethod('AppController', 'jsStopMusicEvent:andParamer:andValue:', event.event, event.paramer, event.value);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsStopEvent', '(Ljava/lang/String;)V', event);
+                jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsStopMusicEvent', '(Ljava/lang/String;Ljava/lang/String;F)V', event.event, event.paramer, event.value);
             }
-        }
+        },
+        playEffect(event) {
+            if (cc.sys.os === cc.sys.OS_IOS) {
+                jsb.reflection.callStaticMethod('AppController', 'jsPlayEffectEvent:', event);
+            } else if (cc.sys.os === cc.sys.OS_ANDROID) {
+                jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsPlayEffectEvent', '(Ljava/lang/String;)V', event);
+            }
+        },
     }
 });
 

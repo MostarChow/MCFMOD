@@ -6,6 +6,8 @@
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
 
+#include <map>
+
 #include "fmod_android/inc/fmod.hpp"
 #include "fmod_android/inc/fmod_studio.hpp"
 #include "fmod_android/inc/fmod_errors.h"
@@ -14,6 +16,7 @@
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 
 FMOD::Studio::System *studioSystem;
+std::map<float, FMOD::Studio::EventInstance *> playMap;
 
 const char *GetMediaPath(const char *fileName)
 {
@@ -38,66 +41,71 @@ void loadBank()
     studioSystem->loadBankFile(GetMediaPath("Master.bank"), FMOD_STUDIO_INIT_NORMAL, &masterBank);
     FMOD::Studio::Bank* stringsBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
-    FMOD::Studio::Bank *sfxBank = NULL;
-    studioSystem->loadBankFile(GetMediaPath("SFX.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
     FMOD::Studio::Bank *musicBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
 }
 
-void playEvent(const char *path)
+void playMusicEvent(const char *path, const char *paramer, float value)
 {
-    // 创建示例对象并加载
+    // 通过event创建实例
     FMOD::Studio::EventDescription *desc = NULL;
     studioSystem->getEvent(path, &desc);
-    desc->loadSampleData();
-
     FMOD::Studio::EventInstance *instance = NULL;
     desc->createInstance(&instance);
+
+    // 设置参数和id
+    FMOD_STUDIO_PARAMETER_DESCRIPTION paramDesc;
+    desc->getParameterDescriptionByName(paramer, &paramDesc);
+    FMOD_STUDIO_PARAMETER_ID surfaceID = paramDesc.id;
+    instance->setParameterByID(surfaceID, value);
+
     // 播放
     instance->start();
+    studioSystem->update();
+
+    // 记录
+    playMap[value] = instance;
+}
+
+
+void pauseMusicEvent(const char *path, const char *paramer, float value)
+{
+    FMOD::Studio::EventInstance *instance = playMap[value];
+    instance->setVolume(0);
     instance->release();
     studioSystem->update();
 }
 
-void pauseEvent(const char *path)
+void resumeMusicEvent(const char *path, const char *paramer, float value)
 {
-    FMOD::Studio::EventDescription *desc = NULL;
-    studioSystem->getEvent(path, &desc);
-    // 获取实例对象
-    FMOD::Studio::EventInstance *instance = NULL;
-    int count = 0;
-    desc->getInstanceCount(&count);
-    desc->getInstanceList(&instance, count, &count);
-    // 暂停播放
-    instance->setPaused(true);
+    FMOD::Studio::EventInstance *instance = playMap[value];
+    instance->setVolume(1);
+    instance->release();
     studioSystem->update();
 }
 
-void resumeEvent(const char *path)
+void stopMusicEvent(const char *path, const char *paramer, float value)
 {
-    FMOD::Studio::EventDescription *desc = NULL;
-    studioSystem->getEvent(path, &desc);
-    // 获取实例对象
-    FMOD::Studio::EventInstance *instance = NULL;
-    int count = 0;
-    desc->getInstanceCount(&count);
-    desc->getInstanceList(&instance, count, &count);
-    // 继续播放
-    instance->setPaused(false);
-    studioSystem->update();
-}
-
-void stopEvent(const char *path)
-{
-    FMOD::Studio::EventDescription *desc = NULL;
-    studioSystem->getEvent(path, &desc);
-    // 获取实例对象
-    FMOD::Studio::EventInstance *instance = NULL;
-    int count = 0;
-    desc->getInstanceCount(&count);
-    desc->getInstanceList(&instance, count, &count);
     // 停止播放
+    FMOD::Studio::EventInstance *instance = playMap[value];
     instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+    instance->release();
+    studioSystem->update();
+    // 移除
+    playMap.erase(value);
+}
+
+void playEffectEvent(const char *path)
+{
+    // 通过event创建实例
+    FMOD::Studio::EventDescription *desc = NULL;
+    studioSystem->getEvent(path, &desc);
+    FMOD::Studio::EventInstance *instance = NULL;
+    desc->createInstance(&instance);
+
+    // 播放
+    instance->start();
+    instance->release();
     studioSystem->update();
 }
 
@@ -109,29 +117,43 @@ extern "C"
     {
         loadBank();
     }
-    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_playEvent(JNIEnv*env, jobject thiz, jstring path)
+    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_playMusicEvent(JNIEnv*env, jobject thiz, jstring path, jstring paramer, float value)
     {
         std::string pathStr = cocos2d::JniHelper::jstring2string(path);
         const char *cPath = pathStr.c_str();
-        playEvent(cPath);
+        std::string paramerStr = cocos2d::JniHelper::jstring2string(paramer);
+        const char *cParamer = paramerStr.c_str();
+        playMusicEvent(cPath, cParamer, value);
     }
-    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_pauseEvent(JNIEnv*env, jobject thiz, jstring path)
+    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_pauseMusicEvent(JNIEnv*env, jobject thiz, jstring path, jstring paramer, float value)
     {
         std::string pathStr = cocos2d::JniHelper::jstring2string(path);
         const char *cPath = pathStr.c_str();
-        pauseEvent(cPath);
+        std::string paramerStr = cocos2d::JniHelper::jstring2string(paramer);
+        const char *cParamer = paramerStr.c_str();
+        pauseMusicEvent(cPath, cParamer, value);
     }
-    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_resumeEvent(JNIEnv*env, jobject thiz, jstring path)
+    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_resumeMusicEvent(JNIEnv*env, jobject thiz, jstring path, jstring paramer, float value)
     {
         std::string pathStr = cocos2d::JniHelper::jstring2string(path);
         const char *cPath = pathStr.c_str();
-        resumeEvent(cPath);
+        std::string paramerStr = cocos2d::JniHelper::jstring2string(paramer);
+        const char *cParamer = paramerStr.c_str();
+        resumeMusicEvent(cPath, cParamer, value);
     }
-    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_stopEvent(JNIEnv*env, jobject thiz, jstring path)
+    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_stopMusicEvent(JNIEnv*env, jobject thiz, jstring path, jstring paramer, float value)
     {
         std::string pathStr = cocos2d::JniHelper::jstring2string(path);
         const char *cPath = pathStr.c_str();
-        stopEvent(cPath);
+        std::string paramerStr = cocos2d::JniHelper::jstring2string(paramer);
+        const char *cParamer = paramerStr.c_str();
+        stopMusicEvent(cPath, cParamer, value);
     }
+JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_playEffectEvent(JNIEnv*env, jobject thiz, jstring path)
+{
+    std::string pathStr = cocos2d::JniHelper::jstring2string(path);
+    const char *cPath = pathStr.c_str();
+    playEffectEvent(cPath);
+}
 }
 

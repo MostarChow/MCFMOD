@@ -9,7 +9,6 @@
 #include "fmod.hpp"
 #include "fmod_studio.hpp"
 #include "mostar_common.h"
-#include <vector>
 #include <map>
 
 FMOD::Studio::System *studioSystem = NULL;
@@ -32,8 +31,6 @@ void loadBank()
     studioSystem->loadBankFile(GetMediaPath("Master.bank"), FMOD_STUDIO_INIT_NORMAL, &masterBank);
     FMOD::Studio::Bank* stringsBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
-    FMOD::Studio::Bank *sfxBank = NULL;
-    studioSystem->loadBankFile(GetMediaPath("SFX.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
     FMOD::Studio::Bank *musicBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
 }
