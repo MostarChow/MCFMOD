@@ -116,6 +116,10 @@ FMOD version: 2.02.07
    org.fmod.FMOD.init(this);
    ```
 
+5.生成release包必须操作：\
+      编辑`proj.android-studio/app/proguard-rules.pro`\
+      在`# Proguard Android`前插入`-keep class org.fmod.** { *; }`
+
 #
 ## 接入iOS
 1. 复制文件\
