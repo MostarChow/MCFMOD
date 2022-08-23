@@ -84,6 +84,7 @@ FMOD version: 2.02.07
     public static native void resumeMusicEvent(String path, String paramer, float value);
     public static native void stopMusicEvent(String path, String paramer, float value);
     public static native void playEffectEvent(String path);
+    public static native void stopEffectEvent(String path);
 
     public static void jsLoadBank() {
         loadBank();
@@ -102,6 +103,9 @@ FMOD version: 2.02.07
     }
     public static void jsPlayEffectEvent(String path) {
         playEffectEvent(path);
+    }
+    public static void jsStopEffectEvent(String path) {
+        stopEffectEvent(path);
     }
    
     static
@@ -189,6 +193,11 @@ FMOD version: 2.02.07
    + (void)jsPlayEffectEvent:(NSString *)path {
        const char *pathc = [path UTF8String];
        playEffectEvent(pathc);
+   }
+   
+   + (void)jsStopEffectEvent:(NSString *)path {
+      const char *pathc = [path UTF8String];
+      stopEffectEvent(pathc);
    }
     ```
    

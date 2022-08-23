@@ -40,6 +40,7 @@ public class AppActivity extends Cocos2dxActivity {
     public static native void resumeMusicEvent(String path, String paramer, float value);
     public static native void stopMusicEvent(String path, String paramer, float value);
     public static native void playEffectEvent(String path);
+    public static native void stopEffectEvent(String path);
 
     public static void jsLoadBank() {
         loadBank();
@@ -58,6 +59,9 @@ public class AppActivity extends Cocos2dxActivity {
     }
     public static void jsPlayEffectEvent(String path) {
         playEffectEvent(path);
+    }
+    public static void jsStopEffectEvent(String path) {
+        stopEffectEvent(path);
     }
 
     static

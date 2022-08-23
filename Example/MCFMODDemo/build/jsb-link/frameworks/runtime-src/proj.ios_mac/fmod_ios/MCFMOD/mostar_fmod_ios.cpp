@@ -98,3 +98,17 @@ void playEffectEvent(const char *path)
     instance->release();
     studioSystem->update();
 }
+
+void stopEffectEvent(const char *path)
+{
+    FMOD::Studio::EventDescription *desc = NULL;
+    studioSystem->getEvent(path, &desc);
+    // 获取实例对象
+    FMOD::Studio::EventInstance *instance = NULL;
+    int count = 0;
+    desc->getInstanceCount(&count);
+    desc->getInstanceList(&instance, count, &count);
+    // 停止播放
+    instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+    studioSystem->update();
+}

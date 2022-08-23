@@ -9,7 +9,6 @@
 #include "fmod.hpp"
 #include "fmod_studio.hpp"
 #include "mostar_common.h"
-#include <vector>
 #include <map>
 
 FMOD::Studio::System *studioSystem = NULL;
@@ -32,8 +31,6 @@ void loadBank()
     studioSystem->loadBankFile(GetMediaPath("Master.bank"), FMOD_STUDIO_INIT_NORMAL, &masterBank);
     FMOD::Studio::Bank* stringsBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
-    FMOD::Studio::Bank *sfxBank = NULL;
-    studioSystem->loadBankFile(GetMediaPath("SFX.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
     FMOD::Studio::Bank *musicBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
 }
@@ -99,5 +96,19 @@ void playEffectEvent(const char *path)
     // 播放
     instance->start();
     instance->release();
+    studioSystem->update();
+}
+
+void stopEffectEvent(const char *path)
+{
+    FMOD::Studio::EventDescription *desc = NULL;
+    studioSystem->getEvent(path, &desc);
+    // 获取实例对象
+    FMOD::Studio::EventInstance *instance = NULL;
+    int count = 0;
+    desc->getInstanceCount(&count);
+    desc->getInstanceList(&instance, count, &count);
+    // 停止播放
+    instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
     studioSystem->update();
 }

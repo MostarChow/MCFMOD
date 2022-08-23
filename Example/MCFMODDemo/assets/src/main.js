@@ -51,6 +51,9 @@ cc.Class({
     playeffect() {
       FMOD.playEffect(FMOD.bianda);
     },
+    stopeffect() {
+        FMOD.stopEffect(FMOD.bianda);
+    },
 
     // update (dt) {},
 });

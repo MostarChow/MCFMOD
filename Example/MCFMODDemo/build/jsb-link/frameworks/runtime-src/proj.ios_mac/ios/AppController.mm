@@ -171,4 +171,9 @@ Application* app = nullptr;
     playEffectEvent(pathc);
 }
 
++ (void)jsStopEffectEvent:(NSString *)path {
+    const char *pathc = [path UTF8String];
+    stopEffectEvent(pathc);
+}
+
 @end

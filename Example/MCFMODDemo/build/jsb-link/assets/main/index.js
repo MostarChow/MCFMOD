@@ -1,10 +1,10 @@
-window.__require = function c(e, t, s) {
+window.__require = function c(t, e, s) {
 function n(i, o) {
-if (!t[i]) {
 if (!e[i]) {
+if (!t[i]) {
 var r = i.split("/");
 r = r[r.length - 1];
-if (!e[r]) {
+if (!t[r]) {
 var l = "function" == typeof __require && __require;
 if (!o && l) return l(r, !0);
 if (a) return a(r, !0);
@@ -12,65 +12,68 @@ throw new Error("Cannot find module '" + i + "'");
 }
 i = r;
 }
-var u = t[i] = {
+var u = e[i] = {
 exports: {}
 };
-e[i][0].call(u.exports, function(c) {
-return n(e[i][1][c] || c);
-}, u, u.exports, c, e, t, s);
+t[i][0].call(u.exports, function(c) {
+return n(t[i][1][c] || c);
+}, u, u.exports, c, t, e, s);
 }
-return t[i].exports;
+return e[i].exports;
 }
 for (var a = "function" == typeof __require && __require, i = 0; i < s.length; i++) n(s[i]);
 return n;
 }({
-main: [ function(c, e) {
+main: [ function(c, t) {
 "use strict";
-cc._RF.push(e, "e22a5UlHvdKqbt30vd8GrHn", "main");
-var t = c("mostar_fmod");
+cc._RF.push(t, "e22a5UlHvdKqbt30vd8GrHn", "main");
+var e = c("mostar_fmod");
 cc.Class({
 extends: cc.Component,
 properties: {},
 start: function() {
 this.paused = !1;
-t.load();
+e.load();
 },
 playZhucheng: function() {
-t.playMusic(t.zhucheng);
+e.playMusic(e.zhucheng);
 },
 pauseZhucheng: function() {
-t.pauseMusic(t.zhucheng);
+e.pauseMusic(e.zhucheng);
 },
 resumeZhucheng: function() {
-t.resumeMusic(t.zhucheng);
+e.resumeMusic(e.zhucheng);
 },
 stopZhucheng: function() {
-t.stopMusic(t.zhucheng);
+e.stopMusic(e.zhucheng);
 },
 playSenlin: function() {
-t.playMusic(t.senlin);
+e.playMusic(e.senlin);
 },
 pauseSenlin: function() {
-t.pauseMusic(t.senlin);
+e.pauseMusic(e.senlin);
 },
 resumeSenlin: function() {
-t.resumeMusic(t.senlin);
+e.resumeMusic(e.senlin);
 },
 stopSenlin: function() {
-t.stopMusic(t.senlin);
+e.stopMusic(e.senlin);
 },
 playeffect: function() {
-t.playEffect(t.bianda);
+e.playEffect(e.bianda);
+},
+stopeffect: function() {
+e.stopEffect(e.bianda);
 }
 });
 cc._RF.pop();
 }, {
 mostar_fmod: "mostar_fmod"
 } ],
-mostar_fmod: [ function(c, e) {
+mostar_fmod: [ function(c, t) {
 "use strict";
-cc._RF.push(e, "3c2d7hDw9VGV4dLiFpIuKLS", "mostar_fmod");
-var t = cc.Class({
+cc._RF.push(t, "3c2d7hDw9VGV4dLiFpIuKLS", "mostar_fmod");
+var e = cc.Class({
 statics: {
 test: "event:/Music/Level 03",
 zhucheng: {
@@ -101,10 +104,13 @@ cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "
 },
 playEffect: function(c) {
 cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsPlayEffectEvent:", c) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsPlayEffectEvent", "(Ljava/lang/String;)V", c);
+},
+stopEffect: function(c) {
+cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsStopEffectEvent:", c) : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsStopEffectEvent", "(Ljava/lang/String;)V", c);
 }
 }
 });
-e.exports = t;
+t.exports = e;
 cc._RF.pop();
 }, {} ]
 }, {}, [ "main", "mostar_fmod" ]);

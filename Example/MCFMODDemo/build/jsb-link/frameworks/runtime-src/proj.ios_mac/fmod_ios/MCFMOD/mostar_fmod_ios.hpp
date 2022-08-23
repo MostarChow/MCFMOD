@@ -40,4 +40,9 @@ void stopMusicEvent(const char *path, const char *paramer, float value);
  */
 void playEffectEvent(const char *path);
 
+/**
+ 停止播放音效Event
+ */
+void stopEffectEvent(const char *path);
+
 #endif /* mostar_fmod_hpp */

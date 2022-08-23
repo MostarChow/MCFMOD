@@ -109,6 +109,20 @@ void playEffectEvent(const char *path)
     studioSystem->update();
 }
 
+void stopEffectEvent(const char *path)
+{
+    FMOD::Studio::EventDescription *desc = NULL;
+    studioSystem->getEvent(path, &desc);
+    // 获取实例对象
+    FMOD::Studio::EventInstance *instance = NULL;
+    int count = 0;
+    desc->getInstanceCount(&count);
+    desc->getInstanceList(&instance, count, &count);
+    // 停止播放
+    instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+    studioSystem->update();
+}
+
 
 extern "C"
 {
@@ -149,11 +163,17 @@ extern "C"
         const char *cParamer = paramerStr.c_str();
         stopMusicEvent(cPath, cParamer, value);
     }
-JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_playEffectEvent(JNIEnv*env, jobject thiz, jstring path)
-{
-    std::string pathStr = cocos2d::JniHelper::jstring2string(path);
-    const char *cPath = pathStr.c_str();
-    playEffectEvent(cPath);
-}
+    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_playEffectEvent(JNIEnv*env, jobject thiz, jstring path)
+    {
+        std::string pathStr = cocos2d::JniHelper::jstring2string(path);
+        const char *cPath = pathStr.c_str();
+        playEffectEvent(cPath);
+    }
+    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_stopEffectEvent(JNIEnv*env, jobject thiz, jstring path)
+    {
+        std::string pathStr = cocos2d::JniHelper::jstring2string(path);
+        const char *cPath = pathStr.c_str();
+        stopEffectEvent(cPath);
+    }
 }
 

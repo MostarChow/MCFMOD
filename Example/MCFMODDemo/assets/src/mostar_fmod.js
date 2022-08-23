@@ -50,6 +50,13 @@ const FMOD = cc.Class({
                 jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsPlayEffectEvent', '(Ljava/lang/String;)V', event);
             }
         },
+        stopEffect(event) {
+            if (cc.sys.os === cc.sys.OS_IOS) {
+                jsb.reflection.callStaticMethod('AppController', 'jsStopEffectEvent:', event);
+            } else if (cc.sys.os === cc.sys.OS_ANDROID) {
+                jsb.reflection.callStaticMethod('org/cocos2dx/javascript/AppActivity', 'jsStopEffectEvent', '(Ljava/lang/String;)V', event);
+            }
+        },
     }
 });
 
