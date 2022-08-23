@@ -33,6 +33,8 @@ void loadBank()
     studioSystem->loadBankFile(GetMediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
     FMOD::Studio::Bank *musicBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
+    FMOD::Studio::Bank *ambBank = NULL;
+    studioSystem->loadBankFile(GetMediaPath("amb.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &ambBank);
 }
 
 void playMusicEvent(const char *path, const char *paramer, float value)
