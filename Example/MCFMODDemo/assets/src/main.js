@@ -49,10 +49,10 @@ cc.Class({
     },
 
     playeffect() {
-      FMOD.playEffect(FMOD.bianda);
+      FMOD.playEffect(FMOD.amb);
     },
     stopeffect() {
-        FMOD.stopEffect(FMOD.bianda);
+        FMOD.stopEffect(FMOD.amb);
     },
 
     // update (dt) {},

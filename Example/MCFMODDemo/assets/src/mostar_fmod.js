@@ -6,7 +6,7 @@ const FMOD = cc.Class({
         zhucheng: {'event': 'event:/MUSIC/music_switch', 'paramer': 'music switch', 'value': 0.0},
         senlin: {'event': 'event:/MUSIC/music_switch', 'paramer': 'music switch', 'value': 2.0},
 
-        bianda: 'event:/SFX/jinzhandongzuo/sfx_1jinzhan_bianda',
+        amb: 'event:/AMB/amb_zhucheng',
 
         load() {
             if (cc.sys.os === cc.sys.OS_IOS) {

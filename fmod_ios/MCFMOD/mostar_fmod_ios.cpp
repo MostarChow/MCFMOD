@@ -14,6 +14,7 @@
 FMOD::Studio::System *studioSystem = NULL;
 
 std::map<float, FMOD::Studio::EventInstance *> playMap;
+std::map<const char *, FMOD::Studio::EventInstance *> ambMap;
 
 void loadBank()
 {
@@ -94,7 +95,8 @@ void playEffectEvent(const char *path)
     studioSystem->getEvent(path, &desc);
     FMOD::Studio::EventInstance *instance = NULL;
     desc->createInstance(&instance);
-    
+    // 记录
+    ambMap[path] = instance;
     // 播放
     instance->start();
     instance->release();
@@ -113,4 +115,43 @@ void stopEffectEvent(const char *path)
     // 停止播放
     instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
     studioSystem->update();
+    // 移除
+    ambMap.erase(path);
+}
+
+
+void pauseAll()
+{
+    for (auto it = playMap.begin(); it != playMap.end(); ++it)
+    {
+        FMOD::Studio::EventInstance *instance = it->second;
+        instance->setVolume(0);
+        instance->release();
+        studioSystem->update();
+    }
+    for (auto it = ambMap.begin(); it != ambMap.end(); ++it)
+    {
+        FMOD::Studio::EventInstance *instance = it->second;
+        instance->setVolume(0);
+        instance->release();
+        studioSystem->update();
+    }
+}
+
+void resumeAll()
+{
+    for (auto it = playMap.begin(); it != playMap.end(); ++it)
+    {
+        FMOD::Studio::EventInstance *instance = it->second;
+        instance->setVolume(1);
+        instance->release();
+        studioSystem->update();
+    }
+    for (auto it = ambMap.begin(); it != ambMap.end(); ++it)
+    {
+        FMOD::Studio::EventInstance *instance = it->second;
+        instance->setVolume(1);
+        instance->release();
+        studioSystem->update();
+    }
 }

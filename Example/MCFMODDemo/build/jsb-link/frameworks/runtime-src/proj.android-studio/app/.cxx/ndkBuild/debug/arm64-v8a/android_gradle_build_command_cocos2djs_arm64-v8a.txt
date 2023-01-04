@@ -10,7 +10,7 @@ APP_PLATFORM=android-16
 NDK_OUT=/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj
 NDK_LIBS_OUT=/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib
 NDK_TOOLCHAIN_VERSION=clang
-NDK_MODULE_PATH=/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external
+NDK_MODULE_PATH=/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external
 -j10
 NDK_DEBUG=1
 cocos2djs

@@ -12,7 +12,7 @@
   "variant": {
     "buildSystemArgumentList": [
       "NDK_TOOLCHAIN_VERSION\u003dclang",
-      "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+      "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
       "-j10",
       "NDK_DEBUG\u003d1"
     ],

@@ -30,8 +30,9 @@
 #import "RootViewController.h"
 #import "SDKWrapper.h"
 #import "platform/ios/CCEAGLView-ios.h"
-
 #import "mostar_fmod_ios.hpp"
+
+
 
 using namespace cocos2d;
 
@@ -92,6 +93,7 @@ Application* app = nullptr;
      */
     app->onPause();
     [[SDKWrapper getInstance] applicationWillResignActive:application];
+    pauseAll();
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -100,6 +102,7 @@ Application* app = nullptr;
      */
     app->onResume();
     [[SDKWrapper getInstance] applicationDidBecomeActive:application];
+    resumeAll();
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -135,36 +138,36 @@ Application* app = nullptr;
 }
 
 + (void)jsLoadBank {
-     loadBank();
-    }
-
- + (void)jsPlayMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
-     const char *pathc = [path UTF8String];
-     const char *paramerc = [paramer UTF8String];
-     float valuef = [value floatValue];
-     playMusicEvent(pathc, paramerc, valuef);
-    }
-
- + (void)jsPauseMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
-     const char *pathc = [path UTF8String];
-     const char *paramerc = [paramer UTF8String];
-     float valuef = [value floatValue];
-     pauseMusicEvent(pathc, paramerc, valuef);
+  loadBank();
  }
 
- + (void)jsResumeMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
-     const char *pathc = [path UTF8String];
-     const char *paramerc = [paramer UTF8String];
-     float valuef = [value floatValue];
-     resumeMusicEvent(pathc, paramerc, valuef);
- }
++ (void)jsPlayMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
+    const char *pathc = [path UTF8String];
+    const char *paramerc = [paramer UTF8String];
+    float valuef = [value floatValue];
+    playMusicEvent(pathc, paramerc, valuef);
+}
 
- + (void)jsStopMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value{
-     const char *pathc = [path UTF8String];
-     const char *paramerc = [paramer UTF8String];
-     float valuef = [value floatValue];
-     stopMusicEvent(pathc, paramerc, valuef);
- }
++ (void)jsPauseMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
+    const char *pathc = [path UTF8String];
+    const char *paramerc = [paramer UTF8String];
+    float valuef = [value floatValue];
+    pauseMusicEvent(pathc, paramerc, valuef);
+}
+
++ (void)jsResumeMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
+    const char *pathc = [path UTF8String];
+    const char *paramerc = [paramer UTF8String];
+    float valuef = [value floatValue];
+    resumeMusicEvent(pathc, paramerc, valuef);
+}
+
++ (void)jsStopMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value{
+    const char *pathc = [path UTF8String];
+    const char *paramerc = [paramer UTF8String];
+    float valuef = [value floatValue];
+    stopMusicEvent(pathc, paramerc, valuef);
+}
 
 + (void)jsPlayEffectEvent:(NSString *)path {
     const char *pathc = [path UTF8String];
@@ -172,8 +175,8 @@ Application* app = nullptr;
 }
 
 + (void)jsStopEffectEvent:(NSString *)path {
-    const char *pathc = [path UTF8String];
-    stopEffectEvent(pathc);
+   const char *pathc = [path UTF8String];
+   stopEffectEvent(pathc);
 }
 
 @end

@@ -16,7 +16,7 @@
       "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
       "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
       "NDK_TOOLCHAIN_VERSION\u003dclang",
-      "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+      "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
       "NDK_DEBUG\u003d1",
       "clean"
     ]
@@ -33,7 +33,7 @@
     "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
     "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
     "NDK_TOOLCHAIN_VERSION\u003dclang",
-    "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+    "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
     "-j10",
     "NDK_DEBUG\u003d1",
     "{LIST_OF_TARGETS_TO_BUILD}"
@@ -53,7 +53,7 @@
         "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
         "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
         "NDK_TOOLCHAIN_VERSION\u003dclang",
-        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
         "-j10",
         "NDK_DEBUG\u003d1",
         "/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libcocos2d.a"
@@ -76,7 +76,7 @@
         "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
         "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
         "NDK_TOOLCHAIN_VERSION\u003dclang",
-        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
         "-j10",
         "NDK_DEBUG\u003d1",
         "/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libextension.a"
@@ -99,7 +99,7 @@
         "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
         "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
         "NDK_TOOLCHAIN_VERSION\u003dclang",
-        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
         "-j10",
         "NDK_DEBUG\u003d1",
         "/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libcocos2djs.so"
@@ -122,7 +122,7 @@
         "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
         "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
         "NDK_TOOLCHAIN_VERSION\u003dclang",
-        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
         "-j10",
         "NDK_DEBUG\u003d1",
         "/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libpvmp3dec.a"
@@ -145,7 +145,7 @@
         "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
         "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
         "NDK_TOOLCHAIN_VERSION\u003dclang",
-        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
         "-j10",
         "NDK_DEBUG\u003d1",
         "/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libcpufeatures.a"
@@ -168,7 +168,7 @@
         "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
         "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
         "NDK_TOOLCHAIN_VERSION\u003dclang",
-        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
         "-j10",
         "NDK_DEBUG\u003d1",
         "/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libeditorsupport.a"
@@ -191,7 +191,7 @@
         "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
         "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
         "NDK_TOOLCHAIN_VERSION\u003dclang",
-        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
         "-j10",
         "NDK_DEBUG\u003d1",
         "/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libvorbisidec.a"
@@ -214,7 +214,7 @@
         "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
         "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
         "NDK_TOOLCHAIN_VERSION\u003dclang",
-        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
         "-j10",
         "NDK_DEBUG\u003d1",
         "/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libaudioengine.a"
@@ -237,7 +237,7 @@
         "NDK_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj",
         "NDK_LIBS_OUT\u003d/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/lib",
         "NDK_TOOLCHAIN_VERSION\u003dclang",
-        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.8/CocosCreator.app/Contents/Resources/cocos2d-x/external",
+        "NDK_MODULE_PATH\u003d/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos:/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/external",
         "-j10",
         "NDK_DEBUG\u003d1",
         "/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libcocos2dandroid.a"

@@ -721,8 +721,6 @@ cc.js.mixin(proto, {
     this.ignoreOpacityFlag();
   },
   update: function update(comp, dt) {
-    comp.node._updateWorldMatrix();
-
     _update.call(this, comp, dt);
 
     var _this$_renderData$_fl = this._renderData._flexBuffer,

@@ -17,6 +17,7 @@
 
 FMOD::Studio::System *studioSystem;
 std::map<float, FMOD::Studio::EventInstance *> playMap;
+std::map<const char *, FMOD::Studio::EventInstance *> ambMap;
 
 const char *GetMediaPath(const char *fileName)
 {
@@ -43,12 +44,16 @@ void loadBank()
     studioSystem->loadBankFile(GetMediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
     FMOD::Studio::Bank *musicBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("Music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
+    FMOD::Studio::Bank *ambBank = NULL;
+    studioSystem->loadBankFile(GetMediaPath("amb.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &ambBank);
+
 }
 
 void playMusicEvent(const char *path, const char *paramer, float value)
 {
     // 通过event创建实例
     FMOD::Studio::EventDescription *desc = NULL;
+
     studioSystem->getEvent(path, &desc);
     FMOD::Studio::EventInstance *instance = NULL;
     desc->createInstance(&instance);
@@ -102,7 +107,8 @@ void playEffectEvent(const char *path)
     studioSystem->getEvent(path, &desc);
     FMOD::Studio::EventInstance *instance = NULL;
     desc->createInstance(&instance);
-
+    // 记录
+    ambMap[path] = instance;
     // 播放
     instance->start();
     instance->release();
@@ -121,6 +127,44 @@ void stopEffectEvent(const char *path)
     // 停止播放
     instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
     studioSystem->update();
+    // 移除
+    ambMap.erase(path);
+}
+
+void pauseAll()
+{
+    for (auto it = playMap.begin(); it != playMap.end(); ++it)
+    {
+        FMOD::Studio::EventInstance *instance = it->second;
+        instance->setVolume(0);
+        instance->release();
+        studioSystem->update();
+    }
+    for (auto it = ambMap.begin(); it != ambMap.end(); ++it)
+    {
+        FMOD::Studio::EventInstance *instance = it->second;
+        instance->setVolume(0);
+        instance->release();
+        studioSystem->update();
+    }
+}
+
+void resumeAll()
+{
+    for (auto it = playMap.begin(); it != playMap.end(); ++it)
+    {
+        FMOD::Studio::EventInstance *instance = it->second;
+        instance->setVolume(1);
+        instance->release();
+        studioSystem->update();
+    }
+    for (auto it = ambMap.begin(); it != ambMap.end(); ++it)
+    {
+        FMOD::Studio::EventInstance *instance = it->second;
+        instance->setVolume(1);
+        instance->release();
+        studioSystem->update();
+    }
 }
 
 
@@ -175,5 +219,14 @@ extern "C"
         const char *cPath = pathStr.c_str();
         stopEffectEvent(cPath);
     }
+    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_pauseAll(JNIEnv*env, jobject thiz)
+    {
+        pauseAll();
+    }
+    JNIEXPORT void Java_org_cocos2dx_javascript_AppActivity_resumeAll(JNIEnv*env, jobject thiz)
+    {
+        resumeAll();
+    }
+
 }
 

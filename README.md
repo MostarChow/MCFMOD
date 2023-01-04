@@ -85,6 +85,8 @@ FMOD version: 2.02.07
     public static native void stopMusicEvent(String path, String paramer, float value);
     public static native void playEffectEvent(String path);
     public static native void stopEffectEvent(String path);
+    public static native void pauseAll();
+    public static native void resumeAll();
 
     public static void jsLoadBank() {
         loadBank();
@@ -118,6 +120,14 @@ FMOD version: 2.02.07
    2). 在`protected void onCreate(Bundle savedInstanceState) {`最后插入以下代码：
    ```
    org.fmod.FMOD.init(this);
+   ```
+   3). 在`protected void onResume() {`最后插入以下代码：
+   ```
+   resumeAll();
+   ```
+   4). 在`protected void onPause() {`最后插入以下代码：
+   ```
+   pauseAll();
    ```
 
 5.生成release包必须操作：\
@@ -156,7 +166,7 @@ FMOD version: 2.02.07
    #import "mostar_fmod_ios.hpp"
    ```
    
-   在`@end`前插入以下代码：
+   1). 在`@end`前插入以下代码：
    ```
     + (void)jsLoadBank {
      loadBank();
@@ -201,5 +211,14 @@ FMOD version: 2.02.07
    }
     ```
    
+   2). 在`- (void)applicationWillResignActive:(UIApplication *)application {`最后插入以下代码：
+   ```
+   pauseAll();
+   ```
+   3). 在`- (void)applicationDidBecomeActive:(UIApplication *)application {`最后插入以下代码：
+   ```
+   resumeAll();
+   ```
+   
 9. 将`media`目录拖动到`*.xcodeproj`下。不勾选`Copy items if needed`，选择`Create folder references`。 \
-   ![ios_3](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/ios_3.png)
+    ![ios_3](https://raw.githubusercontent.com/MostarChow/MCFMOD/main/README/ios_3.png)

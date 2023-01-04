@@ -667,7 +667,7 @@ t.prototype.constructor = t;
 h(t, e);
 }
 function h(t, e) {
-return (h = Object.setPrototypeOf || function(t, e) {
+return (h = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t, e) {
 t.__proto__ = e;
 return t;
 })(t, e);
@@ -908,7 +908,7 @@ t.prototype.constructor = t;
 h(t, e);
 }
 function h(t, e) {
-return (h = Object.setPrototypeOf || function(t, e) {
+return (h = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t, e) {
 t.__proto__ = e;
 return t;
 })(t, e);
@@ -987,8 +987,8 @@ Object.keys(o).forEach(function(t) {
 "use strict";
 i.__esModule = !0;
 i.PhysicsMaterial = void 0;
-var o, n, r, s, a, l;
-function c(t, e, i, o) {
+var o, n, r, s, a;
+function l(t, e, i, o) {
 i && Object.defineProperty(t, e, {
 enumerable: i.enumerable,
 configurable: i.configurable,
@@ -996,7 +996,7 @@ writable: i.writable,
 value: i.initializer ? i.initializer.call(o) : void 0
 });
 }
-function h(t, e) {
+function c(t, e) {
 for (var i = 0; i < e.length; i++) {
 var o = e[i];
 o.enumerable = o.enumerable || !1;
@@ -1005,30 +1005,30 @@ o.configurable = !0;
 Object.defineProperty(t, o.key, o);
 }
 }
-function p(t, e, i) {
-e && h(t.prototype, e);
-i && h(t, i);
+function h(t, e, i) {
+e && c(t.prototype, e);
+i && c(t, i);
 Object.defineProperty(t, "prototype", {
 writable: !1
 });
 return t;
 }
-function u(t) {
+function p(t) {
 if (void 0 === t) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
 return t;
 }
-function d(t, e) {
+function u(t, e) {
 t.prototype = Object.create(e.prototype);
 t.prototype.constructor = t;
-y(t, e);
+d(t, e);
 }
-function y(t, e) {
-return (y = Object.setPrototypeOf || function(t, e) {
+function d(t, e) {
+return (d = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t, e) {
 t.__proto__ = e;
 return t;
 })(t, e);
 }
-function f(t, e, i, o, n) {
+function y(t, e, i, o, n) {
 var r = {};
 Object.keys(o).forEach(function(t) {
 r[t] = o[t];
@@ -1049,14 +1049,14 @@ r = null;
 }
 return r;
 }
-var v = cc._decorator, m = v.ccclass, g = v.property, b = cc.js.array.fastRemove, w = cc.math.equals, x = m("cc.PhysicsMaterial")(o = (n = (l = a = function(t) {
-d(e, t);
+var f = cc._decorator, v = f.ccclass, m = f.property, g = cc.js.array.fastRemove, b = cc.math.equals, w = v("cc.PhysicsMaterial")(o = (n = ((a = function(t) {
+u(e, t);
 function e() {
 var i;
-c(i = t.call(this) || this, "_friction", r, u(i));
-c(i, "_restitution", s, u(i));
-cc.EventTarget.call(u(i));
-e.allMaterials.push(u(i));
+l(i = t.call(this) || this, "_friction", r, p(i));
+l(i, "_restitution", s, p(i));
+cc.EventTarget.call(p(i));
+e.allMaterials.push(p(i));
 "" == i._uuid && (i._uuid = "pm_" + e._idCounter++);
 return i;
 }
@@ -1069,18 +1069,18 @@ return t;
 };
 i.destroy = function() {
 if (t.prototype.destroy.call(this)) {
-b(e.allMaterials, this);
+g(e.allMaterials, this);
 return !0;
 }
 return !1;
 };
-p(e, [ {
+h(e, [ {
 key: "friction",
 get: function() {
 return this._friction;
 },
 set: function(t) {
-if (!w(this._friction, t)) {
+if (!b(this._friction, t)) {
 this._friction = t;
 this.emit("physics_material_update");
 }
@@ -1091,33 +1091,33 @@ get: function() {
 return this._restitution;
 },
 set: function(t) {
-if (!w(this._restitution, t)) {
+if (!b(this._restitution, t)) {
 this._restitution = t;
 this.emit("physics_material_update");
 }
 }
 } ]);
 return e;
-}(cc.Asset), a.allMaterials = [], a._idCounter = 0, l), r = f(n.prototype, "_friction", [ g ], {
+}(cc.Asset)).allMaterials = [], a._idCounter = 0, a), r = y(n.prototype, "_friction", [ m ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return .1;
 }
-}), s = f(n.prototype, "_restitution", [ g ], {
+}), s = y(n.prototype, "_restitution", [ m ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return .1;
 }
-}), f(n.prototype, "friction", [ g ], Object.getOwnPropertyDescriptor(n.prototype, "friction"), n.prototype), 
-f(n.prototype, "restitution", [ g ], Object.getOwnPropertyDescriptor(n.prototype, "restitution"), n.prototype), 
+}), y(n.prototype, "friction", [ m ], Object.getOwnPropertyDescriptor(n.prototype, "friction"), n.prototype), 
+y(n.prototype, "restitution", [ m ], Object.getOwnPropertyDescriptor(n.prototype, "restitution"), n.prototype), 
 n)) || o;
-i.PhysicsMaterial = x;
-cc.js.mixin(x.prototype, cc.EventTarget.prototype);
-cc.PhysicsMaterial = x;
+i.PhysicsMaterial = w;
+cc.js.mixin(w.prototype, cc.EventTarget.prototype);
+cc.PhysicsMaterial = w;
 }, {} ],
 12: [ function(t, e, i) {
 "use strict";
@@ -1159,7 +1159,7 @@ t.prototype.constructor = t;
 m(t, e);
 }
 function m(t, e) {
-return (m = Object.setPrototypeOf || function(t, e) {
+return (m = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t, e) {
 t.__proto__ = e;
 return t;
 })(t, e);
@@ -1266,7 +1266,7 @@ t.prototype.constructor = t;
 b(t, e);
 }
 function b(t, e) {
-return (b = Object.setPrototypeOf || function(t, e) {
+return (b = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t, e) {
 t.__proto__ = e;
 return t;
 })(t, e);
@@ -1484,7 +1484,7 @@ t.prototype.constructor = t;
 d(t, e);
 }
 function d(t, e) {
-return (d = Object.setPrototypeOf || function(t, e) {
+return (d = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t, e) {
 t.__proto__ = e;
 return t;
 })(t, e);
@@ -1588,7 +1588,7 @@ t.prototype.constructor = t;
 B(t, e);
 }
 function B(t, e) {
-return (B = Object.setPrototypeOf || function(t, e) {
+return (B = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t, e) {
 t.__proto__ = e;
 return t;
 })(t, e);
@@ -1614,15 +1614,15 @@ r = null;
 }
 return r;
 }
-var E = cc._decorator, M = E.ccclass, C = E.executeInEditMode, A = E.executionOrder, z = E.menu, F = E.property, P = E.requireComponent, R = E.disallowMultiple, T = cc.Vec3, q = (o = M("cc.ConstantForce"), 
-n = A(98), r = P(m.RigidBody3D), s = z("i18n:MAIN_MENU.component.physics/Constant Force 3D"), 
-a = F({
+var E = cc._decorator, M = E.ccclass, C = E.executeInEditMode, A = E.executionOrder, z = E.menu, P = E.property, F = E.requireComponent, R = E.disallowMultiple, T = cc.Vec3, q = (o = M("cc.ConstantForce"), 
+n = A(98), r = F(m.RigidBody3D), s = z("i18n:MAIN_MENU.component.physics/Constant Force 3D"), 
+a = P({
 displayOrder: 0
-}), l = F({
+}), l = P({
 displayOrder: 1
-}), c = F({
+}), c = P({
 displayOrder: 2
-}), h = F({
+}), h = P({
 displayOrder: 3
 }), o(p = n(p = r(p = s(p = R(p = C(p = (u = function(t) {
 _(e, t);
@@ -1693,28 +1693,28 @@ this._maskUpdate(this._localTorque, 8);
 }
 } ]);
 return e;
-}(cc.Component), d = S(u.prototype, "_force", [ F ], {
+}(cc.Component), d = S(u.prototype, "_force", [ P ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return new T();
 }
-}), y = S(u.prototype, "_localForce", [ F ], {
+}), y = S(u.prototype, "_localForce", [ P ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return new T();
 }
-}), f = S(u.prototype, "_torque", [ F ], {
+}), f = S(u.prototype, "_torque", [ P ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return new T();
 }
-}), v = S(u.prototype, "_localTorque", [ F ], {
+}), v = S(u.prototype, "_localTorque", [ P ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
@@ -1767,15 +1767,15 @@ return t;
 function z(t, e) {
 t.prototype = Object.create(e.prototype);
 t.prototype.constructor = t;
-F(t, e);
+P(t, e);
 }
-function F(t, e) {
-return (F = Object.setPrototypeOf || function(t, e) {
+function P(t, e) {
+return (P = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t, e) {
 t.__proto__ = e;
 return t;
 })(t, e);
 }
-function P(t, e, i, o, n) {
+function F(t, e, i, o, n) {
 var r = {};
 Object.keys(o).forEach(function(t) {
 r[t] = o[t];
@@ -1813,7 +1813,7 @@ displayOrder: 5
 displayOrder: 6
 }), d = V({
 displayOrder: 7
-}), o(y = n(y = r(y = O(y = q(y = (P((f = function(t) {
+}), o(y = n(y = r(y = O(y = q(y = (F((f = function(t) {
 z(e, t);
 function e() {
 var e;
@@ -1990,63 +1990,63 @@ return !t;
 } ]);
 return e;
 }(cc.Component)).prototype, "mass", [ s ], Object.getOwnPropertyDescriptor(f.prototype, "mass"), f.prototype), 
-P(f.prototype, "linearDamping", [ a ], Object.getOwnPropertyDescriptor(f.prototype, "linearDamping"), f.prototype), 
-P(f.prototype, "angularDamping", [ l ], Object.getOwnPropertyDescriptor(f.prototype, "angularDamping"), f.prototype), 
-P(f.prototype, "isKinematic", [ c ], Object.getOwnPropertyDescriptor(f.prototype, "isKinematic"), f.prototype), 
-P(f.prototype, "useGravity", [ h ], Object.getOwnPropertyDescriptor(f.prototype, "useGravity"), f.prototype), 
-P(f.prototype, "fixedRotation", [ p ], Object.getOwnPropertyDescriptor(f.prototype, "fixedRotation"), f.prototype), 
-P(f.prototype, "linearFactor", [ u ], Object.getOwnPropertyDescriptor(f.prototype, "linearFactor"), f.prototype), 
-P(f.prototype, "angularFactor", [ d ], Object.getOwnPropertyDescriptor(f.prototype, "angularFactor"), f.prototype), 
-v = P(f.prototype, "_mass", [ V ], {
+F(f.prototype, "linearDamping", [ a ], Object.getOwnPropertyDescriptor(f.prototype, "linearDamping"), f.prototype), 
+F(f.prototype, "angularDamping", [ l ], Object.getOwnPropertyDescriptor(f.prototype, "angularDamping"), f.prototype), 
+F(f.prototype, "isKinematic", [ c ], Object.getOwnPropertyDescriptor(f.prototype, "isKinematic"), f.prototype), 
+F(f.prototype, "useGravity", [ h ], Object.getOwnPropertyDescriptor(f.prototype, "useGravity"), f.prototype), 
+F(f.prototype, "fixedRotation", [ p ], Object.getOwnPropertyDescriptor(f.prototype, "fixedRotation"), f.prototype), 
+F(f.prototype, "linearFactor", [ u ], Object.getOwnPropertyDescriptor(f.prototype, "linearFactor"), f.prototype), 
+F(f.prototype, "angularFactor", [ d ], Object.getOwnPropertyDescriptor(f.prototype, "angularFactor"), f.prototype), 
+v = F(f.prototype, "_mass", [ V ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return 10;
 }
-}), m = P(f.prototype, "_linearDamping", [ V ], {
+}), m = F(f.prototype, "_linearDamping", [ V ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return .1;
 }
-}), g = P(f.prototype, "_angularDamping", [ V ], {
+}), g = F(f.prototype, "_angularDamping", [ V ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return .1;
 }
-}), b = P(f.prototype, "_fixedRotation", [ V ], {
+}), b = F(f.prototype, "_fixedRotation", [ V ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return !1;
 }
-}), w = P(f.prototype, "_isKinematic", [ V ], {
+}), w = F(f.prototype, "_isKinematic", [ V ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return !1;
 }
-}), x = P(f.prototype, "_useGravity", [ V ], {
+}), x = F(f.prototype, "_useGravity", [ V ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return !0;
 }
-}), _ = P(f.prototype, "_linearFactor", [ V ], {
+}), _ = F(f.prototype, "_linearFactor", [ V ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
 initializer: function() {
 return new k(1, 1, 1);
 }
-}), B = P(f.prototype, "_angularFactor", [ V ], {
+}), B = F(f.prototype, "_angularFactor", [ V ], {
 configurable: !0,
 enumerable: !0,
 writable: !0,
@@ -2974,7 +2974,7 @@ r.prototype.constructor = r;
 var s = new o();
 new o();
 r.prototype.collisionPairs = function(t, e, i) {
-for (var o = t.numObjects(), r = t.bodies, a = this.aabbMax, l = this.aabbMin, c = this.nx, h = this.ny, p = this.nz, u = h * p, d = p, y = 1, f = a.x, v = a.y, m = a.z, g = l.x, b = l.y, w = l.z, x = c / (f - g), _ = h / (v - b), B = p / (m - w), S = (f - g) / c, E = (v - b) / h, M = (m - w) / p, C = .5 * Math.sqrt(S * S + E * E + M * M), A = n.types, z = A.SPHERE, F = A.PLANE, P = (A.BOX, 
+for (var o = t.numObjects(), r = t.bodies, a = this.aabbMax, l = this.aabbMin, c = this.nx, h = this.ny, p = this.nz, u = h * p, d = p, y = 1, f = a.x, v = a.y, m = a.z, g = l.x, b = l.y, w = l.z, x = c / (f - g), _ = h / (v - b), B = p / (m - w), S = (f - g) / c, E = (v - b) / h, M = (m - w) / p, C = .5 * Math.sqrt(S * S + E * E + M * M), A = n.types, z = A.SPHERE, P = A.PLANE, F = (A.BOX, 
 A.COMPOUND, A.CONVEXPOLYHEDRON, this.bins), R = this.binLengths, T = this.bins.length, q = 0; q !== T; q++) R[q] = 0;
 var O = Math.ceil;
 l = Math.min, a = Math.max;
@@ -2993,7 +2993,7 @@ m *= d;
 S *= y;
 for (var E = a *= u; E <= v; E += u) for (var M = l; M <= m; M += d) for (var C = f; C <= S; C += y) {
 var A = E + M + C;
-P[A][R[A]++] = s;
+F[A][R[A]++] = s;
 }
 }
 for (q = 0; q !== o; q++) {
@@ -3004,14 +3004,14 @@ var V = it.position.x, k = it.position.y, N = it.position.z, L = j.radius;
 I(V - L, k - L, N - L, V + L, k + L, N + L, it);
 break;
 
-case F:
+case P:
 j.worldNormalNeedsUpdate && j.computeWorldNormal(it.quaternion);
 var W = j.worldNormal, D = g + .5 * S - it.position.x, U = b + .5 * E - it.position.y, G = w + .5 * M - it.position.z, H = s;
 H.set(D, U, G);
 for (var K = 0, Q = 0; K !== c; K++, Q += u, H.y = U, H.x += S) for (var X = 0, Y = 0; X !== h; X++, 
 Y += d, H.z = G, H.y += E) for (var Z = 0, J = 0; Z !== p; Z++, J += y, H.z += M) if (H.dot(W) < C) {
 var $ = Q + Y + J;
-P[$][R[$]++] = it;
+F[$][R[$]++] = it;
 }
 break;
 
@@ -3023,7 +3023,7 @@ I(it.aabb.lowerBound.x, it.aabb.lowerBound.y, it.aabb.lowerBound.z, it.aabb.uppe
 for (q = 0; q !== T; q++) {
 var tt = R[q];
 if (tt > 1) {
-var et = P[q];
+var et = F[q];
 for (K = 0; K !== tt; K++) {
 var it = et[K];
 for (X = 0; X !== K; X++) {
@@ -3328,28 +3328,28 @@ l.prototype[s.types.SPHERE] = l.prototype.intersectSphere;
 var M = new i(), C = (new i(), new i(), new i());
 l.prototype.intersectConvex = function(t, e, i, o, n, r) {
 for (var s = M, a = C, l = r && r.faceList || null, c = t.faces, h = t.vertices, p = t.faceNormals, u = this._direction, y = this.from, f = this.to, w = y.distanceTo(f), x = l ? l.length : c.length, _ = this.result, B = 0; !_._shouldStop && B < x; B++) {
-var S = l ? l[B] : B, E = c[S], A = p[S], z = e, F = i;
+var S = l ? l[B] : B, E = c[S], A = p[S], z = e, P = i;
 a.copy(h[E[0]]);
 z.vmult(a, a);
-a.vadd(F, a);
+a.vadd(P, a);
 a.vsub(y, a);
 z.vmult(A, s);
-var P = u.dot(s);
-if (!(Math.abs(P) < this.precision)) {
-var R = s.dot(a) / P;
+var F = u.dot(s);
+if (!(Math.abs(F) < this.precision)) {
+var R = s.dot(a) / F;
 if (!(R < 0)) {
 u.mult(R, v);
 v.vadd(y, v);
 m.copy(h[E[0]]);
 z.vmult(m, m);
-F.vadd(m, m);
+P.vadd(m, m);
 for (var T = 1; !_._shouldStop && T < E.length - 1; T++) {
 g.copy(h[E[T]]);
 b.copy(h[E[T + 1]]);
 z.vmult(g, g);
 z.vmult(b, b);
-F.vadd(g, g);
-F.vadd(b, b);
+P.vadd(g, g);
+P.vadd(b, b);
 var q = v.distanceTo(y);
 !d(v, m, g, b) && !d(v, g, m, b) || q > w || this.reportIntersection(s, v, n, o, S);
 }
@@ -3358,10 +3358,10 @@ var q = v.distanceTo(y);
 }
 };
 l.prototype[s.types.CONVEXPOLYHEDRON] = l.prototype.intersectConvex;
-var A = new i(), z = new i(), F = new i(), P = new i(), R = new i(), T = new i(), q = (new a(), 
+var A = new i(), z = new i(), P = new i(), F = new i(), R = new i(), T = new i(), q = (new a(), 
 []), O = new n();
 l.prototype.intersectTrimesh = function(t, e, i, o, r, s) {
-var a = A, l = q, c = O, h = C, p = z, u = F, y = P, f = T, w = R, x = (s && s.faceList, 
+var a = A, l = q, c = O, h = C, p = z, u = P, y = F, f = T, w = R, x = (s && s.faceList, 
 t.indices), _ = (t.vertices, t.faceNormals, this.from), B = this.to, S = this._direction;
 c.position.copy(i);
 c.quaternion.copy(e);
@@ -5440,16 +5440,16 @@ r.applyImpulse(z, C);
 }
 if (0 !== M.sideImpulse) {
 v = M.raycastResult.body;
-var F = new i();
-M.raycastResult.hitPointWorld.vsub(v.position, F);
 var P = new i();
-a[l].scale(M.sideImpulse, P);
+M.raycastResult.hitPointWorld.vsub(v.position, P);
+var F = new i();
+a[l].scale(M.sideImpulse, F);
 r.vectorToLocalFrame(C, C);
 C["xyz"[this.indexUpAxis]] *= M.rollInfluence;
 r.vectorToWorldFrame(C, C);
-r.applyImpulse(P, C);
-P.scale(-1, P);
-v.applyImpulse(P, F);
+r.applyImpulse(F, C);
+F.scale(-1, F);
+v.applyImpulse(F, P);
 }
 }
 };
@@ -6100,7 +6100,7 @@ m = b;
 if (!(m < 0)) {
 var z = this.faces[m];
 z.connectedFaces = [];
-for (var F = 0; F < this.faces.length; F++) for (var P = 0; P < this.faces[F].length; P++) -1 !== z.indexOf(this.faces[F][P]) && F !== m && -1 === z.connectedFaces.indexOf(F) && z.connectedFaces.push(F);
+for (var P = 0; P < this.faces.length; P++) for (var F = 0; F < this.faces[P].length; F++) -1 !== z.indexOf(this.faces[P][F]) && P !== m && -1 === z.connectedFaces.indexOf(P) && z.connectedFaces.push(P);
 f.length;
 for (var R = z.length, T = 0; T < R; T++) {
 var q = this.vertices[z[T]], O = this.vertices[z[(T + 1) % R]];
@@ -6131,11 +6131,11 @@ d.copy(this.faceNormals[m]);
 j = this.getPlaneConstantOfFace(m);
 y.copy(d);
 i.vmult(y, y);
-for (V = j - y.dot(e), F = 0; F < f.length; F++) {
-var k = y.dot(f[F]) + V;
+for (V = j - y.dot(e), P = 0; P < f.length; P++) {
+var k = y.dot(f[P]) + V;
 k <= n && (k = n);
 if (k <= r) {
-var N = f[F];
+var N = f[P];
 if (k <= 0) {
 var L = {
 point: N,
@@ -6246,15 +6246,15 @@ e.vmult(r, r);
 }
 if (t) for (n = 0; n < i; n++) (r = o[n]).vadd(t, r);
 };
-var z = new o(), F = new o(), P = new o();
+var z = new o(), P = new o(), F = new o();
 r.prototype.pointIsInside = function(t) {
 var e = this.vertices.length, i = this.vertices, o = this.faces, n = this.faceNormals, r = this.faces.length, s = z;
 this.getAveragePointLocal(s);
 for (var a = 0; a < r; a++) {
 this.faces[a].length, e = n[a];
-var l = i[o[a][0]], c = F;
+var l = i[o[a][0]], c = P;
 t.vsub(l, c);
-var h = e.dot(c), p = P;
+var h = e.dot(c), p = F;
 s.vsub(l, p);
 var u = e.dot(p);
 if (h < 0 && u > 0 || h > 0 && u < 0) return !1;
@@ -7029,7 +7029,7 @@ C.vadd(M.vlambda, C);
 M.wlambda.vmul(M.angularFactor, M.wlambda);
 A.vadd(M.wlambda, A);
 }
-for (var z = d.length, F = 1 / m; z--; ) d[z].multiplier = x[z] * F;
+for (var z = d.length, P = 1 / m; z--; ) d[z].multiplier = x[z] * P;
 }
 return h;
 };
@@ -7582,9 +7582,9 @@ this.createFrictionEquationsFromContact(g, this.frictionResult);
 }
 }
 };
-var B = new s(), S = new s(), E = (new s(), new s()), M = new s(), C = new s(), A = new s(), z = new s(), F = new s(), P = new s(), R = new s(), T = new s(), q = new s(), O = new s(), I = new i(), j = [];
+var B = new s(), S = new s(), E = (new s(), new s()), M = new s(), C = new s(), A = new s(), z = new s(), P = new s(), F = new s(), R = new s(), T = new s(), q = new s(), O = new s(), I = new i(), j = [];
 u.prototype[n.types.SPHERE | n.types.TRIMESH] = u.prototype.sphereTrimesh = function(t, e, i, o, n, s, l, c, h, p, u) {
-var d = C, y = A, f = z, v = F, m = P, g = R, b = I, w = M, x = S, _ = j;
+var d = C, y = A, f = z, v = P, m = F, g = R, b = I, w = M, x = S, _ = j;
 a.pointToLocalFrame(o, s, i, m);
 var V = t.radius;
 b.lowerBound.set(m.x - V, m.y - V, m.z - V);
@@ -7720,11 +7720,11 @@ if (C < M + d && C > 0) {
 var A = X, z = Y;
 A.copy(u[(B + 1) % 3]);
 z.copy(u[(B + 2) % 3]);
-var F = A.norm(), P = z.norm();
+var P = A.norm(), F = z.norm();
 A.normalize();
 z.normalize();
 var R = K.dot(A), T = K.dot(z);
-if (R < F && R > -F && T < P && T > -P) {
+if (R < P && R > -P && T < F && T > -F) {
 var q = Math.abs(C - M - d);
 if (null === _ || q < _) {
 _ = q;
@@ -7863,13 +7863,13 @@ M.vsub(E, C);
 var A = C.dot(S), z = pt;
 i.vsub(E, z);
 if (A < 0 && z.dot(S) > 0) {
-for (var F = [], P = 0, R = B.length; P !== R; P++) {
+for (var P = [], F = 0, R = B.length; F !== R; F++) {
 var T = p.get();
-r.vmult(y[B[P]], T);
+r.vmult(y[B[F]], T);
 o.vadd(T, T);
-F.push(T);
+P.push(T);
 }
-if (H(F, S, i)) {
+if (H(P, S, i)) {
 if (h) return !0;
 w = !0;
 var q = this.createContactEquation(s, a, t, e, l, c);
@@ -7890,14 +7890,14 @@ p.release(O);
 p.release(I);
 this.result.push(q);
 this.createFrictionEquationsFromContact(q, this.frictionResult);
-P = 0;
-for (var j = F.length; P !== j; P++) p.release(F[P]);
+F = 0;
+for (var j = P.length; F !== j; F++) p.release(P[F]);
 return;
 }
-for (P = 0; P !== B.length; P++) {
+for (F = 0; F !== B.length; F++) {
 var V = p.get(), k = p.get();
-r.vmult(y[B[(P + 1) % B.length]], V);
-r.vmult(y[B[(P + 2) % B.length]], k);
+r.vmult(y[B[(F + 1) % B.length]], V);
+r.vmult(y[B[(F + 2) % B.length]], k);
 o.vadd(V, V);
 o.vadd(k, k);
 var N = ot;
@@ -7924,7 +7924,7 @@ q.ri.vadd(i, q.ri);
 q.ri.vsub(s.position, q.ri);
 this.result.push(q);
 this.createFrictionEquationsFromContact(q, this.frictionResult);
-for (P = 0, j = F.length; P !== j; P++) p.release(F[P]);
+for (F = 0, j = P.length; F !== j; F++) p.release(P[F]);
 p.release(V);
 p.release(k);
 p.release(W);
@@ -7938,7 +7938,7 @@ p.release(W);
 p.release(G);
 p.release(D);
 }
-for (P = 0, j = F.length; P !== j; P++) p.release(F[P]);
+for (F = 0, j = P.length; F !== j; F++) p.release(P[F]);
 }
 }
 };
@@ -8118,9 +8118,9 @@ if (p && C) return !0;
 }
 }
 };
-var Ft = new s(), Pt = new s();
+var Pt = new s(), Ft = new s();
 u.prototype[n.types.SPHERE | n.types.HEIGHTFIELD] = u.prototype.sphereHeightfield = function(t, e, i, o, n, r, s, l, c, h, p) {
-var u = e.data, d = t.radius, y = e.elementSize, f = Pt, v = Ft;
+var u = e.data, d = t.radius, y = e.elementSize, f = Ft, v = Pt;
 a.pointToLocalFrame(o, r, i, v);
 var m = Math.floor((v.x - d) / y) - 1, g = Math.ceil((v.x + d) / y) + 1, b = Math.floor((v.y - d) / y) - 1, w = Math.ceil((v.y + d) / y) + 1;
 if (!(g < 0 || w < 0 || m > u.length || b > u[0].length)) {
@@ -8373,12 +8373,12 @@ type: "preStep"
 type: "collide",
 body: null,
 contact: null
-}, F = [], P = [], R = [], T = [];
+}, P = [], F = [], R = [], T = [];
 new i(), new i(), new i(), new i(), new i(), new i(), new i(), new i(), new i(), 
 new o(), new o(), new o(), new i();
 g.prototype.internalStep = function(t) {
 this.dt = t;
-var e, i = this.contacts, o = R, n = T, r = this.numObjects(), s = this.bodies, a = this.solver, l = this.gravity, c = this.doProfiling, h = this.profile, p = u.DYNAMIC, d = this.constraints, y = P, f = (l.norm(), 
+var e, i = this.contacts, o = R, n = T, r = this.numObjects(), s = this.bodies, a = this.solver, l = this.gravity, c = this.doProfiling, h = this.profile, p = u.DYNAMIC, d = this.constraints, y = F, f = (l.norm(), 
 l.x), v = l.y, m = l.z, b = 0;
 c && (e = performance.now());
 for (b = 0; b !== r; b++) if ((j = s[b]).useGravity && j.type === p) {
@@ -8401,7 +8401,7 @@ n.splice(S, 1);
 }
 this.collisionMatrixTick();
 c && (e = performance.now());
-var E = F, M = i.length;
+var E = P, M = i.length;
 for (b = 0; b !== M; b++) E.push(i[b]);
 i.length = 0;
 var q = this.frictionEquations.length;
@@ -8681,7 +8681,7 @@ l.dispatchEvent(O);
 }
 this.contactsDic.reset();
 this.oldContactsDic.reset();
-F = I;
+P = I;
 I = this.contacts.slice();
 this.contacts.length = 0;
 }

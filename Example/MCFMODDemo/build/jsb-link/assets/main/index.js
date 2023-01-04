@@ -1,28 +1,28 @@
 window.__require = function c(t, e, s) {
-function n(i, o) {
-if (!e[i]) {
-if (!t[i]) {
-var r = i.split("/");
+function a(o, i) {
+if (!e[o]) {
+if (!t[o]) {
+var r = o.split("/");
 r = r[r.length - 1];
 if (!t[r]) {
 var l = "function" == typeof __require && __require;
-if (!o && l) return l(r, !0);
-if (a) return a(r, !0);
-throw new Error("Cannot find module '" + i + "'");
+if (!i && l) return l(r, !0);
+if (n) return n(r, !0);
+throw new Error("Cannot find module '" + o + "'");
 }
-i = r;
+o = r;
 }
-var u = e[i] = {
+var u = e[o] = {
 exports: {}
 };
-t[i][0].call(u.exports, function(c) {
-return n(t[i][1][c] || c);
+t[o][0].call(u.exports, function(c) {
+return a(t[o][1][c] || c);
 }, u, u.exports, c, t, e, s);
 }
-return e[i].exports;
+return e[o].exports;
 }
-for (var a = "function" == typeof __require && __require, i = 0; i < s.length; i++) n(s[i]);
-return n;
+for (var n = "function" == typeof __require && __require, o = 0; o < s.length; o++) a(s[o]);
+return a;
 }({
 main: [ function(c, t) {
 "use strict";
@@ -60,10 +60,10 @@ stopSenlin: function() {
 e.stopMusic(e.senlin);
 },
 playeffect: function() {
-e.playEffect(e.bianda);
+e.playEffect(e.amb);
 },
 stopeffect: function() {
-e.stopEffect(e.bianda);
+e.stopEffect(e.amb);
 }
 });
 cc._RF.pop();
@@ -86,7 +86,7 @@ event: "event:/MUSIC/music_switch",
 paramer: "music switch",
 value: 2
 },
-bianda: "event:/SFX/jinzhandongzuo/sfx_1jinzhan_bianda",
+amb: "event:/AMB/amb_zhucheng",
 load: function() {
 cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsLoadBank") : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsLoadBank", "()V");
 },

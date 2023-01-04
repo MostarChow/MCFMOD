@@ -45,4 +45,14 @@ void playEffectEvent(const char *path);
  */
 void stopEffectEvent(const char *path);
 
+/**
+ 暂停所有音量
+ */
+void pauseAll();
+
+/**
+ 恢复所有音量
+ */
+void resumeAll();
+
 #endif /* mostar_fmod_hpp */
