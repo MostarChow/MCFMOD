@@ -24,13 +24,13 @@
 		286B0E9524075FE000095E1A /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 28A34C0F225B462E00926306 /* assets */; };
 		28A34C10225B462E00926306 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 28A34C0F225B462E00926306 /* assets */; };
 		294D7D801D0D668F002CE7B7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294D7D7F1D0D668F002CE7B7 /* CoreText.framework */; };
-		2E1DC74D2965766300D5330C /* mostar_fmod_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1DC7492965766300D5330C /* mostar_fmod_ios.cpp */; };
-		2E1DC74E2965766300D5330C /* mostar_common.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2E1DC74B2965766300D5330C /* mostar_common.mm */; };
-		2E1DC7502965769800D5330C /* media in Resources */ = {isa = PBXBuildFile; fileRef = 2E1DC74F2965769800D5330C /* media */; };
-		2E1DC75B296578A900D5330C /* libfmod_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1DC7442965762B00D5330C /* libfmod_iphoneos.a */; };
-		2E1DC75C296578A900D5330C /* libfmodL_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1DC7422965762B00D5330C /* libfmodL_iphoneos.a */; };
-		2E1DC75D296578A900D5330C /* libfmodstudio_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1DC7412965762B00D5330C /* libfmodstudio_iphoneos.a */; };
-		2E1DC75E296578A900D5330C /* libfmodstudioL_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1DC7432965762B00D5330C /* libfmodstudioL_iphoneos.a */; };
+		2E3F14A42967C99A0098D8BC /* libfmod_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3F14A02967C9990098D8BC /* libfmod_iphoneos.a */; };
+		2E3F14A52967C99A0098D8BC /* libfmodstudio_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3F14A12967C9990098D8BC /* libfmodstudio_iphoneos.a */; };
+		2E3F14A62967C99A0098D8BC /* libfmodL_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3F14A22967C9990098D8BC /* libfmodL_iphoneos.a */; };
+		2E3F14A72967C99A0098D8BC /* libfmodstudioL_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3F14A32967C9990098D8BC /* libfmodstudioL_iphoneos.a */; };
+		2E3F14AC2967C9DC0098D8BC /* mostar_common.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F14A82967C9DC0098D8BC /* mostar_common.mm */; };
+		2E3F14AD2967C9DC0098D8BC /* mostar_fmod_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F14A92967C9DC0098D8BC /* mostar_fmod_ios.cpp */; };
+		2E3F14AF2967C9FE0098D8BC /* media in Resources */ = {isa = PBXBuildFile; fileRef = 2E3F14AE2967C9FE0098D8BC /* media */; };
 		4011F9CF212BD6750091CC5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4011F9D1212BD6750091CC5B /* LaunchScreen.storyboard */; };
 		4011F9D5212BD7050091CC5B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4011F9D7212BD7050091CC5B /* Localizable.strings */; };
 		4033CDBC20E4935100DAA37B /* jsb-adapter in Resources */ = {isa = PBXBuildFile; fileRef = 4033CDBB20E4935000DAA37B /* jsb-adapter */; };
@@ -138,19 +138,15 @@
 		22CC757021BA5B5C00FBF2F7 /* SDKWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDKWrapper.h; path = ios/SDKWrapper.h; sourceTree = "<group>"; };
 		28A34C0F225B462E00926306 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../../assets; sourceTree = "<group>"; };
 		294D7D7F1D0D668F002CE7B7 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
-		2E1DC7412965762B00D5330C /* libfmodstudio_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmodstudio_iphoneos.a; path = fmod_ios/lib/Release/libfmodstudio_iphoneos.a; sourceTree = "<group>"; };
-		2E1DC7422965762B00D5330C /* libfmodL_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmodL_iphoneos.a; path = fmod_ios/lib/Release/libfmodL_iphoneos.a; sourceTree = "<group>"; };
-		2E1DC7432965762B00D5330C /* libfmodstudioL_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmodstudioL_iphoneos.a; path = fmod_ios/lib/Release/libfmodstudioL_iphoneos.a; sourceTree = "<group>"; };
-		2E1DC7442965762B00D5330C /* libfmod_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmod_iphoneos.a; path = fmod_ios/lib/Release/libfmod_iphoneos.a; sourceTree = "<group>"; };
-		2E1DC7492965766300D5330C /* mostar_fmod_ios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mostar_fmod_ios.cpp; path = fmod_ios/MCFMOD/mostar_fmod_ios.cpp; sourceTree = "<group>"; };
-		2E1DC74A2965766300D5330C /* mostar_fmod_ios.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mostar_fmod_ios.hpp; path = fmod_ios/MCFMOD/mostar_fmod_ios.hpp; sourceTree = "<group>"; };
-		2E1DC74B2965766300D5330C /* mostar_common.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = mostar_common.mm; path = fmod_ios/MCFMOD/mostar_common.mm; sourceTree = "<group>"; };
-		2E1DC74C2965766300D5330C /* mostar_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mostar_common.h; path = fmod_ios/MCFMOD/mostar_common.h; sourceTree = "<group>"; };
-		2E1DC74F2965769800D5330C /* media */ = {isa = PBXFileReference; lastKnownFileType = folder; path = media; sourceTree = "<group>"; };
-		2E1DC7532965782D00D5330C /* libfmodstudioL_iphonesimulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmodstudioL_iphonesimulator.a; path = fmod_ios/lib/Debug/libfmodstudioL_iphonesimulator.a; sourceTree = "<group>"; };
-		2E1DC7542965782D00D5330C /* libfmod_iphonesimulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmod_iphonesimulator.a; path = fmod_ios/lib/Debug/libfmod_iphonesimulator.a; sourceTree = "<group>"; };
-		2E1DC7552965782E00D5330C /* libfmodL_iphonesimulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmodL_iphonesimulator.a; path = fmod_ios/lib/Debug/libfmodL_iphonesimulator.a; sourceTree = "<group>"; };
-		2E1DC7562965782E00D5330C /* libfmodstudio_iphonesimulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmodstudio_iphonesimulator.a; path = fmod_ios/lib/Debug/libfmodstudio_iphonesimulator.a; sourceTree = "<group>"; };
+		2E3F14A02967C9990098D8BC /* libfmod_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmod_iphoneos.a; path = fmod_ios/lib/Release/libfmod_iphoneos.a; sourceTree = "<group>"; };
+		2E3F14A12967C9990098D8BC /* libfmodstudio_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmodstudio_iphoneos.a; path = fmod_ios/lib/Release/libfmodstudio_iphoneos.a; sourceTree = "<group>"; };
+		2E3F14A22967C9990098D8BC /* libfmodL_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmodL_iphoneos.a; path = fmod_ios/lib/Release/libfmodL_iphoneos.a; sourceTree = "<group>"; };
+		2E3F14A32967C9990098D8BC /* libfmodstudioL_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmodstudioL_iphoneos.a; path = fmod_ios/lib/Release/libfmodstudioL_iphoneos.a; sourceTree = "<group>"; };
+		2E3F14A82967C9DC0098D8BC /* mostar_common.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = mostar_common.mm; path = fmod_ios/MCFMOD/mostar_common.mm; sourceTree = "<group>"; };
+		2E3F14A92967C9DC0098D8BC /* mostar_fmod_ios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mostar_fmod_ios.cpp; path = fmod_ios/MCFMOD/mostar_fmod_ios.cpp; sourceTree = "<group>"; };
+		2E3F14AA2967C9DC0098D8BC /* mostar_fmod_ios.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mostar_fmod_ios.hpp; path = fmod_ios/MCFMOD/mostar_fmod_ios.hpp; sourceTree = "<group>"; };
+		2E3F14AB2967C9DC0098D8BC /* mostar_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mostar_common.h; path = fmod_ios/MCFMOD/mostar_common.h; sourceTree = "<group>"; };
+		2E3F14AE2967C9FE0098D8BC /* media */ = {isa = PBXFileReference; lastKnownFileType = folder; path = media; sourceTree = "<group>"; };
 		4011F9D2212BD6810091CC5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4011F9D8212BD7150091CC5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4011F9D9212BD73A0091CC5B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -235,10 +231,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E1DC75B296578A900D5330C /* libfmod_iphoneos.a in Frameworks */,
-				2E1DC75C296578A900D5330C /* libfmodL_iphoneos.a in Frameworks */,
-				2E1DC75D296578A900D5330C /* libfmodstudio_iphoneos.a in Frameworks */,
-				2E1DC75E296578A900D5330C /* libfmodstudioL_iphoneos.a in Frameworks */,
+				2E3F14A42967C99A0098D8BC /* libfmod_iphoneos.a in Frameworks */,
+				2E3F14A52967C99A0098D8BC /* libfmodstudio_iphoneos.a in Frameworks */,
+				2E3F14A62967C99A0098D8BC /* libfmodL_iphoneos.a in Frameworks */,
+				2E3F14A72967C99A0098D8BC /* libfmodstudioL_iphoneos.a in Frameworks */,
 				467AF615232881EB00770112 /* CoreMedia.framework in Frameworks */,
 				467AF613232881E400770112 /* AVKit.framework in Frameworks */,
 				467AF6082321FBED00770112 /* WebKit.framework in Frameworks */,
@@ -319,7 +315,7 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
-				2E1DC74F2965769800D5330C /* media */,
+				2E3F14AE2967C9FE0098D8BC /* media */,
 				28A34C0F225B462E00926306 /* assets */,
 				1AC6FB34180E9ACB004C840B /* cocos2d_libs.xcodeproj */,
 				D4545214156E28EF00887EB5 /* Classes */,
@@ -343,14 +339,10 @@
 		A92275401517C094001B78AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2E1DC7542965782D00D5330C /* libfmod_iphonesimulator.a */,
-				2E1DC7552965782E00D5330C /* libfmodL_iphonesimulator.a */,
-				2E1DC7562965782E00D5330C /* libfmodstudio_iphonesimulator.a */,
-				2E1DC7532965782D00D5330C /* libfmodstudioL_iphonesimulator.a */,
-				2E1DC7442965762B00D5330C /* libfmod_iphoneos.a */,
-				2E1DC7422965762B00D5330C /* libfmodL_iphoneos.a */,
-				2E1DC7412965762B00D5330C /* libfmodstudio_iphoneos.a */,
-				2E1DC7432965762B00D5330C /* libfmodstudioL_iphoneos.a */,
+				2E3F14A02967C9990098D8BC /* libfmod_iphoneos.a */,
+				2E3F14A22967C9990098D8BC /* libfmodL_iphoneos.a */,
+				2E3F14A12967C9990098D8BC /* libfmodstudio_iphoneos.a */,
+				2E3F14A32967C9990098D8BC /* libfmodstudioL_iphoneos.a */,
 				467AF614232881EB00770112 /* CoreMedia.framework */,
 				467AF612232881E400770112 /* AVKit.framework */,
 				467AF6072321FBED00770112 /* WebKit.framework */,
@@ -398,10 +390,10 @@
 		D45446CC156DE73F00887EB5 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				2E1DC74C2965766300D5330C /* mostar_common.h */,
-				2E1DC74B2965766300D5330C /* mostar_common.mm */,
-				2E1DC7492965766300D5330C /* mostar_fmod_ios.cpp */,
-				2E1DC74A2965766300D5330C /* mostar_fmod_ios.hpp */,
+				2E3F14AB2967C9DC0098D8BC /* mostar_common.h */,
+				2E3F14A82967C9DC0098D8BC /* mostar_common.mm */,
+				2E3F14A92967C9DC0098D8BC /* mostar_fmod_ios.cpp */,
+				2E3F14AA2967C9DC0098D8BC /* mostar_fmod_ios.hpp */,
 				051C018221E32AE400D4A347 /* UserConfigIOS.debug.xcconfig */,
 				051C018121E32AE400D4A347 /* UserConfigIOS.release.xcconfig */,
 				22CC756E21BA5B5C00FBF2F7 /* service */,
@@ -553,7 +545,7 @@
 				1AE159EC18C9DF3600FCA372 /* project.json in Resources */,
 				1AD7E0A818C9DB93004817A6 /* main.js in Resources */,
 				C03780EB18BEE0E400FE4F13 /* src in Resources */,
-				2E1DC7502965769800D5330C /* media in Resources */,
+				2E3F14AF2967C9FE0098D8BC /* media in Resources */,
 				4011F9CF212BD6750091CC5B /* LaunchScreen.storyboard in Resources */,
 				4011F9D5212BD7050091CC5B /* Localizable.strings in Resources */,
 			);
@@ -577,11 +569,11 @@
 			files = (
 				509D4AC917EBB2AB00697056 /* RootViewController.mm in Sources */,
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
+				2E3F14AD2967C9DC0098D8BC /* mostar_fmod_ios.cpp in Sources */,
+				2E3F14AC2967C9DC0098D8BC /* mostar_common.mm in Sources */,
 				509D4AC817EBB2AB00697056 /* main.m in Sources */,
 				22CC757121BA5B5C00FBF2F7 /* SDKWrapper.m in Sources */,
 				509D4ABC17EBB2AB00697056 /* AppController.mm in Sources */,
-				2E1DC74E2965766300D5330C /* mostar_common.mm in Sources */,
-				2E1DC74D2965766300D5330C /* mostar_fmod_ios.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

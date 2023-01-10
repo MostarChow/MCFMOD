@@ -55,4 +55,16 @@ void pauseAll();
  */
 void resumeAll();
 
+
+/**
+ 停止所有音频
+ */
+void stopAll();
+
+/**
+ 重新播放所有音频
+ */
+void replayAll();
+
+
 #endif /* mostar_fmod_hpp */

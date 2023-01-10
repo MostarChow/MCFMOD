@@ -1,2 +1,0 @@
-/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/instantapp/jni/Android.mk
-/Users/mostar/Workspaces/Github/MCFMOD/Example/MCFMODDemo/build/jsb-link/frameworks/runtime-src/proj.android-studio/instantapp/jni/Application.mk

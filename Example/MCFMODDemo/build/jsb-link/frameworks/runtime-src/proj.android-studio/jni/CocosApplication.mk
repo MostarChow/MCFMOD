@@ -47,4 +47,3 @@ endif
 
 # Some Android Simulators don't support SSE instruction, so disable it for x86 arch.
 APP_CPPFLAGS += -U__SSE__
-USE_EDIT_BOX := 1

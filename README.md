@@ -168,9 +168,22 @@ FMOD version: 2.02.07
    
    1). 在`@end`前插入以下代码：
    ```
-    + (void)jsLoadBank {
-     loadBank();
-    }
+   - (void)registerNotification {
+       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioSession:) name:AVAudioSessionInterruptionNotification object:nil];
+   }
+
+   - (void)audioSession:(NSNotification *)notification {
+       bool began = [[notification.userInfo valueForKey:AVAudioSessionInterruptionTypeKey] intValue] == AVAudioSessionInterruptionTypeBegan;
+       if (!began) {
+         replayAll();
+     } else {
+         stopAll();
+     }
+   }
+   
+   + (void)jsLoadBank {
+       loadBank();
+   }
 
    + (void)jsPlayMusicEvent:(NSString *)path andParamer:(NSString *)paramer andValue:(NSNumber *)value {
        const char *pathc = [path UTF8String];
@@ -210,12 +223,17 @@ FMOD version: 2.02.07
       stopEffectEvent(pathc);
    }
     ```
-   
-   2). 在`- (void)applicationWillResignActive:(UIApplication *)application {`最后插入以下代码：
+
+   2). 在`application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{`最后插入以下代码：
+   ```
+   [self registerNotification];
+   return YES;
+   ```  
+   3). 在`- (void)applicationWillResignActive:(UIApplication *)application {`最后插入以下代码：
    ```
    pauseAll();
    ```
-   3). 在`- (void)applicationDidBecomeActive:(UIApplication *)application {`最后插入以下代码：
+   4). 在`- (void)applicationDidBecomeActive:(UIApplication *)application {`最后插入以下代码：
    ```
    resumeAll();
    ```

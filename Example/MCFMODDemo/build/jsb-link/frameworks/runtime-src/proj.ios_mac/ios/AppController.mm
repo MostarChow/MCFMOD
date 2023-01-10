@@ -30,7 +30,9 @@
 #import "RootViewController.h"
 #import "SDKWrapper.h"
 #import "platform/ios/CCEAGLView-ios.h"
+
 #import "mostar_fmod_ios.hpp"
+#import <AVFoundation/AVFoundation.h>
 
 
 
@@ -80,10 +82,27 @@ Application* app = nullptr;
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
+    
     //run the cocos2d-x game scene
     app->start();
     
+    [self registerNotification];
+    
     return YES;
+}
+
+- (void)registerNotification {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioSession:) name:AVAudioSessionInterruptionNotification object:nil];
+}
+
+
+- (void)audioSession:(NSNotification *)notification {
+    bool began = [[notification.userInfo valueForKey:AVAudioSessionInterruptionTypeKey] intValue] == AVAudioSessionInterruptionTypeBegan;
+    if (!began) {
+        replayAll();
+    } else {
+        stopAll();
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
