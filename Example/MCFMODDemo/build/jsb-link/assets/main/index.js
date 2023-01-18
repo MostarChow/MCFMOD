@@ -86,7 +86,7 @@ event: "event:/MUSIC/music_switch",
 paramer: "music switch",
 value: 2
 },
-amb: "event:/AMB/amb_zhucheng",
+amb: "event:/MUSIC/bgm_zhandou",
 load: function() {
 cc.sys.os === cc.sys.OS_IOS ? jsb.reflection.callStaticMethod("AppController", "jsLoadBank") : cc.sys.os === cc.sys.OS_ANDROID && jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "jsLoadBank", "()V");
 },

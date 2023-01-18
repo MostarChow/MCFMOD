@@ -151,7 +151,7 @@ void pauseAll()
     for (auto it = playMap.begin(); it != playMap.end(); ++it)
     {
         FMOD::Studio::EventInstance *instance = it->second;
-        instance->setVolume(0);
+        instance->setPaused(true);
         instance->release();
         studioSystem->update();
     }
@@ -162,7 +162,7 @@ void resumeAll()
     for (auto it = playMap.begin(); it != playMap.end(); ++it)
     {
         FMOD::Studio::EventInstance *instance = it->second;
-        instance->setVolume(1);
+        instance->setPaused(false);
         instance->release();
         studioSystem->update();
     }
