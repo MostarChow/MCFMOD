@@ -21,7 +21,7 @@
 FMOD::Studio::System *studioSystem = NULL;
 
 // 音乐列表
-std::map<float, FMOD::Studio::EventInstance *> playMap;
+std::map<std::string, FMOD::Studio::EventInstance *> playMap;
 
 // 播放音乐列表
 // {path,paramer,value : volume}
@@ -29,7 +29,6 @@ std::map<std::string, float> musicTask;
 // 播放音效列表
 // {path : 0}
 std::map<std::string, float> effectTask;
-
 
 void loadBank()
 {
@@ -70,47 +69,50 @@ void playMusicEvent(const char *path, const char *paramer, float value)
     // 播放
     instance->start();
     studioSystem->update();
+    
     // 记录
-    playMap[value] = instance;
+   
     // 记录播放任务
     std::string key = std::string(path) + "," + std::string(paramer) + "," + std::to_string(value);
     musicTask[key] = 1;
+    playMap[key] = instance;
 }
 
 
 void pauseMusicEvent(const char *path, const char *paramer, float value)
 {
     float volume = 0;
-    FMOD::Studio::EventInstance *instance = playMap[value];
+    std::string key = std::string(path) + "," + std::string(paramer) + "," + std::to_string(value);
+    FMOD::Studio::EventInstance *instance = playMap[key];
     instance->setVolume(volume);
     instance->release();
     studioSystem->update();
     // 记录播放任务
-    std::string key = std::string(path) + "," + std::string(paramer) + "," + std::to_string(value);
     musicTask[key] = volume;
 }
 
 void resumeMusicEvent(const char *path, const char *paramer, float value)
 {
     float volume = 1;
-    FMOD::Studio::EventInstance *instance = playMap[value];
+    std::string key = std::string(path) + "," + std::string(paramer) + "," + std::to_string(value);
+    FMOD::Studio::EventInstance *instance = playMap[key];
     instance->setVolume(volume);
     instance->release();
     studioSystem->update();
     // 记录播放任务
-    std::string key = std::string(path) + "," + std::string(paramer) + "," + std::to_string(value);
     musicTask[key] = volume;
 }
 
 void stopMusicEvent(const char *path, const char *paramer, float value)
 {
     // 停止播放
-    FMOD::Studio::EventInstance *instance = playMap[value];
+    std::string key = std::string(path) + "," + std::string(paramer) + "," + std::to_string(value);
+    FMOD::Studio::EventInstance *instance = playMap[key];
     instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
     instance->release();
     studioSystem->update();
     // 移除
-    playMap.erase(value);
+    playMap.erase(key);
 }
 
 void playEffectEvent(const char *path)
@@ -163,13 +165,15 @@ void resumeAll()
 {
     for (auto it = playMap.begin(); it != playMap.end(); ++it)
     {
+        std::string iKey = it->first;
         // 判断是否在播放
         for (auto jt = musicTask.begin(); jt != musicTask.end(); ++jt)
         {
+            FMOD::Studio::EventInstance *instance = it->second;
+            std::string jKey = jt->first;
             float volume = jt->second;
-            if (volume > 0)
+            if (volume > 0 && iKey == jKey)
             {
-                FMOD::Studio::EventInstance *instance = it->second;
                 instance->setVolume(1);
                 instance->release();
                 studioSystem->update();
@@ -238,7 +242,7 @@ void replayAll()
         instance->setVolume(volume);
         studioSystem->update();
         // 记录
-        playMap[value] = instance;
+        playMap[key] = instance;
         // 记录播放任务
         musicTask[key] = volume;
     }
