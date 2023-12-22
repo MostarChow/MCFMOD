@@ -136,14 +136,14 @@ void pauseAll()
     for (auto it = playMap.begin(); it != playMap.end(); ++it)
     {
         FMOD::Studio::EventInstance *instance = it->second;
-        instance->setPaused(true);
+        instance->setVolume(0);
         instance->release();
         studioSystem->update();
     }
     for (auto it = ambMap.begin(); it != ambMap.end(); ++it)
     {
         FMOD::Studio::EventInstance *instance = it->second;
-        instance->setPaused(true);
+        instance->setVolume(0);
         instance->release();
         studioSystem->update();
     }
@@ -153,15 +153,23 @@ void resumeAll()
 {
     for (auto it = playMap.begin(); it != playMap.end(); ++it)
     {
-        FMOD::Studio::EventInstance *instance = it->second;
-        instance->setPaused(false);
-        instance->release();
-        studioSystem->update();
+        // 判断是否在播放
+        for (auto jt = musicTask.begin(); jt != musicTask.end(); ++jt)
+        {
+            float volume = jt->second;
+            if (volume > 0)
+            {
+                FMOD::Studio::EventInstance *instance = it->second;
+                instance->setVolume(1);
+                instance->release();
+                studioSystem->update();
+            }
+        }
     }
     for (auto it = ambMap.begin(); it != ambMap.end(); ++it)
     {
         FMOD::Studio::EventInstance *instance = it->second;
-        instance->setPaused(false);
+        instance->setVolume(1);
         instance->release();
         studioSystem->update();
     }

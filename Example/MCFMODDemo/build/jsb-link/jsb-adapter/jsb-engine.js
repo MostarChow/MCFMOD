@@ -345,7 +345,12 @@ var Assembler = {
   },
   _updateRenderData: function _updateRenderData() {
     if (!this._renderComp || !this._renderComp.isValid) return;
-    this.updateRenderData(this._renderComp);
+
+    if (!this.updateRenderData(this._renderComp)) {
+      this._aftUpdateRenderDataForNative();
+    }
+  },
+  _aftUpdateRenderDataForNative: function _aftUpdateRenderDataForNative() {
     var materials = this._renderComp._materials;
 
     for (var i = 0; i < materials.length; i++) {
@@ -709,7 +714,32 @@ cc.js.mixin(cc.Mask.prototype, {
 },{}],13:[function(require,module,exports){
 "use strict";
 
-var proto = cc.MotionStreak.__assembler__.prototype;
+var proto = cc.MotionStreak.__assembler__.MultiMotionStreakAssembler.prototype;
+var _update = proto.update;
+cc.js.mixin(proto, {
+  update: function update(comp, dt) {
+    _update.call(this, comp, dt);
+
+    var _this$_renderData$_fl = this._renderData._flexBuffer,
+        iData = _this$_renderData$_fl.iData,
+        usedVertices = _this$_renderData$_fl.usedVertices;
+    var indiceOffset = 0;
+
+    for (var i = 0, l = usedVertices; i < l; i += 2) {
+      iData[indiceOffset++] = i;
+      iData[indiceOffset++] = i + 2;
+      iData[indiceOffset++] = i + 1;
+      iData[indiceOffset++] = i + 1;
+      iData[indiceOffset++] = i + 2;
+      iData[indiceOffset++] = i + 3;
+    }
+  }
+});
+
+},{}],14:[function(require,module,exports){
+"use strict";
+
+var proto = cc.MotionStreak.__assembler__.MotionStreakAssembler.prototype;
 var _init = proto.init;
 var _update = proto.update;
 cc.js.mixin(proto, {
@@ -739,7 +769,7 @@ cc.js.mixin(proto, {
   }
 });
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -808,7 +838,7 @@ cc.js.mixin(proto, {
   }, renderer.Particle3DAssembler.prototype);
 })();
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -848,7 +878,7 @@ Object.assign(cc.Sprite.__assembler__.Mesh.prototype, {
   }
 });
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -888,7 +918,7 @@ Object.assign(cc.Sprite.__assembler__.RadialFilled.prototype, {
   }
 });
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -931,7 +961,7 @@ proto.initLocal = function () {
   nativeProto.setLocalData.call(this, this._local);
 };
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -974,7 +1004,7 @@ proto.initLocal = function () {
   nativeProto.setLocalData.call(this, this._local);
 };
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1042,7 +1072,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   }
 });
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1053,7 +1083,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1076,7 +1106,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1097,7 +1127,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1109,7 +1139,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1121,7 +1151,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1172,7 +1202,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1221,7 +1251,7 @@ require('./3d/bar-filled.js');
 
 require('./3d/radial-filled.js');
 
-},{"./2d/mesh.js":15,"./2d/radial-filled.js":16,"./2d/simple.js":17,"./2d/sliced.js":18,"./2d/tiled.js":19,"./3d/bar-filled.js":20,"./3d/mesh.js":21,"./3d/radial-filled.js":22,"./3d/simple.js":23,"./3d/sliced.js":24,"./3d/tiled.js":25}],27:[function(require,module,exports){
+},{"./2d/mesh.js":16,"./2d/radial-filled.js":17,"./2d/simple.js":18,"./2d/sliced.js":19,"./2d/tiled.js":20,"./3d/bar-filled.js":21,"./3d/mesh.js":22,"./3d/radial-filled.js":23,"./3d/simple.js":24,"./3d/sliced.js":25,"./3d/tiled.js":26}],28:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1307,6 +1337,8 @@ if (CC_NATIVERENDERER) {
 
     require('./assemblers/motion-streak.js');
 
+    require('./assemblers/motion-streak-multi.js');
+
     require('./assemblers/mesh-renderer.js');
 
     require('./assemblers/particle-3d-assembler.js');
@@ -1323,7 +1355,7 @@ if (CC_NATIVERENDERER) {
   });
 }
 
-},{"./assemblers/assembler-2d.js":2,"./assemblers/assembler-3d.js":3,"./assemblers/assembler.js":4,"./assemblers/graphics-assembler.js":5,"./assemblers/label/index.js":10,"./assemblers/mask-assembler.js":11,"./assemblers/mesh-renderer.js":12,"./assemblers/motion-streak.js":13,"./assemblers/particle-3d-assembler.js":14,"./assemblers/sprite/index.js":26,"./jsb-assets-manager.js":28,"./jsb-audio.js":29,"./jsb-dragonbones.js":31,"./jsb-editbox.js":32,"./jsb-effect-variant.js":33,"./jsb-effect.js":34,"./jsb-game.js":36,"./jsb-loader.js":37,"./jsb-particle.js":38,"./jsb-reflection.js":39,"./jsb-safearea.js":40,"./jsb-skin-mesh.js":41,"./jsb-spine-skeleton.js":42,"./jsb-sys.js":43,"./jsb-tiledmap.js":44,"./jsb-videoplayer.js":45,"./jsb-webview.js":46,"./scene/camera.js":47,"./scene/light.js":48,"./scene/mesh-buffer.js":49,"./scene/node-proxy.js":50,"./scene/node.js":51,"./scene/quad-buffer.js":52,"./scene/render-data.js":53,"./scene/render-flow.js":54}],28:[function(require,module,exports){
+},{"./assemblers/assembler-2d.js":2,"./assemblers/assembler-3d.js":3,"./assemblers/assembler.js":4,"./assemblers/graphics-assembler.js":5,"./assemblers/label/index.js":10,"./assemblers/mask-assembler.js":11,"./assemblers/mesh-renderer.js":12,"./assemblers/motion-streak-multi.js":13,"./assemblers/motion-streak.js":14,"./assemblers/particle-3d-assembler.js":15,"./assemblers/sprite/index.js":27,"./jsb-assets-manager.js":29,"./jsb-audio.js":30,"./jsb-dragonbones.js":32,"./jsb-editbox.js":33,"./jsb-effect-variant.js":34,"./jsb-effect.js":35,"./jsb-game.js":37,"./jsb-loader.js":38,"./jsb-particle.js":39,"./jsb-reflection.js":40,"./jsb-safearea.js":41,"./jsb-skin-mesh.js":42,"./jsb-spine-skeleton.js":43,"./jsb-sys.js":44,"./jsb-tiledmap.js":45,"./jsb-videoplayer.js":46,"./jsb-webview.js":47,"./scene/camera.js":48,"./scene/light.js":49,"./scene/mesh-buffer.js":50,"./scene/node-proxy.js":51,"./scene/node.js":52,"./scene/quad-buffer.js":53,"./scene/render-data.js":54,"./scene/render-flow.js":55}],29:[function(require,module,exports){
 "use strict";
 
 /*
@@ -1383,7 +1415,7 @@ if (jsb.AssetsManager) {
   jsb.EventAssetsManager.ERROR_DECOMPRESS = 10;
 }
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1654,7 +1686,7 @@ var handleVolume = function handleVolume(volume) {
   };
 })(Audio.prototype, jsb.AudioEngine);
 
-},{"./jsb-cache-manager":30}],30:[function(require,module,exports){
+},{"./jsb-cache-manager":31}],31:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1842,7 +1874,7 @@ var cacheManager = {
 };
 cc.assetManager.cacheManager = module.exports = cacheManager;
 
-},{"./jsb-fs-utils":35}],31:[function(require,module,exports){
+},{"./jsb-fs-utils":36}],32:[function(require,module,exports){
 "use strict";
 
 var _constants = require("constants");
@@ -2620,7 +2652,7 @@ var cacheManager = require('./jsb-cache-manager');
   };
 })();
 
-},{"./jsb-cache-manager":30,"constants":1}],32:[function(require,module,exports){
+},{"./jsb-cache-manager":31,"constants":1}],33:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -2840,7 +2872,7 @@ var cacheManager = require('./jsb-cache-manager');
   });
 })();
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 "use strict";
 
 // Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
@@ -2865,7 +2897,7 @@ var cacheManager = require('./jsb-cache-manager');
   });
 })();
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 "use strict";
 
 // Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
@@ -2980,7 +3012,7 @@ Object.assign(EffectBase.prototype, {
   }
 });
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -3218,7 +3250,7 @@ var fsUtils = {
 };
 window.fsUtils = module.exports = fsUtils;
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -3275,7 +3307,7 @@ jsb.onResize = function (size) {
   window.resize(size.width, size.height);
 };
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /****************************************************************************
  Copyright (c) 2013-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
@@ -3665,7 +3697,7 @@ cc.assetManager.init = function (options) {
   cacheManager.init();
 };
 
-},{"./jsb-cache-manager":30,"./jsb-fs-utils":35}],38:[function(require,module,exports){
+},{"./jsb-cache-manager":31,"./jsb-fs-utils":36}],39:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -3942,7 +3974,7 @@ cc.assetManager.init = function (options) {
   };
 })();
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -3977,7 +4009,7 @@ if (window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID) {
   jsb.reflection = new JavaScriptObjCBridge();
 }
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 "use strict";
 
 var SafeArea = cc.SafeArea;
@@ -4012,7 +4044,7 @@ if (SafeArea) {
   });
 }
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -4026,7 +4058,7 @@ if (SafeArea) {
   });
 })();
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -4101,6 +4133,8 @@ var cacheManager = require('./jsb-cache-manager');
   spine.skeletonCacheMgr = skeletonCacheMgr;
 
   skeletonDataProto.destroy = function () {
+    this._destroyFromDynamicAtlas();
+
     this.reset();
     skeletonCacheMgr.removeSkeletonCache(this._uuid);
     cc.Asset.prototype.destroy.call(this);
@@ -4383,6 +4417,17 @@ var cacheManager = require('./jsb-cache-manager');
     }
   };
 
+  skeleton.setVertsDirty = function () {
+    if (this.skeletonData) {
+      this._dataDirty = true;
+
+      this.constructor.__assembler__.prototype.handleDynamicAtlasAndSwitchMaterial(this);
+    }
+
+    this.invalidAnimationCache();
+    cc.RenderComponent.prototype.setVertsDirty.call(this);
+  };
+
   skeleton.setSkeletonData = function (skeletonData) {
     if (null != skeletonData.width && null != skeletonData.height && 0 !== skeletonData.width && 0 !== skeletonData.height) {
       this.node.setContentSize(skeletonData.width, skeletonData.height);
@@ -4409,6 +4454,10 @@ var cacheManager = require('./jsb-cache-manager');
       this._nativeSkeleton._comp = null;
       this._nativeSkeleton = null;
     }
+
+    this._dataDirty = true;
+
+    this.constructor.__assembler__.prototype.handleDynamicAtlasAndSwitchMaterial(this);
 
     var nativeSkeleton = null;
 
@@ -4859,6 +4908,29 @@ var cacheManager = require('./jsb-cache-manager');
 
     this._stateData = null;
     this._materialCache = null;
+  };
+
+  var regionAttachment = sp.spine.RegionAttachment.prototype;
+
+  regionAttachment.getTexture2D = function (skeletonData) {
+    if (!this._texture2D) {
+      this._texture2D = skeletonData.getTextureByIndex(this.textureForJSB.getRealTextureIndex());
+    }
+
+    return this._texture2D;
+  };
+
+  var meshAttachment = sp.spine.MeshAttachment.prototype;
+
+  meshAttachment.getTexture2D = function (skeletonData) {
+    if (!this._texture2D) {
+      this._texture2D = skeletonData.getTextureByIndex(this.textureForJSB.getRealTextureIndex());
+    }
+
+    return this._texture2D;
+  };
+
+  renderer.CustomAssembler.prototype.updateRenderDataForSwitchMaterial = function () {// placeholder
   }; ////////////////////////////////////////////////////////////
   // adapt attach util
   ////////////////////////////////////////////////////////////
@@ -4920,7 +4992,7 @@ var cacheManager = require('./jsb-cache-manager');
   };
 })();
 
-},{"./jsb-cache-manager":30}],43:[function(require,module,exports){
+},{"./jsb-cache-manager":31}],44:[function(require,module,exports){
 /****************************************************************************
  Copyright (c) 2013-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
@@ -4979,7 +5051,7 @@ sys.getSafeAreaRect = function () {
   return cc.rect(leftBottom.x, leftBottom.y, rightTop.x - leftBottom.x, rightTop.y - leftBottom.y);
 };
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -5174,7 +5246,7 @@ sys.getSafeAreaRect = function () {
   }, renderer.TiledMapAssembler.prototype);
 })();
 
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -5643,7 +5715,7 @@ sys.getSafeAreaRect = function () {
   });
 })();
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -5995,7 +6067,7 @@ sys.getSafeAreaRect = function () {
   };
 })();
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -6032,7 +6104,7 @@ cc.js.mixin(nativeCameraProto, {
   }
 });
 
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -6069,7 +6141,7 @@ cc.js.mixin(nativeLightProto, {
   }
 });
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -6249,7 +6321,7 @@ cc.js.mixin(nativeLightProto, {
   };
 })();
 
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -6369,7 +6441,7 @@ cc.js.mixin(renderer.NodeProxy.prototype, {
   }
 });
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 /****************************************************************************
  Copyright (c) 2018 Xiamen Yaji Software Co., Ltd.
 
@@ -6434,7 +6506,7 @@ cc.PrivateNode.prototype._posDirty = function (sendEvent) {
   }
 };
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -6497,7 +6569,7 @@ cc.PrivateNode.prototype._posDirty = function (sendEvent) {
   };
 })();
 
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 "use strict";
 
 var proto = cc.RenderData.prototype;
@@ -6532,7 +6604,7 @@ proto.updateMeshRange = function (verticesCount, indicesCount) {
   this._nativeAssembler.updateIndicesRange(0, 0, indicesCount);
 };
 
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -6624,4 +6696,4 @@ RenderFlow.register = function (target) {
   target._inJsbDirtyList = true;
 };
 
-},{}]},{},[27]);
+},{}]},{},[28]);

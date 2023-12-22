@@ -51,10 +51,12 @@ void loadBank()
     studioSystem->loadBankFile(GetMediaPath("Music.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &musicBank);
     FMOD::Studio::Bank *ambBank = NULL;
     studioSystem->loadBankFile(GetMediaPath("amb.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &ambBank);
+
 }
 
 void playMusicEvent(const char *path, const char *paramer, float value)
 {
+    
     // 通过event创建实例
     FMOD::Studio::EventDescription *desc = NULL;
     studioSystem->getEvent(path, &desc);
@@ -151,7 +153,7 @@ void pauseAll()
     for (auto it = playMap.begin(); it != playMap.end(); ++it)
     {
         FMOD::Studio::EventInstance *instance = it->second;
-        instance->setPaused(true);
+        instance->setVolume(0);
         instance->release();
         studioSystem->update();
     }
@@ -161,10 +163,18 @@ void resumeAll()
 {
     for (auto it = playMap.begin(); it != playMap.end(); ++it)
     {
-        FMOD::Studio::EventInstance *instance = it->second;
-        instance->setPaused(false);
-        instance->release();
-        studioSystem->update();
+        // 判断是否在播放
+        for (auto jt = musicTask.begin(); jt != musicTask.end(); ++jt)
+        {
+            float volume = jt->second;
+            if (volume > 0)
+            {
+                FMOD::Studio::EventInstance *instance = it->second;
+                instance->setVolume(1);
+                instance->release();
+                studioSystem->update();
+            }
+        }
     }
 }
 
