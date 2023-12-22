@@ -163,21 +163,16 @@ void pauseAll()
 
 void resumeAll()
 {
-    for (auto it = playMap.begin(); it != playMap.end(); ++it)
+    for (auto it = musicTask.begin(); it != musicTask.end(); ++it)
     {
-        std::string iKey = it->first;
-        // 判断是否在播放
-        for (auto jt = musicTask.begin(); jt != musicTask.end(); ++jt)
+        float volume = it->second;
+        if (volume > 0)
         {
-            FMOD::Studio::EventInstance *instance = it->second;
-            std::string jKey = jt->first;
-            float volume = jt->second;
-            if (volume > 0 && iKey == jKey)
-            {
-                instance->setVolume(1);
-                instance->release();
-                studioSystem->update();
-            }
+            std::string key = it->first;
+            FMOD::Studio::EventInstance *instance = playMap[key];
+            instance->setVolume(1);
+            instance->release();
+            studioSystem->update();
         }
     }
 }
