@@ -23,6 +23,7 @@ cc.Class({
     },
 
     playZhucheng() {
+        console.log("cocos play");
         FMOD.playMusic(FMOD.zhucheng);
     },
     pauseZhucheng() {

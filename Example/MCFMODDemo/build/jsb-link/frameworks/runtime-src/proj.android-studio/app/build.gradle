@@ -44,6 +44,7 @@ android {
         res.srcDirs "../res", 'res'
         jniLibs.srcDirs "../libs", 'libs'
         manifest.srcFile "AndroidManifest.xml"
+        assets.srcDirs = ['res', '../jni/media']
     }
 
     externalNativeBuild {
@@ -127,4 +128,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
     implementation fileTree(dir: "/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos/platform/android/java/libs", include: ['*.jar'])
     implementation project(':libcocos2dx')
+    implementation fileTree(dir: '../jni/fmod_android/core/lib/fmod.jar', include: ['*.jar'])
 }

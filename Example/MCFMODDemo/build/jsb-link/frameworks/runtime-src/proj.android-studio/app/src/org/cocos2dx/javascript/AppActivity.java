@@ -34,12 +34,52 @@ import android.content.res.Configuration;
 
 public class AppActivity extends Cocos2dxActivity {
 
+    public static native void loadBank();
+    public static native void playMusicEvent(String path, String paramer, float value);
+    public static native void pauseMusicEvent(String path, String paramer, float value);
+    public static native void resumeMusicEvent(String path, String paramer, float value);
+    public static native void stopMusicEvent(String path, String paramer, float value);
+    public static native void playEffectEvent(String path);
+    public static native void stopEffectEvent(String path);
+    public static native void pauseAll();
+    public static native void resumeAll();
+
+    public static void jsLoadBank() {
+        loadBank();
+    }
+    public static void jsPlayMusicEvent(String path, String paramer, float value) {
+        System.out.println("Mostar: play");
+        playMusicEvent(path, paramer, value);
+    }
+    public static void jsPauseMusicEvent(String path, String paramer, float value) {
+        pauseMusicEvent(path, paramer, value);
+    }
+    public static void jsResumeMusicEvent(String path, String paramer, float value) {
+        resumeMusicEvent(path, paramer, value);
+    }
+    public static void jsStopMusicEvent(String path, String paramer, float value) {
+        stopMusicEvent(path, paramer, value);
+    }
+    public static void jsPlayEffectEvent(String path) {
+        playEffectEvent(path);
+    }
+    public static void jsStopEffectEvent(String path) {
+        stopEffectEvent(path);
+    }
+
+    static
+    {
+        System.loadLibrary("fmod");
+        System.loadLibrary("fmodstudio");
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // DO OTHER INITIALIZATION BELOW
         SDKWrapper.getInstance().init(this);
-
+        org.fmod.FMOD.init(this);
     }
 
     @Override
@@ -56,14 +96,14 @@ public class AppActivity extends Cocos2dxActivity {
     protected void onResume() {
         super.onResume();
         SDKWrapper.getInstance().onResume();
-
+        resumeAll();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         SDKWrapper.getInstance().onPause();
-
+        pauseAll();
     }
 
     @Override

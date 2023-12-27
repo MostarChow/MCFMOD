@@ -113,6 +113,7 @@ void stopMusicEvent(const char *path, const char *paramer, float value)
     studioSystem->update();
     // 移除
     playMap.erase(key);
+    musicTask.erase(key);
 }
 
 void playEffectEvent(const char *path)

@@ -36,6 +36,7 @@ this.paused = !1;
 e.load();
 },
 playZhucheng: function() {
+console.log("cocos play");
 e.playMusic(e.zhucheng);
 },
 pauseZhucheng: function() {
