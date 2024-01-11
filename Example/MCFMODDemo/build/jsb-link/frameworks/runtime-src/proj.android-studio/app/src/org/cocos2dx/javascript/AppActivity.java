@@ -48,7 +48,6 @@ public class AppActivity extends Cocos2dxActivity {
         loadBank();
     }
     public static void jsPlayMusicEvent(String path, String paramer, float value) {
-        System.out.println("Mostar: play");
         playMusicEvent(path, paramer, value);
     }
     public static void jsPauseMusicEvent(String path, String paramer, float value) {
@@ -73,13 +72,13 @@ public class AppActivity extends Cocos2dxActivity {
         System.loadLibrary("fmodstudio");
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // DO OTHER INITIALIZATION BELOW
         SDKWrapper.getInstance().init(this);
         org.fmod.FMOD.init(this);
+
     }
 
     @Override
@@ -97,6 +96,7 @@ public class AppActivity extends Cocos2dxActivity {
         super.onResume();
         SDKWrapper.getInstance().onResume();
         resumeAll();
+
     }
 
     @Override

@@ -12,6 +12,9 @@
 #include "fmod_android/inc/fmod_studio.hpp"
 #include "fmod_android/inc/fmod_errors.h"
 
+#include <iostream>
+#include <string>
+
 #define LOG_TAG "main"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 
@@ -134,6 +137,7 @@ void playEffectEvent(const char *path)
     // 记录
     std::string key = path;
     effectTask[key] = 0;
+    playMap[key] = instance;
 }
 
 void stopEffectEvent(const char *path)
@@ -151,6 +155,7 @@ void stopEffectEvent(const char *path)
     // 移除
     std::string key = path;
     effectTask.erase(key);
+    playMap.erase(key);
 }
 
 void pauseAll()
@@ -166,6 +171,7 @@ void pauseAll()
 
 void resumeAll()
 {
+    // 恢复背景音乐
     for (auto it = musicTask.begin(); it != musicTask.end(); ++it)
     {
         float volume = it->second;
@@ -177,6 +183,16 @@ void resumeAll()
             instance->release();
             studioSystem->update();
         }
+    }
+    // 恢复音效
+    for (auto it = effectTask.begin(); it != effectTask.end(); ++it)
+    {
+        std::string key = it->first;
+        FMOD::Studio::EventInstance *instance = playMap[key];
+        float volume = 1;
+        instance->setVolume(volume);
+        instance->release();
+        studioSystem->update();
     }
 }
 

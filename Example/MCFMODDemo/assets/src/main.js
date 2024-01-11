@@ -23,7 +23,6 @@ cc.Class({
     },
 
     playZhucheng() {
-        console.log("cocos play");
         FMOD.playMusic(FMOD.zhucheng);
     },
     pauseZhucheng() {
@@ -55,6 +54,10 @@ cc.Class({
     stopeffect() {
         FMOD.stopEffect(FMOD.amb);
     },
+
+    playDisposableEffect() {
+        FMOD.playEffect(FMOD.disposable);
+    }
 
     // update (dt) {},
 });

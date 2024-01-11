@@ -8,6 +8,8 @@ const FMOD = cc.Class({
 
         amb: 'event:/MUSIC/bgm_zhandou',
 
+        disposable: 'event:/SFX/shouji/1/sfx_1paw_hit',
+
         load() {
             if (cc.sys.os === cc.sys.OS_IOS) {
                 jsb.reflection.callStaticMethod('AppController', 'jsLoadBank');

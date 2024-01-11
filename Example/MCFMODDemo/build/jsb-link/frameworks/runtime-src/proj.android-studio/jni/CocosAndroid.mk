@@ -1,16 +1,16 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := fmod
-LOCAL_SRC_FILES := fmod_android/core/lib/$(TARGET_ARCH_ABI)/libfmod.so
-LOCAL_EXPORT_C_INCLUDES := fmod_android/inc
-include $(PREBUILT_SHARED_LIBRARY)
+    LOCAL_MODULE := fmod
+    LOCAL_SRC_FILES := fmod_android/core/lib/$(TARGET_ARCH_ABI)/libfmod.so
+    LOCAL_EXPORT_C_INCLUDES := fmod_android/inc
+    include $(PREBUILT_SHARED_LIBRARY)
 
-include $(CLEAR_VARS)
-LOCAL_MODULE := fmodstudio
-LOCAL_SRC_FILES := fmod_android/studio/lib/$(TARGET_ARCH_ABI)/libfmodstudio.so
-LOCAL_EXPORT_C_INCLUDES := fmod_android/inc
-include $(PREBUILT_SHARED_LIBRARY)
+    include $(CLEAR_VARS)
+    LOCAL_MODULE := fmodstudio
+    LOCAL_SRC_FILES := fmod_android/studio/lib/$(TARGET_ARCH_ABI)/libfmodstudio.so
+    LOCAL_EXPORT_C_INCLUDES := fmod_android/inc
+    include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
@@ -30,6 +30,7 @@ LOCAL_SRC_FILES := hellojavascript/main.cpp \
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_static
+
 LOCAL_SHARED_LIBRARIES := fmod fmodstudio
 
 include $(BUILD_SHARED_LIBRARY)

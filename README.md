@@ -127,7 +127,7 @@ FMOD version: 2.02.07
    ```
    4). 在`protected void onPause() {`最后插入以下代码：
    ```
- 
+    pauseAll();
    ```
 
 5.生成release包必须操作：\
@@ -163,6 +163,7 @@ FMOD version: 2.02.07
 
 8. 打开`*.xcodeproj/Classes/ios/AppController.mm`并引入`mostar_fmod_ios.hpp`。
    ```
+   #import <AVFAudio/AVAudioSession.h>
    #import "mostar_fmod_ios.hpp"
    ```
    

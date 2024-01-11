@@ -345,12 +345,7 @@ var Assembler = {
   },
   _updateRenderData: function _updateRenderData() {
     if (!this._renderComp || !this._renderComp.isValid) return;
-
-    if (!this.updateRenderData(this._renderComp)) {
-      this._aftUpdateRenderDataForNative();
-    }
-  },
-  _aftUpdateRenderDataForNative: function _aftUpdateRenderDataForNative() {
+    this.updateRenderData(this._renderComp);
     var materials = this._renderComp._materials;
 
     for (var i = 0; i < materials.length; i++) {
@@ -714,32 +709,7 @@ cc.js.mixin(cc.Mask.prototype, {
 },{}],13:[function(require,module,exports){
 "use strict";
 
-var proto = cc.MotionStreak.__assembler__.MultiMotionStreakAssembler.prototype;
-var _update = proto.update;
-cc.js.mixin(proto, {
-  update: function update(comp, dt) {
-    _update.call(this, comp, dt);
-
-    var _this$_renderData$_fl = this._renderData._flexBuffer,
-        iData = _this$_renderData$_fl.iData,
-        usedVertices = _this$_renderData$_fl.usedVertices;
-    var indiceOffset = 0;
-
-    for (var i = 0, l = usedVertices; i < l; i += 2) {
-      iData[indiceOffset++] = i;
-      iData[indiceOffset++] = i + 2;
-      iData[indiceOffset++] = i + 1;
-      iData[indiceOffset++] = i + 1;
-      iData[indiceOffset++] = i + 2;
-      iData[indiceOffset++] = i + 3;
-    }
-  }
-});
-
-},{}],14:[function(require,module,exports){
-"use strict";
-
-var proto = cc.MotionStreak.__assembler__.MotionStreakAssembler.prototype;
+var proto = cc.MotionStreak.__assembler__.prototype;
 var _init = proto.init;
 var _update = proto.update;
 cc.js.mixin(proto, {
@@ -769,7 +739,7 @@ cc.js.mixin(proto, {
   }
 });
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -838,7 +808,7 @@ cc.js.mixin(proto, {
   }, renderer.Particle3DAssembler.prototype);
 })();
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -878,7 +848,7 @@ Object.assign(cc.Sprite.__assembler__.Mesh.prototype, {
   }
 });
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -918,7 +888,7 @@ Object.assign(cc.Sprite.__assembler__.RadialFilled.prototype, {
   }
 });
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -961,7 +931,7 @@ proto.initLocal = function () {
   nativeProto.setLocalData.call(this, this._local);
 };
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1004,7 +974,7 @@ proto.initLocal = function () {
   nativeProto.setLocalData.call(this, this._local);
 };
 
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1072,7 +1042,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   }
 });
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1083,7 +1053,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1106,7 +1076,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1127,7 +1097,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1139,7 +1109,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1151,7 +1121,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -1202,7 +1172,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   });
 })();
 
-},{}],27:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1251,7 +1221,7 @@ require('./3d/bar-filled.js');
 
 require('./3d/radial-filled.js');
 
-},{"./2d/mesh.js":16,"./2d/radial-filled.js":17,"./2d/simple.js":18,"./2d/sliced.js":19,"./2d/tiled.js":20,"./3d/bar-filled.js":21,"./3d/mesh.js":22,"./3d/radial-filled.js":23,"./3d/simple.js":24,"./3d/sliced.js":25,"./3d/tiled.js":26}],28:[function(require,module,exports){
+},{"./2d/mesh.js":15,"./2d/radial-filled.js":16,"./2d/simple.js":17,"./2d/sliced.js":18,"./2d/tiled.js":19,"./3d/bar-filled.js":20,"./3d/mesh.js":21,"./3d/radial-filled.js":22,"./3d/simple.js":23,"./3d/sliced.js":24,"./3d/tiled.js":25}],27:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1282,7 +1252,7 @@ require('./jsb-sys.js');
 
 require('./jsb-game.js');
 
-require('./jsb-videoplayer.js');
+if (window.oh) require('./jsb-videoplayer-openharmony.js');else require('./jsb-videoplayer.js');
 
 require('./jsb-webview.js');
 
@@ -1337,8 +1307,6 @@ if (CC_NATIVERENDERER) {
 
     require('./assemblers/motion-streak.js');
 
-    require('./assemblers/motion-streak-multi.js');
-
     require('./assemblers/mesh-renderer.js');
 
     require('./assemblers/particle-3d-assembler.js');
@@ -1355,7 +1323,7 @@ if (CC_NATIVERENDERER) {
   });
 }
 
-},{"./assemblers/assembler-2d.js":2,"./assemblers/assembler-3d.js":3,"./assemblers/assembler.js":4,"./assemblers/graphics-assembler.js":5,"./assemblers/label/index.js":10,"./assemblers/mask-assembler.js":11,"./assemblers/mesh-renderer.js":12,"./assemblers/motion-streak-multi.js":13,"./assemblers/motion-streak.js":14,"./assemblers/particle-3d-assembler.js":15,"./assemblers/sprite/index.js":27,"./jsb-assets-manager.js":29,"./jsb-audio.js":30,"./jsb-dragonbones.js":32,"./jsb-editbox.js":33,"./jsb-effect-variant.js":34,"./jsb-effect.js":35,"./jsb-game.js":37,"./jsb-loader.js":38,"./jsb-particle.js":39,"./jsb-reflection.js":40,"./jsb-safearea.js":41,"./jsb-skin-mesh.js":42,"./jsb-spine-skeleton.js":43,"./jsb-sys.js":44,"./jsb-tiledmap.js":45,"./jsb-videoplayer.js":46,"./jsb-webview.js":47,"./scene/camera.js":48,"./scene/light.js":49,"./scene/mesh-buffer.js":50,"./scene/node-proxy.js":51,"./scene/node.js":52,"./scene/quad-buffer.js":53,"./scene/render-data.js":54,"./scene/render-flow.js":55}],29:[function(require,module,exports){
+},{"./assemblers/assembler-2d.js":2,"./assemblers/assembler-3d.js":3,"./assemblers/assembler.js":4,"./assemblers/graphics-assembler.js":5,"./assemblers/label/index.js":10,"./assemblers/mask-assembler.js":11,"./assemblers/mesh-renderer.js":12,"./assemblers/motion-streak.js":13,"./assemblers/particle-3d-assembler.js":14,"./assemblers/sprite/index.js":26,"./jsb-assets-manager.js":28,"./jsb-audio.js":29,"./jsb-dragonbones.js":31,"./jsb-editbox.js":32,"./jsb-effect-variant.js":33,"./jsb-effect.js":34,"./jsb-game.js":36,"./jsb-loader.js":37,"./jsb-particle.js":38,"./jsb-reflection.js":39,"./jsb-safearea.js":40,"./jsb-skin-mesh.js":41,"./jsb-spine-skeleton.js":42,"./jsb-sys.js":43,"./jsb-tiledmap.js":44,"./jsb-videoplayer-openharmony.js":45,"./jsb-videoplayer.js":46,"./jsb-webview.js":47,"./scene/camera.js":48,"./scene/light.js":49,"./scene/mesh-buffer.js":50,"./scene/node-proxy.js":51,"./scene/node.js":52,"./scene/quad-buffer.js":53,"./scene/render-data.js":54,"./scene/render-flow.js":55}],28:[function(require,module,exports){
 "use strict";
 
 /*
@@ -1415,7 +1383,7 @@ if (jsb.AssetsManager) {
   jsb.EventAssetsManager.ERROR_DECOMPRESS = 10;
 }
 
-},{}],30:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1686,7 +1654,7 @@ var handleVolume = function handleVolume(volume) {
   };
 })(Audio.prototype, jsb.AudioEngine);
 
-},{"./jsb-cache-manager":31}],31:[function(require,module,exports){
+},{"./jsb-cache-manager":30}],30:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -1874,7 +1842,7 @@ var cacheManager = {
 };
 cc.assetManager.cacheManager = module.exports = cacheManager;
 
-},{"./jsb-fs-utils":36}],32:[function(require,module,exports){
+},{"./jsb-fs-utils":35}],31:[function(require,module,exports){
 "use strict";
 
 var _constants = require("constants");
@@ -2652,7 +2620,7 @@ var cacheManager = require('./jsb-cache-manager');
   };
 })();
 
-},{"./jsb-cache-manager":31,"constants":1}],33:[function(require,module,exports){
+},{"./jsb-cache-manager":30,"constants":1}],32:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -2872,7 +2840,7 @@ var cacheManager = require('./jsb-cache-manager');
   });
 })();
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 "use strict";
 
 // Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
@@ -2897,7 +2865,7 @@ var cacheManager = require('./jsb-cache-manager');
   });
 })();
 
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 "use strict";
 
 // Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
@@ -3012,7 +2980,7 @@ Object.assign(EffectBase.prototype, {
   }
 });
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -3250,7 +3218,7 @@ var fsUtils = {
 };
 window.fsUtils = module.exports = fsUtils;
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -3302,12 +3270,19 @@ jsb.onResume = function () {
 
 jsb.onResize = function (size) {
   if (size.width === 0 || size.height === 0) return;
-  size.width /= window.devicePixelRatio;
-  size.height /= window.devicePixelRatio;
+
+  if (globalThis.oh) {
+    size.width /= globalThis.oh.devicePixelRatio;
+    size.height /= globalThis.oh.devicePixelRatio;
+  } else {
+    size.width /= window.devicePixelRatio;
+    size.height /= window.devicePixelRatio;
+  }
+
   window.resize(size.width, size.height);
 };
 
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 /****************************************************************************
  Copyright (c) 2013-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
@@ -3372,7 +3347,11 @@ function downloadScript(url, options, onComplete) {
 
   if (loadedScripts[url]) return onComplete && onComplete();
   download(url, function (src, options, onComplete) {
-    window.require(src);
+    if (globalThis.oh) {
+      globalThis.oh.loadModule(src);
+    } else {
+      window.require(src);
+    }
 
     loadedScripts[url] = true;
     onComplete && onComplete(null);
@@ -3580,6 +3559,7 @@ function parsePlist(url, options, onComplete) {
 
 parser.parsePVRTex = downloader.downloadDomImage;
 parser.parsePKMTex = downloader.downloadDomImage;
+parser.parseASTCTex = downloader.downloadDomImage;
 downloader.downloadScript = downloadScript;
 downloader.register({
   // JS
@@ -3597,6 +3577,7 @@ downloader.register({
   '.image': downloadAsset,
   '.pvr': downloadAsset,
   '.pkm': downloadAsset,
+  '.astc': downloadAsset,
   // Audio
   '.mp3': downloadAsset,
   '.ogg': downloadAsset,
@@ -3650,6 +3631,7 @@ parser.register({
   // compressed texture
   '.pvr': downloader.downloadDomImage,
   '.pkm': downloader.downloadDomImage,
+  '.astc': downloader.downloadDomImage,
   '.binary': parseArrayBuffer,
   '.bin': parseArrayBuffer,
   '.dbbin': parseArrayBuffer,
@@ -3697,7 +3679,7 @@ cc.assetManager.init = function (options) {
   cacheManager.init();
 };
 
-},{"./jsb-cache-manager":31,"./jsb-fs-utils":36}],39:[function(require,module,exports){
+},{"./jsb-cache-manager":30,"./jsb-fs-utils":35}],38:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -3974,7 +3956,7 @@ cc.assetManager.init = function (options) {
   };
 })();
 
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -4009,7 +3991,7 @@ if (window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID) {
   jsb.reflection = new JavaScriptObjCBridge();
 }
 
-},{}],41:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 "use strict";
 
 var SafeArea = cc.SafeArea;
@@ -4044,7 +4026,7 @@ if (SafeArea) {
   });
 }
 
-},{}],42:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 "use strict";
 
 (function () {
@@ -4058,7 +4040,7 @@ if (SafeArea) {
   });
 })();
 
-},{}],43:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -4133,8 +4115,6 @@ var cacheManager = require('./jsb-cache-manager');
   spine.skeletonCacheMgr = skeletonCacheMgr;
 
   skeletonDataProto.destroy = function () {
-    this._destroyFromDynamicAtlas();
-
     this.reset();
     skeletonCacheMgr.removeSkeletonCache(this._uuid);
     cc.Asset.prototype.destroy.call(this);
@@ -4417,17 +4397,6 @@ var cacheManager = require('./jsb-cache-manager');
     }
   };
 
-  skeleton.setVertsDirty = function () {
-    if (this.skeletonData) {
-      this._dataDirty = true;
-
-      this.constructor.__assembler__.prototype.handleDynamicAtlasAndSwitchMaterial(this);
-    }
-
-    this.invalidAnimationCache();
-    cc.RenderComponent.prototype.setVertsDirty.call(this);
-  };
-
   skeleton.setSkeletonData = function (skeletonData) {
     if (null != skeletonData.width && null != skeletonData.height && 0 !== skeletonData.width && 0 !== skeletonData.height) {
       this.node.setContentSize(skeletonData.width, skeletonData.height);
@@ -4454,10 +4423,6 @@ var cacheManager = require('./jsb-cache-manager');
       this._nativeSkeleton._comp = null;
       this._nativeSkeleton = null;
     }
-
-    this._dataDirty = true;
-
-    this.constructor.__assembler__.prototype.handleDynamicAtlasAndSwitchMaterial(this);
 
     var nativeSkeleton = null;
 
@@ -4908,29 +4873,6 @@ var cacheManager = require('./jsb-cache-manager');
 
     this._stateData = null;
     this._materialCache = null;
-  };
-
-  var regionAttachment = sp.spine.RegionAttachment.prototype;
-
-  regionAttachment.getTexture2D = function (skeletonData) {
-    if (!this._texture2D) {
-      this._texture2D = skeletonData.getTextureByIndex(this.textureForJSB.getRealTextureIndex());
-    }
-
-    return this._texture2D;
-  };
-
-  var meshAttachment = sp.spine.MeshAttachment.prototype;
-
-  meshAttachment.getTexture2D = function (skeletonData) {
-    if (!this._texture2D) {
-      this._texture2D = skeletonData.getTextureByIndex(this.textureForJSB.getRealTextureIndex());
-    }
-
-    return this._texture2D;
-  };
-
-  renderer.CustomAssembler.prototype.updateRenderDataForSwitchMaterial = function () {// placeholder
   }; ////////////////////////////////////////////////////////////
   // adapt attach util
   ////////////////////////////////////////////////////////////
@@ -4992,7 +4934,7 @@ var cacheManager = require('./jsb-cache-manager');
   };
 })();
 
-},{"./jsb-cache-manager":31}],44:[function(require,module,exports){
+},{"./jsb-cache-manager":30}],43:[function(require,module,exports){
 /****************************************************************************
  Copyright (c) 2013-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
@@ -5051,7 +4993,7 @@ sys.getSafeAreaRect = function () {
   return cc.rect(leftBottom.x, leftBottom.y, rightTop.x - leftBottom.x, rightTop.y - leftBottom.y);
 };
 
-},{}],45:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 "use strict";
 
 /****************************************************************************
@@ -5244,6 +5186,701 @@ sys.getSafeAreaRect = function () {
       comp.node._renderFlag |= RenderFlow.FLAG_UPDATE_RENDER_DATA;
     }
   }, renderer.TiledMapAssembler.prototype);
+})();
+
+},{}],45:[function(require,module,exports){
+"use strict";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+/****************************************************************************
+ Copyright (c) 2018 Xiamen Yaji Software Co., Ltd.
+
+ https://www.cocos.com/
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated engine source code (the "Software"), a limited,
+  worldwide, royalty-free, non-assignable, revocable and non-exclusive license
+ to use Cocos Creator solely to develop games on your target platforms. You shall
+  not use Cocos Creator software for developing other software or tools that's
+  used for developing games. You are not granted to publish, distribute,
+  sublicense, and/or sell copies of Cocos Creator.
+
+ The software or tools in this License Agreement are licensed, not sold.
+ Xiamen Yaji Software Co., Ltd. reserves all rights not expressly granted to you.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+(function () {
+  if (!(cc && cc.VideoPlayer && cc.VideoPlayer.Impl)) {
+    return;
+  }
+
+  var vec3 = cc.Vec3;
+  var mat4 = cc.Mat4;
+
+  var _worldMat = new mat4();
+
+  var _topLeft = new vec3();
+
+  var _bottomRight = new vec3();
+
+  var kWebViewTag = 0;
+  var videoPlayers = [];
+  var VideoEvent = {
+    PLAYING: 0,
+    PAUSED: 1,
+    STOPPED: 2,
+    COMPLETED: 3,
+    META_LOADED: 4,
+    CLICKED: 5,
+    READY_TO_PLAY: 6,
+    UPDATE: 7,
+    QUIT_FULLSCREEN: 1000
+  };
+  var _impl = cc.VideoPlayer.Impl;
+  var _p = cc.VideoPlayer.Impl.prototype;
+
+  _p._bindEvent = function () {
+    var video = this._video,
+        self = this;
+
+    if (!video) {
+      return;
+    } //binding event
+
+
+    var cbs = this.__eventListeners;
+
+    cbs.loadedmetadata = function () {
+      self._loadedmeta = true;
+
+      self._dispatchEvent(_impl.EventType.META_LOADED);
+
+      if (self._playing) {
+        self._video.play();
+      }
+    };
+
+    cbs.ended = function () {
+      if (self._video !== video) return;
+      self._playing = false;
+
+      self._dispatchEvent(_impl.EventType.COMPLETED);
+    };
+
+    cbs.play = function () {
+      if (self._video !== video) return;
+      self._playing = true;
+
+      self._dispatchEvent(_impl.EventType.PLAYING);
+    };
+
+    cbs.pause = function () {
+      if (self._ignorePause || self._video !== video) return;
+      self._playing = false;
+
+      self._dispatchEvent(_impl.EventType.PAUSED);
+    };
+
+    cbs.click = function () {
+      self._dispatchEvent(_impl.EventType.CLICKED);
+    };
+
+    cbs.stoped = function () {
+      self._dispatchEvent(_impl.EventType.STOPPED);
+
+      self._ignorePause = false;
+    };
+
+    video.addEventListener("loadedmetadata", cbs.loadedmetadata);
+    video.addEventListener("ended", cbs.ended);
+    video.addEventListener("play", cbs.play);
+    video.addEventListener("pause", cbs.pause);
+    video.addEventListener("click", cbs.click);
+    video.addEventListener("stoped", cbs.stoped);
+
+    function onCanPlay() {
+      if (this._loaded) return;
+      this._loaded = true;
+
+      this._dispatchEvent(_impl.EventType.READY_TO_PLAY);
+
+      this._updateVisibility();
+    }
+
+    cbs.onCanPlay = onCanPlay.bind(this);
+    video.addEventListener('canplay', cbs.onCanPlay);
+    video.addEventListener('canplaythrough', cbs.onCanPlay);
+    video.addEventListener('suspend', cbs.onCanPlay);
+  };
+
+  _p._updateVisibility = function () {
+    if (!this._video) return;
+    var video = this._video;
+
+    if (this._visible) {
+      this._video.setVisible(true);
+    } else {
+      this._video.setVisible(false);
+
+      video.pause();
+      this._playing = false;
+    }
+  };
+
+  _p._updateSize = function (width, height) {};
+
+  _p.createDomElementIfNeeded = function () {
+    if (!this._video) {
+      this._video = new VideoPlayer();
+    }
+  };
+
+  _p.removeDom = function () {
+    var video = this._video;
+
+    if (video) {
+      video.stop();
+      video.setVisible(false);
+      var cbs = this.__eventListeners;
+      cbs.loadedmetadata = null;
+      cbs.ended = null;
+      cbs.play = null;
+      cbs.pause = null;
+      cbs.click = null;
+      cbs.onCanPlay = null;
+      video.destroy();
+    }
+
+    this._video = null;
+    this._url = "";
+  };
+
+  _p.setURL = function (path) {
+    var source, extname;
+
+    if (this._url === path) {
+      return;
+    }
+
+    this.removeDom();
+    this._url = path;
+    this.createDomElementIfNeeded();
+
+    this._bindEvent();
+
+    var video = this._video;
+
+    if (!video) {
+      return;
+    }
+
+    video.setVisible(this._visible);
+    this._loaded = false;
+    this._played = false;
+    this._playing = false;
+    this._loadedmeta = false;
+    video.setURL(this._url);
+    this._forceUpdate = true;
+  };
+
+  _p.getURL = function () {
+    return this._url;
+  };
+
+  _p.play = function () {
+    var video = this._video;
+    if (!video || !this._visible || this._playing) return;
+    video.play();
+    this._playing = true;
+  };
+
+  _p.setStayOnBottom = function (enabled) {};
+
+  _p.pause = function () {
+    var video = this._video;
+    if (!this._playing || !video) return;
+    video.pause();
+    this._playing = false;
+  };
+
+  _p.resume = function () {
+    var video = this._video;
+    if (this._playing || !video) return;
+    video.resume();
+    this._playing = true;
+  };
+
+  _p.stop = function () {
+    var video = this._video;
+    if (!video || !this._visible) return; // TODO(qgh) : In the openharmony platform, there is no stop event when the video stops, instead a pause event is sent. 
+    // We can't ignore the pause event here.
+    // this._ignorePause = true;
+
+    video.seekTo(0);
+    video.stop();
+    this._playing = false;
+  };
+
+  _p.setVolume = function (volume) {};
+
+  _p.seekTo = function (time) {
+    var video = this._video;
+    if (!video) return;
+
+    if (this._loaded) {
+      video.seekTo(time);
+    } else {
+      var cb = function cb() {
+        video.seekTo(time);
+      };
+
+      video.addEventListener(_impl._polyfill.event, cb);
+    }
+  };
+
+  _p.isPlaying = function () {
+    return this._playing;
+  };
+
+  _p.duration = function () {
+    var video = this._video;
+    var duration = -1;
+    if (!video) return duration;
+    duration = video.duration();
+
+    if (duration <= 0) {
+      cc.logID(7702);
+    }
+
+    return duration;
+  };
+
+  _p.currentTime = function () {
+    var video = this._video;
+    if (!video) return -1;
+    return video.currentTime();
+  };
+
+  _p.getFrame = function () {
+    var video = this._video;
+    if (!video) return;
+  };
+
+  _p.getFrameChannel = function () {
+    var video = this._video;
+    if (!video) return 0;
+    return 0;
+  };
+
+  _p.getFrameWidth = function () {
+    var video = this._video;
+    if (!video) return 0;
+    return 0;
+  };
+
+  _p.getFrameHeight = function () {
+    var video = this._video;
+    if (!video) return 0;
+    return 0;
+  };
+
+  _p.pushFrameDataToTexture2D = function (tex) {
+    var video = this._video;
+    if (!video) return;
+  };
+
+  _p.getVideoTexDataSize = function () {
+    var video = this._video;
+    if (!video) return 0;
+    return 0;
+  };
+
+  _p.setShowRawFrame = function (show) {
+    var video = this._video;
+    if (!video) return;
+  };
+
+  _p.update = function () {
+    var video = this._video;
+    if (!video) return;
+  };
+
+  _p.setKeepAspectRatioEnabled = function (isEnabled) {
+    if (!this._video) {
+      return false;
+    }
+
+    return this._video.setKeepAspectRatioEnabled(isEnabled);
+  };
+
+  _p.isKeepAspectRatioEnabled = function () {
+    if (!this._video) {
+      return false;
+    }
+
+    return false;
+  };
+
+  _p.isFullScreenEnabled = function () {
+    return this._fullScreenEnabled;
+  };
+
+  _p.setEventListener = function (event, callback) {
+    this._EventList[event] = callback;
+  };
+
+  _p.removeEventListener = function (event) {
+    this._EventList[event] = null;
+  };
+
+  _p._dispatchEvent = function (event) {
+    var callback = this._EventList[event];
+    if (callback) callback.call(this, this, this._video.src);
+  };
+
+  _p.onPlayEvent = function () {
+    var callback = this._EventList[_impl.EventType.PLAYING];
+    callback.call(this, this, this._video.src);
+  };
+
+  _p.enable = function () {
+    var list = _impl.elements;
+    if (list.indexOf(this) === -1) list.push(this);
+    this.setVisible(true);
+  };
+
+  _p.disable = function () {
+    var list = _impl.elements;
+    var index = list.indexOf(this);
+    if (index !== -1) list.splice(index, 1);
+    this.setVisible(false);
+  };
+
+  _p.destroy = function () {
+    this.disable();
+    this.removeDom();
+  };
+
+  _p.setVisible = function (visible) {
+    if (this._visible !== visible) {
+      this._visible = !!visible;
+
+      this._updateVisibility();
+    }
+  };
+
+  _p.setFullScreenEnabled = function (enable) {
+    var video = this._video;
+
+    if (!video) {
+      return;
+    }
+
+    this._fullScreenEnabled = enable;
+    video.setFullScreenEnabled(enable);
+  };
+
+  _p.updateMatrix = function (node) {
+    if (!this._video || !this._visible) return;
+
+    var camera = cc.Camera.findCamera(node)._camera;
+
+    if (!camera) {
+      return;
+    }
+
+    node.getWorldMatrix(_worldMat);
+
+    if (!this._forceUpdate && this._m00 === _worldMat.m[0] && this._m01 === _worldMat.m[1] && this._m04 === _worldMat.m[4] && this._m05 === _worldMat.m[5] && this._m12 === _worldMat.m[12] && this._m13 === _worldMat.m[13] && this._w === node._contentSize.width && this._h === node._contentSize.height) {
+      return;
+    } // update matrix cache
+
+
+    this._m00 = _worldMat.m[0];
+    this._m01 = _worldMat.m[1];
+    this._m04 = _worldMat.m[4];
+    this._m05 = _worldMat.m[5];
+    this._m12 = _worldMat.m[12];
+    this._m13 = _worldMat.m[13];
+    this._w = node._contentSize.width;
+    this._h = node._contentSize.height;
+    var canvas_width = cc.game.canvas.width;
+    var canvas_height = cc.game.canvas.height;
+    var ap = node._anchorPoint; // Vectors in node space
+
+    vec3.set(_topLeft, -ap.x * this._w, (1.0 - ap.y) * this._h, 0);
+    vec3.set(_bottomRight, (1 - ap.x) * this._w, -ap.y * this._h, 0); // Convert to world space
+
+    vec3.transformMat4(_topLeft, _topLeft, _worldMat);
+    vec3.transformMat4(_bottomRight, _bottomRight, _worldMat); // Convert to Screen space
+
+    camera.worldToScreen(_topLeft, _topLeft, canvas_width, canvas_height);
+    camera.worldToScreen(_bottomRight, _bottomRight, canvas_width, canvas_height);
+    var finalWidth = _bottomRight.x - _topLeft.x;
+    var finalHeight = _topLeft.y - _bottomRight.y;
+
+    this._video.setFrame(_topLeft.x, canvas_height - _topLeft.y, finalWidth, finalHeight);
+
+    this._forceUpdate = false;
+  };
+
+  _impl.EventType = {
+    PLAYING: 0,
+    PAUSED: 1,
+    STOPPED: 2,
+    COMPLETED: 3,
+    META_LOADED: 4,
+    CLICKED: 5,
+    READY_TO_PLAY: 6
+  }; // video 队列，所有 vidoe 在 onEnter 的时候都会插入这个队列
+
+  _impl.elements = []; // video 在 game_hide 事件中被自动暂停的队列，用于回复的时候重新开始播放
+
+  _impl.pauseElements = [];
+  cc.game.on(cc.game.EVENT_HIDE, function () {
+    var list = _impl.elements;
+
+    for (var element, i = 0; i < list.length; i++) {
+      element = list[i];
+
+      if (element.isPlaying()) {
+        element.pause();
+
+        _impl.pauseElements.push(element);
+      }
+    }
+  });
+  cc.game.on(cc.game.EVENT_SHOW, function () {
+    var list = _impl.pauseElements;
+    var element = list.pop();
+
+    while (element) {
+      element.play();
+      element = list.pop();
+    }
+  });
+
+  window.oh.onVideoEvent = function (tag, ev, args) {
+    videoPlayers.forEach(function (player) {
+      if (player.index == tag) {
+        player.dispatchEvent(ev, args);
+      }
+    });
+  };
+
+  var VideoPlayer = /*#__PURE__*/function () {
+    function VideoPlayer() {
+      _classCallCheck(this, VideoPlayer);
+
+      this._events = {};
+      this._currentTime = 0;
+      this._duration = 0;
+      this._videoIndex = kWebViewTag++;
+      this._matViewProj_temp = new mat4();
+      window.oh.postMessage("createVideo", this._videoIndex);
+      videoPlayers.push(this);
+    }
+
+    _createClass(VideoPlayer, [{
+      key: "index",
+      get: function get() {
+        return this._videoIndex;
+      }
+    }, {
+      key: "play",
+      value: function play() {
+        window.oh.postMessage("startVideo", this._videoIndex);
+      }
+    }, {
+      key: "setURL",
+      value: function setURL(url) {
+        var reg = new RegExp(/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/);
+        window.oh.postMessage("setVideoUrl", {
+          tag: this._videoIndex,
+          url: url,
+          resourceType: reg.test(url) ? 0 : 1
+        });
+      }
+    }, {
+      key: "pause",
+      value: function pause() {
+        window.oh.postMessage("pauseVideo", this._videoIndex);
+      }
+    }, {
+      key: "setVisible",
+      value: function setVisible(visible) {
+        window.oh.postMessage("setVideoVisible", {
+          tag: this._videoIndex,
+          visible: visible
+        });
+      }
+    }, {
+      key: "resume",
+      value: function resume() {
+        window.oh.postMessage("resumeVideo", this._videoIndex);
+      }
+    }, {
+      key: "currentTime",
+      value: function currentTime() {
+        var _this = this;
+
+        window.oh.postSyncMessage("currentTime", this._videoIndex).then(function (result) {
+          _this._currentTime = result;
+        });
+        return this._currentTime;
+      }
+    }, {
+      key: "stop",
+      value: function stop() {
+        window.oh.postMessage("stopVideo", this._videoIndex);
+      }
+    }, {
+      key: "seekTo",
+      value: function seekTo(val) {
+        window.oh.postMessage("seekVideoTo", {
+          tag: this._videoIndex,
+          time: val
+        });
+      }
+    }, {
+      key: "duration",
+      value: function duration() {
+        var _this2 = this;
+
+        window.oh.postSyncMessage("getVideoDuration", this._videoIndex).then(function (result) {
+          _this2._duration = result;
+        });
+        return this._duration;
+      }
+    }, {
+      key: "destroy",
+      value: function destroy() {
+        window.oh.postMessage("removeVideo", this._videoIndex);
+      }
+    }, {
+      key: "setFullScreenEnabled",
+      value: function setFullScreenEnabled(enable) {
+        window.oh.postMessage("setFullScreenEnabled", {
+          tag: this._videoIndex,
+          fullScreen: enable
+        });
+      }
+    }, {
+      key: "setKeepAspectRatioEnabled",
+      value: function setKeepAspectRatioEnabled(enable) {
+        cc.warn('The platform does not support');
+      }
+    }, {
+      key: "setFrame",
+      value: function setFrame(x, y, w, h) {
+        window.oh.postMessage("setVideoRect", {
+          tag: this._videoIndex,
+          x: x,
+          y: y,
+          w: w,
+          h: h
+        });
+      }
+    }, {
+      key: "eventTypeToEventName",
+      value: function eventTypeToEventName(ev) {
+        var evString;
+
+        switch (ev) {
+          case VideoEvent.PLAYING:
+            evString = "play";
+            break;
+
+          case VideoEvent.PAUSED:
+            evString = "pause";
+            break;
+
+          case VideoEvent.STOPPED:
+            evString = "stoped";
+            break;
+
+          case VideoEvent.COMPLETED:
+            evString = "ended";
+            break;
+
+          case VideoEvent.META_LOADED:
+            evString = "loadedmetadata";
+            break;
+
+          case VideoEvent.CLICKED:
+            evString = "click";
+            break;
+
+          case VideoEvent.READY_TO_PLAY:
+            evString = "suspend";
+            break;
+
+          case VideoEvent.UPDATE:
+            evString = "update";
+            break;
+
+          case VideoEvent.QUIT_FULLSCREEN:
+            evString = "suspend";
+            break;
+
+          default:
+            evString = "none";
+            break;
+        }
+
+        return evString;
+      }
+    }, {
+      key: "dispatchEvent",
+      value: function dispatchEvent(type, args) {
+        var eventName = this.eventTypeToEventName(type);
+        var listeners = this._events[eventName];
+
+        if (listeners) {
+          for (var i = 0; i < listeners.length; i++) {
+            listeners[i](args);
+          }
+        }
+      }
+    }, {
+      key: "addEventListener",
+      value: function addEventListener(name, listener) {
+        if (!this._events[name]) {
+          this._events[name] = [];
+        }
+
+        this._events[name].push(listener);
+      }
+    }, {
+      key: "removeEventListener",
+      value: function removeEventListener(name, listener) {
+        var listeners = this._events[name];
+
+        if (listeners && listeners.length > 0) {
+          for (var i = listeners.length; i--; i > 0) {
+            if (listeners[i] === listener) {
+              listeners.splice(i, 1);
+              break;
+            }
+          }
+        }
+      }
+    }]);
+
+    return VideoPlayer;
+  }();
 })();
 
 },{}],46:[function(require,module,exports){
@@ -6696,4 +7333,4 @@ RenderFlow.register = function (target) {
   target._inJsbDirtyList = true;
 };
 
-},{}]},{},[28]);
+},{}]},{},[27]);

@@ -1,4 +1,4 @@
 include ':libcocos2dx',':instantapp'
-project(':libcocos2dx').projectDir = new File('/Applications/CocosCreator/Creator/2.4.10/CocosCreator.app/Contents/Resources/cocos2d-x/cocos/platform/android/libcocos2dx')
+project(':libcocos2dx').projectDir = new File('/Applications/Cocos/Creator/2.4.12/CocosCreator.app/Contents/Resources/cocos2d-x/cocos/platform/android/libcocos2dx')
 include ':MCFMODDemo'
 project(':MCFMODDemo').projectDir = new File(settingsDir, 'app')

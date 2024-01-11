@@ -1,302 +1,4 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-"use strict";
-
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-window.CanvasRenderingContext2D = jsb.CanvasRenderingContext2D;
-delete jsb.CanvasRenderingContext2D;
-jsb.device = jsb.Device; // cc namespace will be reset to {} in creator, use jsb namespace instead.
-
-var _require = require('./base64/base64.min'),
-    btoa = _require.btoa,
-    atob = _require.atob;
-
-window.btoa = btoa;
-window.atob = atob;
-
-var _require2 = require('./Blob'),
-    Blob = _require2.Blob,
-    URL = _require2.URL;
-
-window.Blob = Blob;
-window.URL = URL;
-window.DOMParser = require('./xmldom/dom-parser').DOMParser;
-
-require('./jsb_prepare');
-
-require('./jsb_opengl');
-
-require('./jsb-adapter');
-
-require('./jsb_audioengine');
-
-require('./jsb_input'); // external interface of native renderer
-
-
-require('./renderer/enums');
-
-require('./renderer/jsb-vertex-format');
-
-require('./renderer/jsb-gfx');
-
-require('./renderer/jsb-renderer');
-
-var _oldRequestFrameCallback = null;
-var _requestAnimationFrameID = 0;
-var _requestAnimationFrameCallbacks = {};
-var _firstTick = true;
-
-window.requestAnimationFrame = function (cb) {
-  var id = ++_requestAnimationFrameID;
-  _requestAnimationFrameCallbacks[id] = cb;
-  return id;
-};
-
-window.cancelAnimationFrame = function (id) {
-  delete _requestAnimationFrameCallbacks[id];
-};
-
-var _require3 = require('./glOptMode'),
-    disableBatchGLCommandsToNative = _require3.disableBatchGLCommandsToNative,
-    flushCommands = _require3.flushCommands;
-
-window.optConfig = {
-  disableBatchGLCommandsToNative: disableBatchGLCommandsToNative
-};
-
-function tick(nowMilliSeconds) {
-  if (_firstTick) {
-    _firstTick = false;
-
-    if (window.onload) {
-      var event = new Event('load');
-      event._target = window;
-      window.onload(event);
-    }
-  }
-
-  fireTimeout(nowMilliSeconds);
-
-  for (var id in _requestAnimationFrameCallbacks) {
-    _oldRequestFrameCallback = _requestAnimationFrameCallbacks[id];
-
-    if (_oldRequestFrameCallback) {
-      delete _requestAnimationFrameCallbacks[id];
-
-      _oldRequestFrameCallback(nowMilliSeconds);
-    }
-  }
-
-  flushCommands();
-}
-
-var _timeoutIDIndex = 0;
-
-var TimeoutInfo = /*#__PURE__*/_createClass(function TimeoutInfo(cb, delay, isRepeat, target, args) {
-  _classCallCheck(this, TimeoutInfo);
-
-  this.cb = cb;
-  this.id = ++_timeoutIDIndex;
-  this.start = performance.now();
-  this.delay = delay;
-  this.isRepeat = isRepeat;
-  this.target = target;
-  this.args = args;
-});
-
-var _timeoutInfos = {};
-
-function fireTimeout(nowMilliSeconds) {
-  var info;
-
-  for (var id in _timeoutInfos) {
-    info = _timeoutInfos[id];
-
-    if (info && info.cb) {
-      if (nowMilliSeconds - info.start >= info.delay) {
-        // console.log(`fireTimeout: id ${id}, start: ${info.start}, delay: ${info.delay}, now: ${nowMilliSeconds}`);
-        if (typeof info.cb === 'string') {
-          Function(info.cb)();
-        } else if (typeof info.cb === 'function') {
-          info.cb.apply(info.target, info.args);
-        }
-
-        if (info.isRepeat) {
-          info.start = nowMilliSeconds;
-        } else {
-          delete _timeoutInfos[id];
-        }
-      }
-    }
-  }
-}
-
-function createTimeoutInfo(prevFuncArgs, isRepeat) {
-  var cb = prevFuncArgs[0];
-
-  if (!cb) {
-    console.error("createTimeoutInfo doesn't pass a callback ...");
-    return 0;
-  }
-
-  var delay = prevFuncArgs.length > 1 ? prevFuncArgs[1] : 0;
-  var args;
-
-  if (prevFuncArgs.length > 2) {
-    args = Array.prototype.slice.call(prevFuncArgs, 2);
-  }
-
-  var info = new TimeoutInfo(cb, delay, isRepeat, this, args);
-  _timeoutInfos[info.id] = info;
-  return info.id;
-}
-
-window.setTimeout = function (cb) {
-  return createTimeoutInfo(arguments, false);
-};
-
-window.clearTimeout = function (id) {
-  delete _timeoutInfos[id];
-};
-
-window.setInterval = function (cb) {
-  return createTimeoutInfo(arguments, true);
-};
-
-window.clearInterval = window.clearTimeout;
-window.alert = console.error.bind(console);
-var __motionCallbackID = 0;
-var __motionEnabled = false;
-var __motionInterval = 16.6; // milliseconds
-
-jsb.device.setMotionInterval = function (milliseconds) {
-  __motionInterval = milliseconds; // convert to seconds
-
-  jsb.device.setAccelerometerInterval(__motionInterval / 1000);
-
-  if (__motionEnabled) {
-    jsb.device.setMotionEnabled(false);
-    jsb.device.setMotionEnabled(true);
-  }
-};
-
-jsb.device.setMotionEnabled = function (enabled) {
-  if (__motionEnabled === enabled) return;
-  jsb.device.setAccelerometerEnabled(enabled);
-
-  if (enabled) {
-    var motionValue;
-    var event = new DeviceMotionEvent();
-    __motionCallbackID = window.setInterval(function () {
-      motionValue = jsb.device.getDeviceMotionValue();
-      event._acceleration.x = motionValue[0];
-      event._acceleration.y = motionValue[1];
-      event._acceleration.z = motionValue[2];
-      event._accelerationIncludingGravity.x = motionValue[3];
-      event._accelerationIncludingGravity.y = motionValue[4];
-      event._accelerationIncludingGravity.z = motionValue[5];
-      event._rotationRate.alpha = motionValue[6];
-      event._rotationRate.beta = motionValue[7];
-      event._rotationRate.gamma = motionValue[8];
-      event._interval = __motionInterval;
-      jsb.device.dispatchDeviceMotionEvent(event);
-    }, __motionInterval);
-  } else {
-    window.clearInterval(__motionCallbackID);
-    __motionCallbackID = 0;
-  }
-
-  __motionEnabled = enabled;
-}; // File utils (Temporary, won't be accessible)
-
-
-if (typeof jsb.FileUtils !== 'undefined') {
-  jsb.fileUtils = jsb.FileUtils.getInstance();
-  delete jsb.FileUtils;
-}
-
-XMLHttpRequest.prototype.addEventListener = function (eventName, listener, options) {
-  this['on' + eventName] = listener;
-};
-
-XMLHttpRequest.prototype.removeEventListener = function (eventName, listener, options) {
-  this['on' + eventName] = null;
-}; // SocketIO
-
-
-if (window.SocketIO) {
-  window.io = window.SocketIO;
-  SocketIO.prototype._Emit = SocketIO.prototype.emit;
-
-  SocketIO.prototype.emit = function (uri, delegate) {
-    if (_typeof(delegate) === 'object') {
-      delegate = JSON.stringify(delegate);
-    }
-
-    this._Emit(uri, delegate);
-  };
-}
-
-window.gameTick = tick; // generate get set function
-
-jsb.generateGetSet = function (moduleObj) {
-  for (var classKey in moduleObj) {
-    var classProto = moduleObj[classKey] && moduleObj[classKey].prototype;
-    if (!classProto) continue;
-
-    var _loop = function _loop(getName) {
-      var getPos = getName.search(/^get/);
-      if (getPos == -1) return "continue";
-      var propName = getName.replace(/^get/, '');
-      var nameArr = propName.split('');
-      var lowerFirst = nameArr[0].toLowerCase();
-      var upperFirst = nameArr[0].toUpperCase();
-      nameArr.splice(0, 1);
-      var left = nameArr.join('');
-      propName = lowerFirst + left;
-      var setName = 'set' + upperFirst + left;
-      if (classProto.hasOwnProperty(propName)) return "continue";
-      var setFunc = classProto[setName];
-      var hasSetFunc = typeof setFunc === 'function';
-
-      if (hasSetFunc) {
-        Object.defineProperty(classProto, propName, {
-          get: function get() {
-            return this[getName]();
-          },
-          set: function set(val) {
-            this[setName](val);
-          },
-          configurable: true
-        });
-      } else {
-        Object.defineProperty(classProto, propName, {
-          get: function get() {
-            return this[getName]();
-          },
-          configurable: true
-        });
-      }
-    };
-
-    for (var getName in classProto) {
-      var _ret = _loop(getName);
-
-      if (_ret === "continue") continue;
-    }
-  }
-}; // promise polyfill relies on setTimeout implementation
-
-
-require('./promise.min');
-
-},{"./Blob":2,"./base64/base64.min":3,"./glOptMode":4,"./jsb-adapter":27,"./jsb_audioengine":32,"./jsb_input":33,"./jsb_opengl":34,"./jsb_prepare":36,"./promise.min":37,"./renderer/enums":38,"./renderer/jsb-gfx":39,"./renderer/jsb-renderer":40,"./renderer/jsb-vertex-format":41,"./xmldom/dom-parser":42}],2:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -472,7 +174,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
           } // decode UTF-16 to binary string
 
 
-          bb.push(unescape(encodeURIComponent(data)));
+          if (globalThis.oh) {
+            bb.push(decodeURI(encodeURIComponent(data)));
+          } else {
+            bb.push(unescape(encodeURIComponent(data)));
+          }
         }
       };
 
@@ -542,7 +248,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 })(typeof self !== "undefined" && self || typeof window !== "undefined" && window || typeof global !== "undefined" && global || (void 0).content || void 0);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 "use strict";
 
 !function () {
@@ -571,7 +277,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   });
 }();
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 "use strict";
 
 var GL_COMMAND_ACTIVE_TEXTURE = 0;
@@ -2364,7 +2070,305 @@ module.exports = {
   flushCommands: flushCommands
 };
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+window.CanvasRenderingContext2D = jsb.CanvasRenderingContext2D;
+delete jsb.CanvasRenderingContext2D;
+jsb.device = jsb.Device; // cc namespace will be reset to {} in creator, use jsb namespace instead.
+
+var _require = require('./base64/base64.min'),
+    btoa = _require.btoa,
+    atob = _require.atob;
+
+window.btoa = btoa;
+window.atob = atob;
+
+var _require2 = require('./Blob'),
+    Blob = _require2.Blob,
+    URL = _require2.URL;
+
+window.Blob = Blob;
+window.URL = URL;
+window.DOMParser = require('./xmldom/dom-parser').DOMParser;
+
+require('./jsb_prepare');
+
+require('./jsb_opengl');
+
+require('./jsb-adapter');
+
+require('./jsb_audioengine');
+
+require('./jsb_input'); // external interface of native renderer
+
+
+require('./renderer/enums');
+
+require('./renderer/jsb-vertex-format');
+
+require('./renderer/jsb-gfx');
+
+require('./renderer/jsb-renderer');
+
+var _oldRequestFrameCallback = null;
+var _requestAnimationFrameID = 0;
+var _requestAnimationFrameCallbacks = {};
+var _firstTick = true;
+
+window.requestAnimationFrame = function (cb) {
+  var id = ++_requestAnimationFrameID;
+  _requestAnimationFrameCallbacks[id] = cb;
+  return id;
+};
+
+window.cancelAnimationFrame = function (id) {
+  delete _requestAnimationFrameCallbacks[id];
+};
+
+var _require3 = require('./glOptMode'),
+    disableBatchGLCommandsToNative = _require3.disableBatchGLCommandsToNative,
+    flushCommands = _require3.flushCommands;
+
+window.optConfig = {
+  disableBatchGLCommandsToNative: disableBatchGLCommandsToNative
+};
+
+function tick(nowMilliSeconds) {
+  if (_firstTick) {
+    _firstTick = false;
+
+    if (window.onload) {
+      var event = new Event('load');
+      event._target = window;
+      window.onload(event);
+    }
+  }
+
+  fireTimeout(nowMilliSeconds);
+
+  for (var id in _requestAnimationFrameCallbacks) {
+    _oldRequestFrameCallback = _requestAnimationFrameCallbacks[id];
+
+    if (_oldRequestFrameCallback) {
+      delete _requestAnimationFrameCallbacks[id];
+
+      _oldRequestFrameCallback(nowMilliSeconds);
+    }
+  }
+
+  flushCommands();
+}
+
+var _timeoutIDIndex = 0;
+
+var TimeoutInfo = /*#__PURE__*/_createClass(function TimeoutInfo(cb, delay, isRepeat, target, args) {
+  _classCallCheck(this, TimeoutInfo);
+
+  this.cb = cb;
+  this.id = ++_timeoutIDIndex;
+  this.start = performance.now();
+  this.delay = delay;
+  this.isRepeat = isRepeat;
+  this.target = target;
+  this.args = args;
+});
+
+var _timeoutInfos = {};
+
+function fireTimeout(nowMilliSeconds) {
+  var info;
+
+  for (var id in _timeoutInfos) {
+    info = _timeoutInfos[id];
+
+    if (info && info.cb) {
+      if (nowMilliSeconds - info.start >= info.delay) {
+        // console.log(`fireTimeout: id ${id}, start: ${info.start}, delay: ${info.delay}, now: ${nowMilliSeconds}`);
+        if (typeof info.cb === 'string') {
+          Function(info.cb)();
+        } else if (typeof info.cb === 'function') {
+          info.cb.apply(info.target, info.args);
+        }
+
+        if (info.isRepeat) {
+          info.start = nowMilliSeconds;
+        } else {
+          delete _timeoutInfos[id];
+        }
+      }
+    }
+  }
+}
+
+function createTimeoutInfo(prevFuncArgs, isRepeat) {
+  var cb = prevFuncArgs[0];
+
+  if (!cb) {
+    console.error("createTimeoutInfo doesn't pass a callback ...");
+    return 0;
+  }
+
+  var delay = prevFuncArgs.length > 1 ? prevFuncArgs[1] : 0;
+  var args;
+
+  if (prevFuncArgs.length > 2) {
+    args = Array.prototype.slice.call(prevFuncArgs, 2);
+  }
+
+  var info = new TimeoutInfo(cb, delay, isRepeat, this, args);
+  _timeoutInfos[info.id] = info;
+  return info.id;
+}
+
+window.setTimeout = function (cb) {
+  return createTimeoutInfo(arguments, false);
+};
+
+window.clearTimeout = function (id) {
+  delete _timeoutInfos[id];
+};
+
+window.setInterval = function (cb) {
+  return createTimeoutInfo(arguments, true);
+};
+
+window.clearInterval = window.clearTimeout;
+window.alert = console.error.bind(console);
+var __motionCallbackID = 0;
+var __motionEnabled = false;
+var __motionInterval = 16.6; // milliseconds
+
+jsb.device.setMotionInterval = function (milliseconds) {
+  __motionInterval = milliseconds; // convert to seconds
+
+  jsb.device.setAccelerometerInterval(__motionInterval / 1000);
+
+  if (__motionEnabled) {
+    jsb.device.setMotionEnabled(false);
+    jsb.device.setMotionEnabled(true);
+  }
+};
+
+jsb.device.setMotionEnabled = function (enabled) {
+  if (__motionEnabled === enabled) return;
+  jsb.device.setAccelerometerEnabled(enabled);
+
+  if (enabled) {
+    var motionValue;
+    var event = new DeviceMotionEvent();
+    __motionCallbackID = window.setInterval(function () {
+      motionValue = jsb.device.getDeviceMotionValue();
+      event._acceleration.x = motionValue[0];
+      event._acceleration.y = motionValue[1];
+      event._acceleration.z = motionValue[2];
+      event._accelerationIncludingGravity.x = motionValue[3];
+      event._accelerationIncludingGravity.y = motionValue[4];
+      event._accelerationIncludingGravity.z = motionValue[5];
+      event._rotationRate.alpha = motionValue[6];
+      event._rotationRate.beta = motionValue[7];
+      event._rotationRate.gamma = motionValue[8];
+      event._interval = __motionInterval;
+      jsb.device.dispatchDeviceMotionEvent(event);
+    }, __motionInterval);
+  } else {
+    window.clearInterval(__motionCallbackID);
+    __motionCallbackID = 0;
+  }
+
+  __motionEnabled = enabled;
+}; // File utils (Temporary, won't be accessible)
+
+
+if (typeof jsb.FileUtils !== 'undefined') {
+  jsb.fileUtils = jsb.FileUtils.getInstance();
+  delete jsb.FileUtils;
+}
+
+XMLHttpRequest.prototype.addEventListener = function (eventName, listener, options) {
+  this['on' + eventName] = listener;
+};
+
+XMLHttpRequest.prototype.removeEventListener = function (eventName, listener, options) {
+  this['on' + eventName] = null;
+}; // SocketIO
+
+
+if (window.SocketIO) {
+  window.io = window.SocketIO;
+  SocketIO.prototype._Emit = SocketIO.prototype.emit;
+
+  SocketIO.prototype.emit = function (uri, delegate) {
+    if (_typeof(delegate) === 'object') {
+      delegate = JSON.stringify(delegate);
+    }
+
+    this._Emit(uri, delegate);
+  };
+}
+
+window.gameTick = tick; // generate get set function
+
+jsb.generateGetSet = function (moduleObj) {
+  for (var classKey in moduleObj) {
+    var classProto = moduleObj[classKey] && moduleObj[classKey].prototype;
+    if (!classProto) continue;
+
+    var _loop = function _loop(getName) {
+      var getPos = getName.search(/^get/);
+      if (getPos == -1) return "continue";
+      var propName = getName.replace(/^get/, '');
+      var nameArr = propName.split('');
+      var lowerFirst = nameArr[0].toLowerCase();
+      var upperFirst = nameArr[0].toUpperCase();
+      nameArr.splice(0, 1);
+      var left = nameArr.join('');
+      propName = lowerFirst + left;
+      var setName = 'set' + upperFirst + left;
+      if (classProto.hasOwnProperty(propName)) return "continue";
+      var setFunc = classProto[setName];
+      var hasSetFunc = typeof setFunc === 'function';
+
+      if (hasSetFunc) {
+        Object.defineProperty(classProto, propName, {
+          get: function get() {
+            return this[getName]();
+          },
+          set: function set(val) {
+            this[setName](val);
+          },
+          configurable: true
+        });
+      } else {
+        Object.defineProperty(classProto, propName, {
+          get: function get() {
+            return this[getName]();
+          },
+          configurable: true
+        });
+      }
+    };
+
+    for (var getName in classProto) {
+      var _ret = _loop(getName);
+
+      if (_ret === "continue") continue;
+    }
+  }
+}; // promise polyfill relies on setTimeout implementation
+
+
+require('./promise.min');
+
+},{"./Blob":1,"./base64/base64.min":2,"./glOptMode":3,"./jsb-adapter":27,"./jsb_audioengine":32,"./jsb_input":33,"./jsb_opengl":34,"./jsb_prepare":36,"./promise.min":37,"./renderer/enums":38,"./renderer/jsb-gfx":39,"./renderer/jsb-renderer":40,"./renderer/jsb-vertex-format":41,"./xmldom/dom-parser":42}],5:[function(require,module,exports){
 "use strict";
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2401,7 +2405,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -2411,7 +2415,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var Event = require('./Event');
 
@@ -2506,7 +2510,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -2516,7 +2520,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var Node = require('./Node');
 
@@ -3204,7 +3208,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -3214,7 +3218,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var EventTarget = require('./EventTarget');
 
@@ -3320,7 +3324,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -3330,7 +3334,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var EventTarget = require('./EventTarget');
 
@@ -3422,7 +3426,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -3432,7 +3436,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3689,7 +3693,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -3699,7 +3703,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var Element = require('./Element');
 
@@ -3764,7 +3768,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -3774,7 +3778,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var HTMLElement = require('./HTMLElement');
 
@@ -3889,7 +3893,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -3899,7 +3903,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var HTMLElement = require('./HTMLElement');
 
@@ -4012,7 +4016,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -4022,7 +4026,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var HTMLElement = require('./HTMLElement');
 
@@ -4070,7 +4074,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -4080,7 +4084,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var HTMLMediaElement = require('./HTMLMediaElement');
 
@@ -4121,7 +4125,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -4131,7 +4135,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var HTMLImageElement = require('./HTMLImageElement');
 
@@ -4217,7 +4221,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -4227,7 +4231,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var Event = require('./Event');
 
@@ -4559,7 +4563,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -4569,7 +4573,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var Event = require('./Event');
 
@@ -4661,7 +4665,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -4671,7 +4675,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var EventTarget = require('./EventTarget');
 
@@ -4757,7 +4761,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -4767,7 +4771,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var Event = require('./Event');
 
@@ -4806,7 +4810,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -4816,7 +4820,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var HTMLElement = require('./HTMLElement');
 
@@ -5060,6 +5064,10 @@ function inject() {
     enumerable: true,
     configurable: true
   });
+
+  if (globalThis.oh) {
+    globalThis.oh.devicePixelRatio = jsb.device.getDevicePixelRatio();
+  }
 
   window.addEventListener = function (eventName, listener, options) {
     window.__canvas.addEventListener(eventName, listener, options);
@@ -6552,17 +6560,17 @@ exports.glTextureFmt = glTextureFmt;
  Copyright (c) 2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos.com
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -6642,6 +6650,34 @@ var GL_COMPRESSED_RGB8_ETC2 = 0x9274; // ext.COMPRESSED_RGB8_ETC2
 
 var GL_COMPRESSED_RGBA8_ETC2_EAC = 0x9278; // ext.COMPRESSED_RGBA8_ETC2_EAC
 
+var GL_COMPRESSED_RGBA_ASTC_4x4_KHR = 0x93B0;
+var GL_COMPRESSED_RGBA_ASTC_5x4_KHR = 0x93B1;
+var GL_COMPRESSED_RGBA_ASTC_5x5_KHR = 0x93B2;
+var GL_COMPRESSED_RGBA_ASTC_6x5_KHR = 0x93B3;
+var GL_COMPRESSED_RGBA_ASTC_6x6_KHR = 0x93B4;
+var GL_COMPRESSED_RGBA_ASTC_8x5_KHR = 0x93B5;
+var GL_COMPRESSED_RGBA_ASTC_8x6_KHR = 0x93B6;
+var GL_COMPRESSED_RGBA_ASTC_8x8_KHR = 0x93B7;
+var GL_COMPRESSED_RGBA_ASTC_10x5_KHR = 0x93B8;
+var GL_COMPRESSED_RGBA_ASTC_10x6_KHR = 0x93B9;
+var GL_COMPRESSED_RGBA_ASTC_10x8_KHR = 0x93BA;
+var GL_COMPRESSED_RGBA_ASTC_10x10_KHR = 0x93BB;
+var GL_COMPRESSED_RGBA_ASTC_12x10_KHR = 0x93BC;
+var GL_COMPRESSED_RGBA_ASTC_12x12_KHR = 0x93BD;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR = 0x93D0;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR = 0x93D1;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR = 0x93D2;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR = 0x93D3;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR = 0x93D4;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR = 0x93D5;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR = 0x93D6;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR = 0x93D7;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR = 0x93D8;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR = 0x93D9;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR = 0x93DA;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR = 0x93DB;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR = 0x93DC;
+var GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR = 0x93DD;
 var _filterGL = [[GL_NEAREST, GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR], [GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_LINEAR]];
 var _textureFmtGL = [// TEXTURE_FMT_RGB_DXT1: 0
 {
@@ -6793,6 +6829,146 @@ var _textureFmtGL = [// TEXTURE_FMT_RGB_DXT1: 0
   format: GL_RGBA,
   internalFormat: GL_COMPRESSED_RGBA8_ETC2_EAC,
   pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_4X4: 30
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_4x4_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_5X4: 31
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_5x4_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_5X5: 32
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_5x5_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_6X5: 33
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_6x5_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_6X6: 34
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_6x6_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_8X5: 35
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_8x5_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_8X6: 36
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_8x6_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_8X8: 37
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_8x8_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_10X5: 38
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_10x5_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_10X6: 39
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_10x6_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_10X8: 40
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_10x8_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_10X10: 41
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_10x10_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_12X10: 42
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_12x10_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_RGBA_ASTC_12X12: 43
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_RGBA_ASTC_12x12_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_4X4: 44
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_5X4: 45
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_5X5: 46
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_6X5: 47
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_6X6: 48
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_8X5: 49
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_8X6: 50
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_8X8: 51
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_10X5: 52
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_10X6: 53
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_10X8: 54
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_10X10: 55
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_12X10: 56
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR,
+  pixelType: null
+}, // TEXTURE_FMT_SRGBA_ASTC_12X12: 57
+{
+  format: GL_RGBA,
+  internalFormat: GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR,
+  pixelType: null
 }];
 /**
  * enums
@@ -6841,7 +7017,6 @@ var enums = {
   ATTR_TEX_COORD6: 'a_texCoord6',
   ATTR_TEX_COORD7: 'a_texCoord7',
   ATTR_TEX_COORD8: 'a_texCoord8',
-  ATTR_TEX_ID: 'a_texId',
   // vertex attribute type
   ATTR_TYPE_INT8: 5120,
   // gl.BYTE
@@ -6902,6 +7077,36 @@ var enums = {
   // etc2 format
   TEXTURE_FMT_RGB_ETC2: 28,
   TEXTURE_FMT_RGBA_ETC2: 29,
+  // astc format (Adaptive Scalable Texture Compression)
+  TEXTURE_FMT_RGBA_ASTC_4X4: 30,
+  TEXTURE_FMT_RGBA_ASTC_5X4: 31,
+  TEXTURE_FMT_RGBA_ASTC_5X5: 32,
+  TEXTURE_FMT_RGBA_ASTC_6X5: 33,
+  TEXTURE_FMT_RGBA_ASTC_6X6: 34,
+  TEXTURE_FMT_RGBA_ASTC_8X5: 35,
+  TEXTURE_FMT_RGBA_ASTC_8X6: 36,
+  TEXTURE_FMT_RGBA_ASTC_8X8: 37,
+  TEXTURE_FMT_RGBA_ASTC_10X5: 38,
+  TEXTURE_FMT_RGBA_ASTC_10X6: 39,
+  TEXTURE_FMT_RGBA_ASTC_10X8: 40,
+  TEXTURE_FMT_RGBA_ASTC_10X10: 41,
+  TEXTURE_FMT_RGBA_ASTC_12X10: 42,
+  TEXTURE_FMT_RGBA_ASTC_12X12: 43,
+  // astc format (Adaptive Scalable Texture Compression) SRGB
+  TEXTURE_FMT_SRGBA_ASTC_4X4: 44,
+  TEXTURE_FMT_SRGBA_ASTC_5X4: 45,
+  TEXTURE_FMT_SRGBA_ASTC_5X5: 46,
+  TEXTURE_FMT_SRGBA_ASTC_6X5: 47,
+  TEXTURE_FMT_SRGBA_ASTC_6X6: 48,
+  TEXTURE_FMT_SRGBA_ASTC_8X5: 49,
+  TEXTURE_FMT_SRGBA_ASTC_8X6: 50,
+  TEXTURE_FMT_SRGBA_ASTC_8X8: 51,
+  TEXTURE_FMT_SRGBA_ASTC_10X5: 52,
+  TEXTURE_FMT_SRGBA_ASTC_10X6: 53,
+  TEXTURE_FMT_SRGBA_ASTC_10X8: 54,
+  TEXTURE_FMT_SRGBA_ASTC_10X10: 55,
+  TEXTURE_FMT_SRGBA_ASTC_12X10: 56,
+  TEXTURE_FMT_SRGBA_ASTC_12X12: 57,
   // depth and stencil function
   DS_FUNC_NEVER: 512,
   // gl.NEVER
@@ -7254,7 +7459,7 @@ function convertOptions(texture, options) {
     options.glFormat = gltf.format;
     options.glType = gltf.pixelType;
     options.bpp = gltf.bpp;
-    options.compressed = format >= _enums.enums.TEXTURE_FMT_RGB_DXT1 && format <= _enums.enums.TEXTURE_FMT_RGBA_PVRTC_4BPPV1 || format >= _enums.enums.TEXTURE_FMT_RGB_ETC2 && format <= _enums.enums.TEXTURE_FMT_RGBA_ETC2;
+    options.compressed = format >= _enums.enums.TEXTURE_FMT_RGB_DXT1 && format <= _enums.enums.TEXTURE_FMT_RGBA_PVRTC_4BPPV1 || format >= _enums.enums.TEXTURE_FMT_RGB_ETC2 && format <= _enums.enums.TEXTURE_FMT_RGBA_ETC2 || format >= _enums.enums.TEXTURE_FMT_RGBA_ASTC_4X4 && format <= _enums.enums.TEXTURE_FMT_SRGBA_ASTC_12X12;
   }
 
   options.width = options.width || texture._width;
@@ -10346,4 +10551,4 @@ function split(source, start) {
 
 exports.XMLReader = XMLReader;
 
-},{}]},{},[1]);
+},{}]},{},[4]);
