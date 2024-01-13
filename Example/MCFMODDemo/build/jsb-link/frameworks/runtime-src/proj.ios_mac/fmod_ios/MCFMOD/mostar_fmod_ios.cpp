@@ -37,7 +37,7 @@ void loadBank()
     // 创建core对象
     FMOD::System *coreSystem = NULL;
     studioSystem->getCoreSystem(&coreSystem);
-    coreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_SURROUND, 0);
+    coreSystem->setSoftwareFormat(44100, FMOD_SPEAKERMODE_STEREO, 2);
     // 初始化studio
     void *extradriverdata = NULL;
     studioSystem->initialize(32, FMOD_INIT_NORMAL, FMOD_INIT_NORMAL, extradriverdata);
