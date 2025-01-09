@@ -223,6 +223,13 @@ FMOD version: 2.02.07
       const char *pathc = [path UTF8String];
       stopEffectEvent(pathc);
    }
+   
+    + (void)jsAllowAmbient:(BOOL)allow {
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+        [session setCategory:AVAudioSessionCategoryAmbient error:nil];
+        [session setActive:allow error:nil];
+    }
+
     ```
 
    2). 在`application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{`最后插入以下代码：
