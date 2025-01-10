@@ -225,9 +225,13 @@ FMOD version: 2.02.07
    }
    
     + (void)jsAllowAmbient:(BOOL)allow {
-        AVAudioSession *session = [AVAudioSession sharedInstance];
+      AVAudioSession *session = [AVAudioSession sharedInstance];
+      if (allow) {
         [session setCategory:AVAudioSessionCategoryAmbient error:nil];
-        [session setActive:allow error:nil];
+      } else {
+        [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
+      }
+      [session setActive:YES error:nil];
     }
 
     ```
